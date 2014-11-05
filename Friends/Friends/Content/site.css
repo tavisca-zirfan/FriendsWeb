@@ -1,0 +1,36 @@
+@media (min-width: 980px) {
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+}
+
+[class^="icon-"],[class*=" icon-"] {
+    background-image: url("/Content/images/glyphicons-halflings.png");
+}
+.apps {
+    /*background-image: url("/Content/images/app_store.png");*/
+    min-height: 400px;
+    background-color: aliceblue;
+}
+.ftr {
+    padding:50px;
+    background-color: darkseagreen;
+    color: white;
+    font-size: 1.2em;
+}
+.ftr img{
+    height: 100px;
+    width: 150px;
+}
+.sign-up {
+    padding: 20px 0px;
+}
+.sign-up .form-group{
+    padding-left: 0px;
+}
+.sign-up .btn {
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 1.4em;
+}

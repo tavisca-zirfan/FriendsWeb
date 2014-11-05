@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Bootstrap";
+}
+
+<div class="container marketing">
+    <div class="row">
+
+        <div class="col-lg-4">
+            <img class="img-circle" src="/Content/images/chat.jpg" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;">
+            <h2>Chat</h2>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+            <p><a class="btn btn-default" href="#">View details »</a></p>
+        </div>
+
+        <div class="col-lg-4">
+            <img class="img-circle" src="/Content/images/games.jpg" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;">
+            <h2>Play</h2>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+            <p><a class="btn btn-default" href="#">View details »</a></p>
+        </div>
+
+        <div class="col-lg-4">
+            <img class="img-circle" src="/Content/images/connect.jpg" data-src="holder.js/140x140" alt="140x140" style="width: 140px; height: 140px;">
+            <h2>Connect</h2>
+            <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+            <p><a class="btn btn-default" href="#">View details »</a></p>
+        </div>
+    </div>
+</div>
+<div class="apps">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 mobile">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#win">Windows</a></li>
+                    <li><a data-toggle="tab" href="#android">Android</a></li>
+                    <li><a data-toggle="tab" href="#mac">Mac</a></li>
+                    <li><a data-toggle="tab" href="#bb">Blackberry</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active fade in" id="win">
+                        <div class="">
+                            <h3>Windows App</h3>
+                            <blockquote>
+                                <p>Dwonload from windows store</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="bb">
+                        <div class="">
+                            <h3>Blackberry App</h3>
+                            <blockquote>
+                                <p>Dwonload from blackberry store</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="android">
+                        <div class="">
+                            <h3>Android App</h3>
+                            <blockquote>
+                                <p>Dwonload from play store</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="mac">
+                        <div class="">
+                            <h3>Mac App</h3>
+                            <blockquote>
+                                <p>Dwonload from apple store</p>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 games"></div>
+        </div>
+    </div>
+</div>
+@section Carousel
+{
+    @Html.Partial("_Carousel")
+}
+

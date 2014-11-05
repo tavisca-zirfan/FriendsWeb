@@ -1,0 +1,10 @@
+﻿@using Friends.Classes
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Home</h2>
+Welcome @{
+            CustomPrincipal user = User as CustomPrincipal;
+            <span>@user.FirstName @user.LastName</span>
+        }

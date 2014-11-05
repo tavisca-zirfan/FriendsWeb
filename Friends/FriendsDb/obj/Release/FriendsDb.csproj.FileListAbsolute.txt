@@ -1,0 +1,9 @@
+D:\Zirfan-Github\Friends\FriendsDb\bin\Release\FriendsDb.dll
+D:\Zirfan-Github\Friends\FriendsDb\bin\Release\FriendsDb.pdb
+D:\Zirfan-Github\Friends\FriendsDb\bin\Release\EntityFramework.dll
+D:\Zirfan-Github\Friends\FriendsDb\bin\Release\EntityFramework.SqlServer.dll
+D:\Zirfan-Github\Friends\FriendsDb\bin\Release\EntityFramework.xml
+D:\Zirfan-Github\Friends\FriendsDb\bin\Release\EntityFramework.SqlServer.xml
+D:\Zirfan-Github\Friends\FriendsDb\obj\Release\FriendsDb.csprojResolveAssemblyReference.cache
+D:\Zirfan-Github\Friends\FriendsDb\obj\Release\FriendsDb.dll
+D:\Zirfan-Github\Friends\FriendsDb\obj\Release\FriendsDb.pdb

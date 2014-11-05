@@ -1,0 +1,87 @@
+﻿@model Friends.Models.SignUpModel
+
+@{
+    ViewBag.Title = "SignUp";
+}
+<header>
+    <h3 class="text-center">Create a free Account</h3>
+</header>
+<div class="oauth">
+    <div class="container">
+        
+    </div>
+</div>
+<div class="sign-up">
+    <div class="container">
+        @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { @class = "" }))
+        {
+            <div class="row">
+                <div class="col-md-3 col-md-offset-3">
+                    <div class="form-group">
+                        <input type="text" name="FirstName" class="form-control input-lg" placeholder="First Name" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <input type="text" name="LastName" class="form-control input-lg" placeholder="Last Name" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <input type="text" name="Email" class="form-control input-lg" placeholder="Email" />
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <input type="password" name="Password" class="form-control input-lg" placeholder="Password" />
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <input type="password" class="form-control input-lg" placeholder="Confirm Password" />
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <label class="input-lg">Date Of Birth</label>
+                        <div class="">
+                            @Html.DropDownList("DateDOB", Enumerable.Range(1, 31).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "Day",new{@class="input-lg"})
+                            @Html.DropDownList("MonthDOB", Enumerable.Range(1, 12).Select(i => new SelectListItem { Value = i.ToString(), Text = System.Globalization.CultureInfo.InvariantCulture.DateTimeFormat.GetMonthName(i) }), "Month",new{@class="input-lg"})
+                            @Html.DropDownList("YearDOB", Enumerable.Range(1900, 114).Select(i => new SelectListItem { Value = i.ToString(), Text = i.ToString() }), "Year",new{@class="input-lg"})
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="form-group">
+                        <input type="radio" name="Gender" value="M" checked="checked" class="" />
+                        <label for="Gender" class="input-lg">Male</label>
+                        <input type="radio" name="Gender" value="F"  class="" />
+                        <label for="Gender" class="input-lg">Female</label>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <input type="submit" class="btn btn-success btn-lg" value="Sign Up" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

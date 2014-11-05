@@ -1,0 +1,4 @@
+D:\Zirfan-Github\Friends\BLL\bin\Debug\BLL.dll
+D:\Zirfan-Github\Friends\BLL\bin\Debug\BLL.pdb
+D:\Zirfan-Github\Friends\BLL\obj\Debug\BLL.dll
+D:\Zirfan-Github\Friends\BLL\obj\Debug\BLL.pdb

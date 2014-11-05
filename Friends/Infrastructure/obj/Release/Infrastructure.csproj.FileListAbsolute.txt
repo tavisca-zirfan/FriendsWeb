@@ -1,0 +1,5 @@
+D:\Zirfan-Github\Friends\Infrastructure\bin\Release\Infrastructure.dll
+D:\Zirfan-Github\Friends\Infrastructure\bin\Release\Infrastructure.pdb
+D:\Zirfan-Github\Friends\Infrastructure\obj\Release\Infrastructure.csprojResolveAssemblyReference.cache
+D:\Zirfan-Github\Friends\Infrastructure\obj\Release\Infrastructure.dll
+D:\Zirfan-Github\Friends\Infrastructure\obj\Release\Infrastructure.pdb

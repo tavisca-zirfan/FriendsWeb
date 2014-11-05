@@ -1,0 +1,13 @@
+D:\Zirfan-Github\Friends\BLL\bin\Release\BLL.dll
+D:\Zirfan-Github\Friends\BLL\bin\Release\BLL.pdb
+D:\Zirfan-Github\Friends\BLL\obj\Release\BLL.csprojResolveAssemblyReference.cache
+D:\Zirfan-Github\Friends\BLL\obj\Release\BLL.dll
+D:\Zirfan-Github\Friends\BLL\obj\Release\BLL.pdb
+D:\Zirfan-Github\Friends\BLL\bin\Release\DAL.dll
+D:\Zirfan-Github\Friends\BLL\bin\Release\FriendsDb.dll
+D:\Zirfan-Github\Friends\BLL\bin\Release\Infrastructure.dll
+D:\Zirfan-Github\Friends\BLL\bin\Release\EntityFramework.dll
+D:\Zirfan-Github\Friends\BLL\bin\Release\DAL.pdb
+D:\Zirfan-Github\Friends\BLL\bin\Release\FriendsDb.pdb
+D:\Zirfan-Github\Friends\BLL\bin\Release\Infrastructure.pdb
+D:\Zirfan-Github\Friends\BLL\bin\Release\EntityFramework.xml
