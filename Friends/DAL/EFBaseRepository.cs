@@ -8,7 +8,7 @@ using Infrastructure.Model;
 
 namespace DAL
 {
-    public abstract class EfBaseRepository<T>:IUnitOfWorkRepository,IRepository where T:class 
+    public partial class EfBaseRepository<T>:IUnitOfWorkRepository,IRepository,IReadRepository<T> where T:class 
     {
         IUnitOfWork UnitOfWork { get; set; }
         private IDbSet<T> _entity;
@@ -18,44 +18,59 @@ namespace DAL
             get
             {
                 if (_entity == null)
-                    _entity = _context.Set<T>();
+                    _entity = Context.Set<T>();
                 return _entity;
             }
         } 
-        private DbContext _context;
+        protected DbContext Context;
+
         public EfBaseRepository()
         {
-            _context = UnitOfWork.GetTransactionObject() as DbContext;
+            UnitOfWork = new UnitOfWork();
         }
-        public void PersistAdd(Infrastructure.Model.IEntity entity)
+        public EfBaseRepository(IUnitOfWork uow)
+        {
+            UnitOfWork = uow;
+            Context = UnitOfWork.GetTransactionObject() as DbContext;
+        }
+        public void PersistAdd(Object entity)
         {
             Entity.Add((T)entity);
         }
 
-        public void PersistDelete(Infrastructure.Model.IEntity entity)
+        public void PersistDelete(Object entity)
         {
             Entity.Remove((T) entity);
         }
 
-        public void PersistUpdate(Infrastructure.Model.IEntity entity)
+        public void PersistUpdate(Object entity)
         {
-            Entity.Attach((T) entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            
         }
 
-        public void Add(IEntity entity)
+        public void Add(object entity)
         {
             UnitOfWork.RegisterAdd(entity,this);
         }
 
-        public void Update(IEntity entity)
+        public void Update(object entity)
         {
             UnitOfWork.RegisterUpdate(entity,this);
         }
 
-        public void Delete(IEntity entity)
+        public void Delete(object entity)
         {
             UnitOfWork.RegisterDelete(entity,this);
+        }
+
+        public T GetById(object id)
+        {
+            return Entity.Find(id);
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return Entity;
         }
     }
 }

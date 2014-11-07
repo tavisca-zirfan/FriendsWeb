@@ -8,8 +8,8 @@ namespace Infrastructure.Data
 {
     public interface IUnitOfWorkRepository
     {
-        void PersistAdd(IEntity entity);
-        void PersistDelete(IEntity entity);
-        void PersistUpdate(IEntity entity);
+        void PersistAdd(Object entity);
+        void PersistDelete(Object entity);
+        void PersistUpdate(Object entity);
     }
 }

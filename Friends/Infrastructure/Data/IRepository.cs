@@ -8,8 +8,8 @@ namespace Infrastructure.Data
 {
     public interface IRepository
     {
-        void Add(IEntity entity);
-        void Update(IEntity entity);
-        void Delete(IEntity entity);
+        void Add(object entity);
+        void Update(object entity);
+        void Delete(object entity);
     }
 }

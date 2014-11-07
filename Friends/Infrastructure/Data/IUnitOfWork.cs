@@ -10,8 +10,8 @@ namespace Infrastructure.Data
     {
         bool Commit();
         object GetTransactionObject();
-        void RegisterAdd(IEntity entity,IUnitOfWorkRepository repository);
-        void RegisterUpdate(IEntity entity, IUnitOfWorkRepository repository);
-        void RegisterDelete(IEntity entity, IUnitOfWorkRepository repository);
+        void RegisterAdd(object entity,IUnitOfWorkRepository repository);
+        void RegisterUpdate(object entity, IUnitOfWorkRepository repository);
+        void RegisterDelete(object entity, IUnitOfWorkRepository repository);
     }
 }

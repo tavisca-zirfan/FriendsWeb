@@ -14,6 +14,8 @@ namespace Infrastructure.Model
         public string LastName { get; set; }
         public string Username { get; set; }
         public string Gender { get; set; }
-        public List<Role> Roles { get; set; } 
+        public DateTime DOB { get; set; }
+        public IEnumerable<Role> Roles { get; set; } 
+        public int IsActive { get; set; }
     }
 }
