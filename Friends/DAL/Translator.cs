@@ -17,8 +17,9 @@ namespace DAL
                 UserId = credential.UserId,
                 Username = credential.Username,
                 Email = credential.Email,
-                Password = credential.Email,
-                IsActive = credential.IsActive
+                Password = credential.Password,
+                IsActive = credential.IsActive,
+                LastSeen = credential.LastSeen
             };
             if (profile != null)
             {
@@ -45,7 +46,12 @@ namespace DAL
         {
             credential.Email = user.Email;
             credential.IsActive = user.IsActive;
-            credential.Password = user.Password;
+            credential.LastSeen = user.LastSeen;
+            credential.CreatedOn = user.CreatedOn;
+            if (!string.IsNullOrEmpty(user.ChangedPassword))
+            {
+                credential.Password = user.ChangedPassword;
+            }
             credential.Username = user.Username;
         }
         public static void ToDbModel(this User user, UserProfile profile)
@@ -55,6 +61,30 @@ namespace DAL
             profile.Gender = user.Gender;
             profile.DOB = user.DOB;
         }
-        
+        public static Profile ToBusinessModel(this UserProfile userProfile,UserCredential user=null)
+        {
+            var profile = new Profile
+            {
+                About = userProfile.About,
+                DOB = userProfile.DOB,
+                FirstName = userProfile.FirstName,
+                LastName = userProfile.LastName,
+                Gender = userProfile.Gender
+            };
+
+            if (user != null)
+            {
+                profile.Email = user.Email;
+            }
+            return profile;
+        }
+        public static void ToDbModel(this Profile profile, UserProfile userProfile)
+        {
+            userProfile.About = profile.About;
+            userProfile.DOB = profile.DOB;
+            userProfile.FirstName = profile.FirstName;
+            userProfile.LastName = profile.LastName;
+            userProfile.Gender = profile.Gender;
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace DAL
             {
                 _deleteEntities[entity].PersistAdd(entity);
             }
+           
             return _dbContext.SaveChanges()>0;
         }
 

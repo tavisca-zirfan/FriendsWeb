@@ -8,6 +8,7 @@ namespace Infrastructure.Model
     public class User
     {
         public int UserId { get; set; }
+        public string ChangedPassword { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
         public string FirstName { get; set; }
@@ -17,5 +18,7 @@ namespace Infrastructure.Model
         public DateTime DOB { get; set; }
         public IEnumerable<Role> Roles { get; set; } 
         public int IsActive { get; set; }
+        public DateTime LastSeen { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }
