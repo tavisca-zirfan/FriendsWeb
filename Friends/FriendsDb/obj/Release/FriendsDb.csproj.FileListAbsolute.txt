@@ -16,3 +16,5 @@ D:\Zirfan-Github\FriendsWeb\Friends\FriendsDb\bin\Release\EntityFramework.SqlSer
 D:\Zirfan-Github\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.csprojResolveAssemblyReference.cache
 D:\Zirfan-Github\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.dll
 D:\Zirfan-Github\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.Migrations.InitialMigration.resources
+D:\Zirfan-Github\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.csproj.GenerateResource.Cache

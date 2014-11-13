@@ -11,8 +11,8 @@ namespace BLL
 {
     public class UserController:IUserController
     {
-        IUserRepository UserRepository { get; set; }
-        IUnitOfWork UnitOfWork { get; set; }
+        public IUserRepository UserRepository { get; set; }
+        public IUnitOfWork UnitOfWork { get; set; }
         public UserController()
         {
             UnitOfWork = new UnitOfWork();
@@ -21,7 +21,7 @@ namespace BLL
         public User GetUser(string username, string password)
         {
             var user = UserRepository.GetUser(username);
-            if (user.Password == password)
+            if (user!=null && user.Password == password)
                 return user;
             else
             {

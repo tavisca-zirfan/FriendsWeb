@@ -8,7 +8,7 @@ namespace FriendsDb.Models
     {
         static FriendsContext()
         {
-            Database.SetInitializer<FriendsContext>(null);
+            Database.SetInitializer<FriendsContext>(new CreateDatabaseIfNotExists<FriendsContext>());
         }
 
         public FriendsContext()
