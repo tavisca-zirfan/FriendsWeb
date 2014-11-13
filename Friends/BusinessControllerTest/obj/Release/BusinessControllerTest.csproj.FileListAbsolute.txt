@@ -1,0 +1,17 @@
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\BusinessControllerTest.dll
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\BusinessControllerTest.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\BLL.dll
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\DAL.dll
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\Infrastructure.dll
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\Moq.dll
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\EntityFramework.dll
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\FriendsDb.dll
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\BLL.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\DAL.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\Infrastructure.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\Moq.xml
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\EntityFramework.xml
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\bin\Release\FriendsDb.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\obj\Release\BusinessControllerTest.csprojResolveAssemblyReference.cache
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\obj\Release\BusinessControllerTest.dll
+D:\Zirfan-Github\FriendsWeb\Friends\BusinessControllerTest\obj\Release\BusinessControllerTest.pdb
