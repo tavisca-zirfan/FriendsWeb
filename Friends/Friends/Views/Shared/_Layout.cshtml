@@ -77,48 +77,23 @@
         <div class="row">
             @if (IsSectionDefined("sidebar"))
             {
-                <div class="span2">
+                <div class="col-md-2 margin20-left left-sidebar">
                     @RenderSection("sidebar", required: false)
                 </div>
             }
 
-            <div id="content" @(IsSectionDefined("sidebar") ? Html.Raw("class=span10") : Html.Raw("class=span12"))>
-                @if (IsSectionDefined("featured"))
-                {
-                    <div>
-                        <div class="hero-unit">
-                            @RenderSection("featured", required: false)
-                        </div>
-                    </div>
-                }
+            <div id="content" @(IsSectionDefined("sidebar") ? Html.Raw("class=col-md-9") : Html.Raw("class=col-md-12"))>
+                
                 <div>
-                    @RenderBody()
+                    <div class="col-md-12">
+                        @RenderBody()
+                    </div>
+                    
                 </div>
             </div>
         </div>
-        <div class="ftr">
-            <div class="container">
-                <div class="row">
-
-                    <footer id="footer">
-                        <div class="pull-left">
-                            &copy; @DateTime.Now.Year Friends4Ever Ltd.
-                            <br />
-                            <address>
-                                B-104, Trillium,<br />
-                                Magarpatta City, Hadapsar,<br />
-                                Pune - 411028
-                            </address>
-                        </div>
-                        <div class="pull-right">
-                            <img class="img-responsive" src="~/Content/images/friends_logo.png" alt="logo" />
-                        </div>
-                    </footer>
-
-
-                </div>
-            </div>
-        </div>
+        @RenderSection("Footer", false)
+        
         
     </div>
     @Scripts.Render("~/js")

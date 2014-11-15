@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using DAL;
 using Infrastructure.Model;
@@ -9,11 +10,12 @@ namespace DbProviderTest
     [TestClass]
     public class UserRepositoryTest
     {
+        UnitOfWork UOW { get; set; }
         UserRepository UserRepository { get; set; }
         public UserRepositoryTest()
         {
-            var uow = new UnitOfWork();
-            UserRepository = new UserRepository(uow);
+            UOW = new UnitOfWork();
+            UserRepository = new UserRepository(UOW);
         }
         [TestMethod]
         public void GetUserTest()
@@ -29,9 +31,12 @@ namespace DbProviderTest
         [TestMethod]
         public void AddUser()
         {
-            var user = new User {Email = "zaid.b.irfan@gmail.com", IsActive = 1, Password = "qwerty",ChangedPassword = "qwerty",Username = Guid.NewGuid().ToString(),LastSeen = DateTime.Now};
+            var user = new User {Email = "zaid.b.irfan@gmail.com", IsActive = 1, Password = "qwerty",ChangedPassword = "qwerty",Username = Guid.NewGuid().ToString(),LastSeen = DateTime.Now,CreatedOn = DateTime.Now};
             user = UserRepository.AddUser(user);
-            Assert.IsNotNull(user);
+            UOW.Commit();
+            Assert.AreNotEqual(user.UserId,0);
+            UserRepository.Delete(user);
+            UOW.Commit();
         }
     }
 }

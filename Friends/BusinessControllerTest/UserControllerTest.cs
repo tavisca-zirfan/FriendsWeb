@@ -12,7 +12,7 @@ using Moq;
 namespace BusinessControllerTest
 {
     [TestClass]
-    public class UserTest
+    public class UserControllerTest
     {
         [TestMethod]
         public void GetUserByCredentials()

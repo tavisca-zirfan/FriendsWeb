@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Friends.Models;
+using Infrastructure.Model;
 using Newtonsoft.Json;
 using ServiceLayer;
 using ServiceLayer.Model;
@@ -19,22 +20,18 @@ namespace Friends.Controllers
         {
             UserService = new MockUserService();
         }
-        //
-        // GET: /Account/
-        [HttpPost]
-        public ActionResult Login(LoginModel login, string returnUrl = "")
+
+        private ActionResult AuthorizeUser(User user)
         {
-            //UserService = new MockUserService();
-            var user = UserService.Authenticate(new LoginRequest {Username = login.Username, Password = login.Password});
             if (user != null)
             {
-                var roles = user.Roles.Select(r=>r.RoleName).ToArray();
+                var roles = user.Roles.Select(r => r.RoleName).ToArray();
 
                 var serializeModel = new UserModel();
                 serializeModel.Username = user.Username;
                 serializeModel.FirstName = user.FirstName;
                 serializeModel.LastName = user.LastName;
-                serializeModel.Roles = user.Roles.Select(r=>r.RoleName).ToArray();
+                serializeModel.Roles = user.Roles.Select(r => r.RoleName).ToArray();
 
                 string userData = JsonConvert.SerializeObject(serializeModel);
                 FormsAuthenticationTicket authTicket = new FormsAuthenticationTicket(
@@ -62,7 +59,18 @@ namespace Friends.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
-
+            return null;
+        }
+        //
+        // GET: /Account/
+        [HttpPost]
+        public ActionResult Login(LoginModel login, string returnUrl = "")
+        {
+            //UserService = new MockUserService();
+            var user = UserService.Authenticate(new LoginRequest {Username = login.Username, Password = login.Password});
+            var result = AuthorizeUser(user);
+            if (result != null)
+                return result;
             ModelState.AddModelError("", "Incorrect username and/or password");
             return RedirectToAction("Index", "Home");
         }
@@ -95,8 +103,9 @@ namespace Friends.Controllers
                 Password = model.Password,
                 Roles = new List<int>{2}
             };
-            UserService.RegisterUser(request);
-            return RedirectToAction("Index","Home");
+            var user = UserService.RegisterUser(request);
+            var result = AuthorizeUser(user);
+            return result ?? RedirectToAction("Index","Home");
         }
 
     }

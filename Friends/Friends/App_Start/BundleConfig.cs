@@ -15,6 +15,7 @@ namespace Friends.App_Start
             bundles.Add(new StyleBundle("~/css")
                             .Include("~/Content/bootstrap.css")
                             .Include("~/Content/carousel.css")
+                            .Include("~/Content/custom-styles.css")
                             .Include("~/Content/site.css"));
         }
 

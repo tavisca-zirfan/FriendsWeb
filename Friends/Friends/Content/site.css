@@ -34,3 +34,30 @@
     padding-right: 30px;
     font-size: 1.4em;
 }
+.home-content {
+    border-left: #e6e6e6 1px solid;
+    min-height: 600px;
+}
+/*base card start here*/
+.base-card {
+    border:#e6e6e6 1px solid;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: 50px 0px;
+}
+.base-card .row {
+    padding: 0px 15px;
+}
+.base-card .card-action {
+    padding-top: 5px;
+    padding-bottom: 5px
+}
+.base-card .card-action span {
+    padding-right: 5px;
+}
+.base-card hr {
+    margin: 2px;
+}
+.base-card .comment {
+    padding-top: 10px
+}
