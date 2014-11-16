@@ -204,6 +204,8 @@
     <Content Include="Scripts\BtJs\uglify.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />
     <Content Include="Scripts\jquery-2.0.2.min.js" />
+    <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.css" />
+    <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -222,6 +224,7 @@
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
+    <Content Include="Views\Home\_Events.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,6 +14,7 @@ namespace Friends.App_Start
         {
             bundles.Add(new StyleBundle("~/css")
                             .Include("~/Content/bootstrap.css")
+                            .Include("~/Scripts/Plugins/jquery-ui/jquery-ui.css")
                             .Include("~/Content/carousel.css")
                             .Include("~/Content/custom-styles.css")
                             .Include("~/Content/site.css"));
@@ -24,6 +25,7 @@ namespace Friends.App_Start
             bundles.Add(new ScriptBundle("~/js")
                             .Include("~/Scripts/jquery-{version}.js")
                             .Include("~/Scripts/jquery-ui-{version}.js")
+                            .Include("~/Scripts/Plugins/jquery-ui/jquery-ui.js")
                             .Include("~/Scripts/bootstrap.js"));
         }
     }

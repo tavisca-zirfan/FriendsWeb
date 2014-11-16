@@ -39,11 +39,15 @@
     min-height: 600px;
 }
 /*base card start here*/
-.base-card {
+.base-card,.event-card {
     border:#e6e6e6 1px solid;
     padding-top: 20px;
     padding-bottom: 20px;
-    margin: 50px 0px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+.event-card {
+    margin-bottom: 20px;
 }
 .base-card .row {
     padding: 0px 15px;
@@ -60,4 +64,9 @@
 }
 .base-card .comment {
     padding-top: 10px
+}
+
+/*Events start here*/
+.events {
+    margin-bottom: 10px;
 }
