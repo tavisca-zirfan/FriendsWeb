@@ -52,11 +52,25 @@
       <DependentUpon>201411131506353_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Event.cs" />
+    <Compile Include="Models\EventInvited.cs" />
+    <Compile Include="Models\EventType.cs" />
     <Compile Include="Models\FriendsContext.cs" />
+    <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Like.cs" />
+    <Compile Include="Models\Mapping\CommentMap.cs" />
+    <Compile Include="Models\Mapping\EventInvitedMap.cs" />
+    <Compile Include="Models\Mapping\EventMap.cs" />
+    <Compile Include="Models\Mapping\EventTypeMap.cs" />
+    <Compile Include="Models\Mapping\ImageMap.cs" />
+    <Compile Include="Models\Mapping\LikeMap.cs" />
+    <Compile Include="Models\Mapping\PostMap.cs" />
     <Compile Include="Models\Mapping\RoleMap.cs" />
     <Compile Include="Models\Mapping\UserCredentialMap.cs" />
     <Compile Include="Models\Mapping\UserProfileMap.cs" />
     <Compile Include="Models\Mapping\UserRoleMap.cs" />
+    <Compile Include="Models\Post.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\UserCredential.cs" />
     <Compile Include="Models\UserProfile.cs" />
@@ -64,6 +78,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

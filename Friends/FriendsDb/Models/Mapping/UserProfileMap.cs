@@ -15,7 +15,8 @@ namespace FriendsDb.Models.Mapping
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
             this.Property(t => t.UserId)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+                .IsRequired()
+                .HasMaxLength(50);
 
             this.Property(t => t.FirstName)
                 .IsRequired()
@@ -32,6 +33,9 @@ namespace FriendsDb.Models.Mapping
             this.Property(t => t.About)
                 .HasMaxLength(2500);
 
+            this.Property(t => t.Status)
+                .HasMaxLength(500);
+
             // Table & Column Mappings
             this.ToTable("UserProfile");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -43,6 +47,7 @@ namespace FriendsDb.Models.Mapping
             this.Property(t => t.About).HasColumnName("About");
             this.Property(t => t.StatusId).HasColumnName("StatusId");
             this.Property(t => t.LocationId).HasColumnName("LocationId");
+            this.Property(t => t.Status).HasColumnName("Status");
 
             // Relationships
             this.HasRequired(t => t.UserCredential)

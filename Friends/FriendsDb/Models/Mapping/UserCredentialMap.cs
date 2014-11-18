@@ -11,7 +11,10 @@ namespace FriendsDb.Models.Mapping
             this.HasKey(t => t.UserId);
 
             // Properties
-            this.Property(t => t.Username)
+            this.Property(t => t.Id)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+
+            this.Property(t => t.UserId)
                 .IsRequired()
                 .HasMaxLength(50);
 
@@ -25,8 +28,8 @@ namespace FriendsDb.Models.Mapping
 
             // Table & Column Mappings
             this.ToTable("UserCredential");
+            this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.UserId).HasColumnName("UserId");
-            this.Property(t => t.Username).HasColumnName("Username");
             this.Property(t => t.Email).HasColumnName("Email");
             this.Property(t => t.Password).HasColumnName("Password");
             this.Property(t => t.LastSeen).HasColumnName("LastSeen");

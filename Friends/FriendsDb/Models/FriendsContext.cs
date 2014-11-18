@@ -8,7 +8,7 @@ namespace FriendsDb.Models
     {
         static FriendsContext()
         {
-            Database.SetInitializer<FriendsContext>(new CreateDatabaseIfNotExists<FriendsContext>());
+            Database.SetInitializer<FriendsContext>(null);
         }
 
         public FriendsContext()
@@ -16,6 +16,13 @@ namespace FriendsDb.Models
         {
         }
 
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<EventInvited> EventInviteds { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventType> EventTypes { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Like> Likes { get; set; }
+        public DbSet<Post> Posts { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UserCredential> UserCredentials { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
@@ -23,6 +30,13 @@ namespace FriendsDb.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Configurations.Add(new CommentMap());
+            modelBuilder.Configurations.Add(new EventInvitedMap());
+            modelBuilder.Configurations.Add(new EventMap());
+            modelBuilder.Configurations.Add(new EventTypeMap());
+            modelBuilder.Configurations.Add(new ImageMap());
+            modelBuilder.Configurations.Add(new LikeMap());
+            modelBuilder.Configurations.Add(new PostMap());
             modelBuilder.Configurations.Add(new RoleMap());
             modelBuilder.Configurations.Add(new UserCredentialMap());
             modelBuilder.Configurations.Add(new UserProfileMap());
