@@ -1,0 +1,17 @@
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\obj\Debug\BusinessControllerTest.csprojResolveAssemblyReference.cache
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\BusinessControllerTest.dll
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\BusinessControllerTest.pdb
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\BLL.dll
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\DAL.dll
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\Infrastructure.dll
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\Moq.dll
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\EntityFramework.dll
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\FriendsDb.dll
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\BLL.pdb
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\DAL.pdb
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\Infrastructure.pdb
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\Moq.xml
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\EntityFramework.xml
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\bin\Debug\FriendsDb.pdb
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\obj\Debug\BusinessControllerTest.dll
+D:\GIT\Personal\FriendsWeb\Friends\BusinessControllerTest\obj\Debug\BusinessControllerTest.pdb

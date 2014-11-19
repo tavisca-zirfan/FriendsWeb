@@ -1,0 +1,16 @@
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\obj\Debug\DbProviderTest.csprojResolveAssemblyReference.cache
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\DbProviderTest.dll.config
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\DbProviderTest.dll
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\DbProviderTest.pdb
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\DAL.dll
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\EntityFramework.dll
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\EntityFramework.SqlServer.dll
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\FriendsDb.dll
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\Infrastructure.dll
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\DAL.pdb
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\FriendsDb.pdb
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\Infrastructure.pdb
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\EntityFramework.xml
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\bin\Debug\EntityFramework.SqlServer.xml
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\obj\Debug\DbProviderTest.dll
+D:\GIT\Personal\FriendsWeb\Friends\DbProviderTest\obj\Debug\DbProviderTest.pdb
