@@ -36,7 +36,7 @@ namespace Friends
 
                 UserModel serializeModel = JsonConvert.DeserializeObject<UserModel>(authTicket.UserData);
                 CustomPrincipal newUser = new CustomPrincipal(authTicket.Name);
-                newUser.UserId = serializeModel.Username;
+                newUser.UserId = serializeModel.UserId;
                 newUser.FirstName = serializeModel.FirstName;
                 newUser.LastName = serializeModel.LastName;
                 newUser.Roles = serializeModel.Roles;

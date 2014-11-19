@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using DAL;
@@ -11,7 +12,26 @@ namespace DbProviderTest
     public class UserRepositoryTest
     {
         UnitOfWork UOW { get; set; }
-        UserRepository UserRepository { get; set; }
+        IUserRepository UserRepository { get; set; }
+        private const string Email = "test@testmail.com";
+        private const string Password = "qwerty";
+
+        private User CreateUser()
+        {
+            var user = UserGenerator.CreateUserForCredential(Email,Password);
+            var profile = UserGenerator.CreateProfile();
+            UserRepository.AddUser(user);
+            UserRepository.AddProfile(user.UserId, profile);
+            UserRepository.AddRoles(user.UserId,new List<int>{1,2});
+            UOW.Commit();
+            return user;
+        }
+
+        private void DeleteUser(string userId)
+        {
+            UserRepository.DeleteCredential(userId);
+            UOW.Commit();
+        }
         public UserRepositoryTest()
         {
             UOW = new UnitOfWork();
@@ -20,23 +40,82 @@ namespace DbProviderTest
         [TestMethod]
         public void GetUserTest()
         {
-            var username = "zaid.irfan@gmail.com";
-            var uow = new UnitOfWork();
-            var repo = new UserRepository(uow);
-            var user = repo.GetUser(username);
+            var nuser = CreateUser();
+            var user = UserRepository.GetUserByEmail(Email);
             Assert.IsNotNull(user);
             Assert.AreEqual(2,user.Roles.Count());
+            DeleteUser(nuser.UserId);
         }
 
         [TestMethod]
         public void AddUser()
         {
-            var user = new User {Email = "zaid.b.irfan@gmail.com", IsActive = 1, Password = "qwerty",ChangedPassword = "qwerty",Username = Guid.NewGuid().ToString(),LastSeen = DateTime.Now,CreatedOn = DateTime.Now};
+            var user = UserGenerator.CreateUserForCredential(Email, Password);
             user = UserRepository.AddUser(user);
             UOW.Commit();
-            Assert.AreNotEqual(user.UserId,0);
-            UserRepository.Delete(user);
+            var isUserSaved = UserRepository.CheckCredentialIfUserIdExist(user.UserId);
+            Assert.IsTrue(isUserSaved);
+            UserRepository.DeleteCredential(user.UserId);
             UOW.Commit();
+        }
+
+        [TestMethod]
+        public void AddUserProfile()
+        {
+            var user = UserGenerator.CreateUserForCredential(Email, Password);
+            var profile = UserGenerator.CreateProfile();
+            user = UserRepository.AddUser(user);
+            UserRepository.AddProfile(user.UserId,profile);
+            UOW.Commit();
+            profile = UserRepository.GetProfile(user.UserId);
+            Assert.IsNotNull(profile);
+            UserRepository.DeleteCredential(user.UserId);
+            UOW.Commit();
+        }
+
+        [TestMethod]
+        public void AddUserProfileIfCredentialDoesNotExist()
+        {
+            try
+            {
+                var profile = UserGenerator.CreateProfile();
+                profile = UserRepository.AddProfile("invalidid", profile);
+                UOW.Commit();
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+            }
+            var myProfile = UserRepository.GetProfile("invalidid");
+            Assert.IsNull(myProfile);
+        }
+
+        [TestMethod]
+        public void AddUserRoles()
+        {
+            var user = UserGenerator.CreateUserForCredential(Email, Password);
+            user = UserRepository.AddUser(user);
+            UserRepository.AddRoles(user.UserId,new List<int>{1,2});
+            UOW.Commit();
+            var roles = UserRepository.GetRoles(user.UserId);
+            Assert.AreEqual(roles.Count,2);
+            UserRepository.DeleteCredential(user.UserId);
+            UOW.Commit();
+        }
+        [TestMethod]
+        public void AddUserRoleIfCredentialDoesNotExist()
+        {
+            try
+            {
+                UserRepository.AddRoles("invalidid", new List<int>{1,2});
+                UOW.Commit();
+            }
+            catch (Exception ex)
+            {
+                Assert.IsNotNull(ex);
+            }
+            var roles = UserRepository.GetRoles("invalidid");
+            Assert.IsNull(roles);
         }
     }
 }

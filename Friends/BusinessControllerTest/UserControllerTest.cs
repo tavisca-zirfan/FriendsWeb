@@ -19,7 +19,7 @@ namespace BusinessControllerTest
         {
             var controller = new UserController();
             var ur = new Mock<IUserRepository>();
-            ur.Setup(m => m.GetUser(It.IsAny<string>())).Returns(new User {Username = "Zaid", Password = "abcd"});
+            ur.Setup(m => m.GetUser(It.IsAny<string>())).Returns(new User {Email = "zaid.haq@gmail.com", Password = "abcd"});
             controller.UserRepository = ur.Object;
             var user = controller.GetUser("Zaid", "abcd");
             Assert.IsNotNull(user);
@@ -29,7 +29,7 @@ namespace BusinessControllerTest
         {
             var controller = new UserController();
             var ur = new Mock<IUserRepository>();
-            ur.Setup(m => m.GetUser(It.IsAny<string>())).Returns(new User { Username = "Zaid", Password = "abcd" });
+            ur.Setup(m => m.GetUser(It.IsAny<string>())).Returns(new User { Email = "zaid.haq@gmail.com", Password = "abcd" });
             controller.UserRepository = ur.Object;
             var user = controller.GetUser("Zaid", "abcd123");
             Assert.IsNull(user);
@@ -61,9 +61,9 @@ namespace BusinessControllerTest
         {
             var controller = new UserController();
             var ur = new Mock<IUserRepository>();
-            ur.Setup(m => m.AddUser(It.IsAny<User>())).Returns(new User{UserId = 1});
-            ur.Setup(m => m.AddProfile(It.IsAny<int>(), It.IsAny<Profile>())).Returns(new Profile());
-            ur.Setup(m => m.AddRoles(It.IsAny<User>(), It.IsAny<List<int>>()));
+            ur.Setup(m => m.AddUser(It.IsAny<User>())).Returns(new User{UserId = "abc"});
+            ur.Setup(m => m.AddProfile(It.IsAny<string>(), It.IsAny<Profile>())).Returns(new Profile());
+            ur.Setup(m => m.AddRoles(It.IsAny<string>(), It.IsAny<List<int>>()));
             var uow = new Mock<IUnitOfWork>();
             uow.Setup(m => m.Commit());
             controller.UserRepository = ur.Object;

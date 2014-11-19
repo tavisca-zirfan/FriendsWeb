@@ -28,7 +28,7 @@ namespace Friends.Controllers
                 var roles = user.Roles.Select(r => r.RoleName).ToArray();
 
                 var serializeModel = new UserModel();
-                serializeModel.Username = user.Username;
+                serializeModel.UserId = user.UserId;
                 serializeModel.FirstName = user.FirstName;
                 serializeModel.LastName = user.LastName;
                 serializeModel.Roles = user.Roles.Select(r => r.RoleName).ToArray();

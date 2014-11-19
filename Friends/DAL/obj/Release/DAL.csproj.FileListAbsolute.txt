@@ -24,3 +24,5 @@ D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Release\EntityFramework.xml
 D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Release\EntityFramework.SqlServer.xml
 D:\Zirfan-Github\FriendsWeb\Friends\DAL\obj\Release\DAL.dll
 D:\Zirfan-Github\FriendsWeb\Friends\DAL\obj\Release\DAL.pdb
+D:\GIT\Personal\FriendsWeb\Friends\DAL\obj\Release\DAL.csprojResolveAssemblyReference.cache
+D:\GIT\Personal\FriendsWeb\Friends\DAL\obj\Release\DAL.dll

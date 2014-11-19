@@ -32,25 +32,22 @@ namespace BLL
         public User RegisterUser(User user, Profile profile)
         {
             
-            user.Username = Guid.NewGuid().ToString();
+            user.UserId = Guid.NewGuid().ToString();
             user.LastSeen = DateTime.Now;
             user.CreatedOn = DateTime.Now;
             user.ChangedPassword = user.Password;
             UserRepository.AddUser(user);
             UserRepository.AddProfile(user.UserId,profile);
-            UserRepository.AddRoles(user,new List<int>{2});
+            UserRepository.AddRoles(user.UserId,new List<int>{2});
             UnitOfWork.Commit();
             return user;
         }
 
-        public Profile GetProfile(int userId)
+        public Profile GetProfile(string userId)
         {
             return UserRepository.GetProfile(userId);
         }
 
-        public Profile GetProfile(string username)
-        {
-            return UserRepository.GetProfile(username);
-        }
+        
     }
 }

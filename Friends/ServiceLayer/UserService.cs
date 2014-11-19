@@ -11,8 +11,7 @@ namespace ServiceLayer
     {
         User Authenticate(LoginRequest request);
         User RegisterUser(UserRegistrationRequest request);
-        Profile GetProfile(int userid);
-        Profile GetProfile(string username);
+        Profile GetProfile(string userid);
     }
     public class MockUserService : IUserService
     {
@@ -46,15 +45,12 @@ namespace ServiceLayer
         }
 
 
-        public Profile GetProfile(int userid)
+        public Profile GetProfile(string userid)
         {
             return UserController.GetProfile(userid);
         }
 
-        public Profile GetProfile(string username)
-        {
-            return UserController.GetProfile(username);
-        }
+        
     }
 
 }

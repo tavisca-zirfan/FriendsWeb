@@ -9,9 +9,8 @@ namespace BLL
 {
     public interface IUserController
     {
-        User GetUser(string username, string password);
+        User GetUser(string email, string password);
         User RegisterUser(User credentials, Profile profile);
-        Profile GetProfile(int userId);
-        Profile GetProfile(string username);
+        Profile GetProfile(string userId);
     }
 }

@@ -15,7 +15,6 @@ namespace DAL
             var user = new User
             {
                 UserId = credential.UserId,
-                Username = credential.Username,
                 Email = credential.Email,
                 Password = credential.Password,
                 IsActive = credential.IsActive,
@@ -42,6 +41,13 @@ namespace DAL
             };
         }
 
+        public static List<Infrastructure.Model.Role> ToBusinessModel(this List<FriendsDb.Models.Role> role)
+        {
+            var roles = new List<Infrastructure.Model.Role>();
+            role.ForEach(r=>roles.Add(r.ToBusinessModel()));
+            return roles;
+        }
+
         public static void ToDbModel(this User user,UserCredential credential)
         {
             credential.Email = user.Email;
@@ -52,7 +58,7 @@ namespace DAL
             {
                 credential.Password = user.ChangedPassword;
             }
-            credential.Username = user.Username;
+            credential.UserId = user.UserId;
         }
         public static void ToDbModel(this User user, UserProfile profile)
         {
