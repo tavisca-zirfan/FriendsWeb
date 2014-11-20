@@ -15,3 +15,16 @@ D:\GIT\Personal\FriendsWeb\Friends\DAL\bin\Debug\Infrastructure.pdb
 D:\GIT\Personal\FriendsWeb\Friends\DAL\bin\Debug\EntityFramework.xml
 D:\GIT\Personal\FriendsWeb\Friends\DAL\bin\Debug\EntityFramework.SqlServer.xml
 D:\GIT\Personal\FriendsWeb\Friends\DAL\obj\Debug\DAL.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\DAL.dll
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\DAL.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\EntityFramework.dll
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\EntityFramework.SqlServer.dll
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\FriendsDb.dll
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\Infrastructure.dll
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\FriendsDb.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\Infrastructure.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\EntityFramework.xml
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\bin\Debug\EntityFramework.SqlServer.xml
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\obj\Debug\DAL.dll
+D:\Zirfan-Github\FriendsWeb\Friends\DAL\obj\Debug\DAL.pdb
