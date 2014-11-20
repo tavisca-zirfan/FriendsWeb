@@ -30,3 +30,4 @@ D:\GIT\Personal\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.Migrations.In
 D:\GIT\Personal\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.csproj.GenerateResource.Cache
 D:\GIT\Personal\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.dll
 D:\GIT\Personal\FriendsWeb\Friends\FriendsDb\obj\Release\FriendsDb.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\FriendsDb\bin\Release\FriendsDb.dll.config

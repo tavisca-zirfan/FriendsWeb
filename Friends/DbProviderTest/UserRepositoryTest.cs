@@ -115,7 +115,7 @@ namespace DbProviderTest
                 Assert.IsNotNull(ex);
             }
             var roles = UserRepository.GetRoles("invalidid");
-            Assert.IsNull(roles);
+            Assert.AreEqual(roles.Count,0);
         }
     }
 }

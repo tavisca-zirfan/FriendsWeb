@@ -43,9 +43,15 @@
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\IUnitOfWork.cs" />
     <Compile Include="Data\IUnitOfWorkRepo.cs" />
+    <Compile Include="Model\Comment.cs" />
     <Compile Include="Model\IEntity.cs" />
+    <Compile Include="Model\Like.cs" />
+    <Compile Include="Model\OrderType.cs" />
+    <Compile Include="Model\Post.cs" />
+    <Compile Include="Model\PostType.cs" />
     <Compile Include="Model\Profile.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\SearchFilter.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

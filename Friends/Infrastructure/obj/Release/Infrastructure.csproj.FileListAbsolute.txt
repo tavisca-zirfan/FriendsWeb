@@ -7,3 +7,4 @@ D:\Zirfan-Github\FriendsWeb\Friends\Infrastructure\bin\Release\Infrastructure.dl
 D:\Zirfan-Github\FriendsWeb\Friends\Infrastructure\bin\Release\Infrastructure.pdb
 D:\Zirfan-Github\FriendsWeb\Friends\Infrastructure\obj\Release\Infrastructure.dll
 D:\Zirfan-Github\FriendsWeb\Friends\Infrastructure\obj\Release\Infrastructure.pdb
+D:\Zirfan-Github\FriendsWeb\Friends\Infrastructure\obj\Release\Infrastructure.csprojResolveAssemblyReference.cache
