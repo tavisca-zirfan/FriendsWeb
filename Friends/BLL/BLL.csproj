@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="IPostController.cs" />
     <Compile Include="IUserController.cs" />
+    <Compile Include="PostController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserController.cs" />
   </ItemGroup>

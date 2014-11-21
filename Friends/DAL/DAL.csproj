@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EFBaseRepository.cs" />
+    <Compile Include="IPostRepository.cs" />
     <Compile Include="IUserRepository.cs" />
+    <Compile Include="PostRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Translator.cs" />
     <Compile Include="UnitOfWork.cs" />

@@ -94,8 +94,8 @@ namespace DAL
             try
             {
                 var userProfile = new UserProfile {UserId = userId};
-                profile.ToDbModel(userProfile);
-                Db.UserProfiles.Add(userProfile);
+            profile.ToDbModel(userProfile);
+            Db.UserProfiles.Add(userProfile);
             }
             catch (Exception ex)
             {

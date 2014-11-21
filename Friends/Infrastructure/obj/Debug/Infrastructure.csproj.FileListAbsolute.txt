@@ -1,8 +1,0 @@
-D:\Zirfan-Github\Friends\Infrastructure\bin\Debug\Infrastructure.dll
-D:\Zirfan-Github\Friends\Infrastructure\bin\Debug\Infrastructure.pdb
-D:\Zirfan-Github\Friends\Infrastructure\obj\Debug\Infrastructure.dll
-D:\Zirfan-Github\Friends\Infrastructure\obj\Debug\Infrastructure.pdb
-D:\GIT\Personal\FriendsWeb\Friends\Infrastructure\bin\Debug\Infrastructure.dll
-D:\GIT\Personal\FriendsWeb\Friends\Infrastructure\bin\Debug\Infrastructure.pdb
-D:\GIT\Personal\FriendsWeb\Friends\Infrastructure\obj\Debug\Infrastructure.dll
-D:\GIT\Personal\FriendsWeb\Friends\Infrastructure\obj\Debug\Infrastructure.pdb

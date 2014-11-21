@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IPostService.cs" />
     <Compile Include="Model\LoginRequest.cs" />
     <Compile Include="Model\LoginResponse.cs" />
     <Compile Include="Model\UserRegistrationRequest.cs" />
