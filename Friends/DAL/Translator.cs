@@ -7,7 +7,7 @@ using Infrastructure.Model;
 
 namespace DAL
 {
-    public static class Translator
+    public static class UserTranslator
     {
         public static User ToBusinessModel(this FriendsDb.Models.UserCredential credential, UserProfile profile=null,
             IEnumerable<FriendsDb.Models.Role> roles=null)
@@ -91,6 +91,19 @@ namespace DAL
             userProfile.FirstName = profile.FirstName;
             userProfile.LastName = profile.LastName;
             userProfile.Gender = profile.Gender;
+        }
+
+        public static Profile ToProfile(this User user)
+        {
+            return new Profile{DOB = user.DOB,Email = user.Email,FirstName=user.FirstName,LastName = user.LastName,Gender=user.Gender,LastSeen = user.LastSeen};
+        }
+
+        public static void AddProfileInformation(this User user,Profile profile)
+        {
+            user.FirstName = profile.FirstName;
+            user.LastName = profile.LastName;
+            user.Gender = profile.Gender;
+            user.DOB = profile.DOB;
         }
     }
 }

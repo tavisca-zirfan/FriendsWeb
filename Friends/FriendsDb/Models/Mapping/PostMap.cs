@@ -18,7 +18,7 @@ namespace FriendsDb.Models.Mapping
                 .IsRequired()
                 .HasMaxLength(50);
 
-            this.Property(t => t.Post1)
+            this.Property(t => t.PostMessage)
                 .IsRequired()
                 .HasMaxLength(500);
 
@@ -34,7 +34,7 @@ namespace FriendsDb.Models.Mapping
             this.ToTable("Post");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Pid).HasColumnName("Pid");
-            this.Property(t => t.Post1).HasColumnName("Post");
+            this.Property(t => t.PostMessage).HasColumnName("Post");
             this.Property(t => t.Author).HasColumnName("Author");
             this.Property(t => t.Recipient).HasColumnName("Recipient");
             this.Property(t => t.Time).HasColumnName("Time");

@@ -44,6 +44,7 @@
     <Compile Include="Data\IUnitOfWork.cs" />
     <Compile Include="Data\IUnitOfWorkRepo.cs" />
     <Compile Include="Model\IEntity.cs" />
+    <Compile Include="Model\Post.cs" />
     <Compile Include="Model\Profile.cs" />
     <Compile Include="Model\Role.cs" />
     <Compile Include="Model\User.cs" />
