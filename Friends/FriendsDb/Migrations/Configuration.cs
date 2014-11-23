@@ -1,5 +1,3 @@
-using FriendsDb.Models;
-
 namespace FriendsDb.Migrations
 {
     using System;
@@ -28,8 +26,6 @@ namespace FriendsDb.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-            context.Roles.AddOrUpdate(r=>r.RoleId,new Role{RoleId = 1,RoleName = "Admin"},new Role{RoleId = 2,RoleName = "User"});
-            context.EventTypes.AddOrUpdate(e => e.EventTypeId, new EventType { EventTypeId = 1, EventType1 = "Birthday" }, new EventType { EventTypeId = 2, EventType1 = "Marriage" }, new EventType { EventTypeId = 3, EventType1 = "Outing" });
         }
     }
 }
