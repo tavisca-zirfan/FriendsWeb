@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using FriendsDb.Models;
@@ -58,6 +60,12 @@ namespace DAL
         public void RegisterDelete(object entity, IUnitOfWorkRepository repository)
         {
             _deleteEntities.Add(entity, repository);
+        }
+
+
+        public void Refresh()
+        {
+            
         }
     }
 }

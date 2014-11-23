@@ -74,7 +74,7 @@ namespace DAL
                             into roles
                             join uc in Db.UserCredentials on roles.Key equals uc.UserId
                             join up in Db.UserProfiles on uc.UserId equals up.UserId
-                            where uc.UserId == userId
+                            where uc.Email == userId
                             select new { Credential = uc, Profile = up, Roles = roles }).FirstOrDefault();
             return user != null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null;
         }
@@ -124,12 +124,14 @@ namespace DAL
         public void DeleteCredential(string userId)
         {
             var credential = Db.UserCredentials.FirstOrDefault(u => u.UserId == userId);
+            if(credential!=null)
             Db.UserCredentials.Remove(credential);
         }
 
         public void DeleteProfile(string userId)
         {
             var profile = Db.UserProfiles.FirstOrDefault(u => u.UserId == userId);
+            if(profile!=null)
             Db.UserProfiles.Remove(profile);
         }
 

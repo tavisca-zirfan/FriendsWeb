@@ -8,11 +8,11 @@ namespace FriendsDb.Models
     {
         static FriendsContext()
         {
-            Database.SetInitializer<FriendsContext>(new CreateDatabaseIfNotExists<FriendsContext>());
+            Database.SetInitializer<FriendsContext>(null);
         }
 
         public FriendsContext()
-            : base("FriendsContext")
+            : base("Name=FriendsContext")
         {
         }
 
