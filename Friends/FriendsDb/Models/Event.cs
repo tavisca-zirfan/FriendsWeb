@@ -20,6 +20,7 @@ namespace FriendsDb.Models
         public Nullable<System.DateTime> DateCreated { get; set; }
         public string CreatedBy { get; set; }
         public virtual ICollection<EventInvited> EventInviteds { get; set; }
+        public virtual EventType EventType1 { get; set; }
         public virtual UserCredential UserCredential { get; set; }
     }
 }

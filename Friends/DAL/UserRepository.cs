@@ -91,9 +91,16 @@ namespace DAL
 
         public Profile AddProfile(string userId,Profile profile)
         {
-            var userProfile = new UserProfile{UserId = userId};
+            try
+            {
+                var userProfile = new UserProfile {UserId = userId};
             profile.ToDbModel(userProfile);
             Db.UserProfiles.Add(userProfile);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
             return profile;
         }
 
@@ -106,32 +113,38 @@ namespace DAL
         public void UpdateCredential(User user)
         {
             var credential = Db.UserCredentials.FirstOrDefault(uc => uc.UserId == user.UserId);
+            if(credential == null)
+                throw new Exception("User Not Found");
             user.ToDbModel(credential);
         }
 
-        public void UpdateProfile(User user, Profile profile)
+        public void UpdateProfile(string userId, Profile profile)
         {
-            var userProfile = Db.UserProfiles.FirstOrDefault(up => up.UserId == user.UserId);
+            var userProfile = Db.UserProfiles.FirstOrDefault(up => up.UserId == userId);
+            if (userProfile == null)
+                throw new Exception("User Not Found");
             profile.ToDbModel(userProfile);
         }
 
-        public void RemoveRoles(User user, IEnumerable<int> roles)
+        public void RemoveRoles(string userId, IEnumerable<int> roles)
         {
-            Db.UserRoles.RemoveRange(roles.Select(r => new UserRole {RoleId = r, UserId = user.UserId}));
+            Db.UserRoles.RemoveRange(Db.UserRoles.Where(ur=>ur.UserId==userId&& roles.Contains(ur.RoleId)));
         }
 
 
         public void DeleteCredential(string userId)
         {
             var credential = Db.UserCredentials.FirstOrDefault(u => u.UserId == userId);
-            if(credential!=null)
+            if (credential == null)
+                throw new Exception("User Not Found");
             Db.UserCredentials.Remove(credential);
         }
 
         public void DeleteProfile(string userId)
         {
             var profile = Db.UserProfiles.FirstOrDefault(u => u.UserId == userId);
-            if(profile!=null)
+            if (profile == null)
+                throw new Exception("User Not Found");
             Db.UserProfiles.Remove(profile);
         }
 

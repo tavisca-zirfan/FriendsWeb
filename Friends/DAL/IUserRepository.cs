@@ -18,8 +18,8 @@ namespace DAL
         void AddRoles(string userId,IEnumerable<int> roles);
         List<Infrastructure.Model.Role> GetRoles(string userId); 
         void UpdateCredential(User user);
-        void UpdateProfile(User user,Profile profile);
-        void RemoveRoles(User user, IEnumerable<int> roles);
+        void UpdateProfile(string userId,Profile profile);
+        void RemoveRoles(string userId, IEnumerable<int> roles);
         void DeleteCredential(string userId);
         void DeleteProfile(string userId);
         bool CheckCredentialIfUserIdExist(string userId);
