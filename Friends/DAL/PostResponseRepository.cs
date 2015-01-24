@@ -15,13 +15,16 @@ namespace DAL
         public PostResponseRepository(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
-            Db = UnitOfWork.GetTransactionObject() as FriendsContext;
+            if (unitOfWork == null)
+                Db = new FriendsContext();
+            else
+            {
+                Db = UnitOfWork.GetTransactionObject() as FriendsContext;
+            }
         }
 
-        public PostResponseRepository()
-        {
-            Db = new FriendsContext();
-        }
+        public PostResponseRepository():this(null){}
+
         public void AddComment(string postId,Model.Comment comment)
         {
             var dbComment = new Comment();
@@ -41,6 +44,7 @@ namespace DAL
                     c => c.CommentId == comment.CommentId && c.UserId == comment.CommentedBy.UserId);
             if (dbComment == null)
                 return null;
+            RemoveLike(new List<string>{dbComment.CommentId},Model.PostType.Comment );
             Db.Comments.Remove(dbComment);
             return dbComment.CommentId;
         }
@@ -50,6 +54,7 @@ namespace DAL
             var dbComment = Db.Comments.Where(c => c.TypeId == postId && c.Type == postType.ToString());
             var deletedIds = dbComment.Select(c => c.CommentId).ToList();
             Db.Comments.RemoveRange(dbComment);
+            RemoveLike(deletedIds,Model.PostType.Comment);
             return deletedIds;
         }
 

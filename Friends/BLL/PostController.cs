@@ -51,9 +51,6 @@ namespace BLL
             {
                 var post = PostRepository.GetPost(postId, PostType.Post, userId);
                 PostRepository.DeletePost(post);
-                PostResponseRepository.DeleteComment(postId, PostType.Post);
-                PostResponseRepository.RemoveLike(new List<string> { post.PostId }, PostType.Post);
-                PostResponseRepository.RemoveLike(post.Comments.Select(c => c.CommentId).ToList(), PostType.Comment);
                 UnitOfWork.Commit();
             }
             catch (Exception ex)

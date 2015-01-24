@@ -12,15 +12,22 @@ namespace DAL
     {
         public IUnitOfWork UnitOfWork { get; set; }
         private FriendsContext Db;
+        private PostResponseRepository _postResponseRepository;
         public PostRepository(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
-            Db = UnitOfWork.GetTransactionObject() as FriendsContext;
+            if(unitOfWork==null)
+                Db = new FriendsContext();
+            else
+            {
+                Db = UnitOfWork.GetTransactionObject() as FriendsContext;
+            }
+            _postResponseRepository = new PostResponseRepository(unitOfWork);
         }
 
-        public PostRepository()
+        public PostRepository():this(null)
         {
-            Db = new FriendsContext();
+            
         }
 
         public void AddPost(Model.Post post)
@@ -37,6 +44,8 @@ namespace DAL
             if (dbPost == null)
                 return null;
             Db.Posts.Remove(dbPost);
+            _postResponseRepository.DeleteComment(dbPost.Pid, Model.PostType.Post);
+            _postResponseRepository.RemoveLike(new List<string>{dbPost.Pid},Model.PostType.Post );
             return dbPost.Pid;
         }
 

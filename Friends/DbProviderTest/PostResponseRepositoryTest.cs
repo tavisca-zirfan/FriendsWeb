@@ -23,7 +23,7 @@ namespace DbProviderTest
                 UnitOfWork.Commit();
                 var user = UserGenerator.CreateUserForCredential("test@test.com", "qwerty");
                 user.UserId = userId;
-                UserRepository.AddUser(user);
+                UserRepository.AddUser(user,UserGenerator.CreateProfile());
                 UnitOfWork.Commit();
             }
             catch (Exception ex)
@@ -78,7 +78,13 @@ namespace DbProviderTest
                 PostResponseRepository = new PostResponseRepository(UnitOfWork);
                 PostRepository = new PostRepository(UnitOfWork);
                 UserRepository = new UserRepository(UnitOfWork);
-                PostRepository.DeletePost(post);
+                //PostResponseRepository.RemoveLike(userId, commentId, PostType.Comment, LikeType.Like);
+                //PostResponseRepository.RemoveLike(userId, commentId2, PostType.Comment, LikeType.Like);
+                //PostResponseRepository.RemoveLike(userId, postId, PostType.Post, LikeType.Like);
+                //PostResponseRepository.RemoveLike(userId, postId2, PostType.Post, LikeType.Like);
+                //PostResponseRepository.DeleteComment(post.PostId, PostType.Post);
+                PostRepository.DeletePost(PostGenerator.CreatePost(postId2,userId));
+                PostRepository.DeletePost(PostGenerator.CreatePost(postId,userId));
                 UnitOfWork.Commit();
             }
             catch (Exception ex)

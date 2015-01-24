@@ -143,11 +143,12 @@ namespace DAL
         {
             var credential = Db.UserCredentials.FirstOrDefault(u => u.UserId == userId);
             if (credential == null)
-                throw new Exception("User Not Found");
+                //throw new Exception("User Not Found");
+                return;
             Db.UserCredentials.Remove(credential);
             var profile = Db.UserProfiles.FirstOrDefault(u => u.UserId == userId);
-            if (profile == null)
-                throw new Exception("User Not Found");
+            //if (profile == null)
+                //throw new Exception("User Not Found");
             Db.UserProfiles.Remove(profile);
             Db.UserRoles.RemoveRange(Db.UserRoles.Where(ur => ur.UserId == userId));
         }
