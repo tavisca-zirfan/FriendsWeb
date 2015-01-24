@@ -1,5 +1,5 @@
+
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using FriendsDb.Models.Mapping;
 
 namespace FriendsDb.Models
@@ -12,7 +12,7 @@ namespace FriendsDb.Models
         }
 
         public FriendsContext()
-            : base("FriendsContext")
+            : base()
         {
         }
 
