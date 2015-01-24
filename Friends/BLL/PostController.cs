@@ -2,49 +2,70 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DAL;
+using Infrastructure.Data;
+using Infrastructure.Model;
 
 namespace BLL
 {
     public class PostController:IPostController
     {
+        public IPostRepository PostRepository { get; set; }
+        public IPostResponseRepository PostResponseRepository { get; set; }
+        public IUnitOfWork UnitOfWork { get; set; }
+        public PostController()
+        {
+            UnitOfWork = new UnitOfWork();
+            PostRepository=new PostRepository(UnitOfWork);
+            PostResponseRepository=new PostResponseRepository(UnitOfWork);
+
+        }
         public Infrastructure.Model.Post CreatePost(string authorId, string recipientId, string postMessage)
         {
-            throw new NotImplementedException();
+            var post = new Post
+            {
+                Author = new User {UserId = authorId},
+                CreatedAt = DateTime.UtcNow,
+                PostId = Guid.NewGuid().ToString(),
+                PostMessage = postMessage,
+                PostType = PostType.Post,
+                Recipient = new User {UserId = recipientId}
+            };
+            try
+            {
+                PostRepository.AddPost(post);
+                UnitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return post;
         }
 
-        public Infrastructure.Model.Comment AddComment(string authorId, string postId, Infrastructure.Model.PostType postType, string comment)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         public bool RemovePost(string userId, string postId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var post = PostRepository.GetPost(postId, PostType.Post, userId);
+                PostRepository.DeletePost(post);
+                PostResponseRepository.DeleteComment(postId, PostType.Post);
+                PostResponseRepository.RemoveLike(new List<string> { post.PostId }, PostType.Post);
+                PostResponseRepository.RemoveLike(post.Comments.Select(c => c.CommentId).ToList(), PostType.Comment);
+                UnitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
 
-        public bool RemoveComment(string userId, string commentId, Infrastructure.Model.PostType postType)
+        public IEnumerable<Post> GetPosts(string userId)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Like(string userId, Infrastructure.Model.PostType postType, string destinationId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Unlike(string userId, Infrastructure.Model.PostType postType, string destinationId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Dislike(string userId, Infrastructure.Model.PostType postType, string destinationId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool RevertDislike(string userId, Infrastructure.Model.PostType postType, string destinationId)
-        {
-            throw new NotImplementedException();
+            return PostRepository.GetPosts(PostType.Post, userId);
         }
     }
 }

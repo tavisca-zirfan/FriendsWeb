@@ -11,9 +11,10 @@ namespace Infrastructure.Model
         public string PostMessage { get; set; }
         public User Author { get; set; }
         public User Recipient { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
         public IEnumerable<Comment> Comments { get; set; }  
         public int Likes { get; set; }
+        public int Dislikes { get; set; }
         public PostType PostType;
     }
 }

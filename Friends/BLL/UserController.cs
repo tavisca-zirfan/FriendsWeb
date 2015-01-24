@@ -62,7 +62,7 @@ namespace BLL
         {
             throw new NotImplementedException();
         }
-
+        
         public Profile UpdateProfile(string userId, Profile profile)
         {
             throw new NotImplementedException();

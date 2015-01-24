@@ -22,7 +22,7 @@ namespace FriendsDb.Models.Mapping
                 .IsRequired()
                 .HasMaxLength(50);
 
-            this.Property(t => t.Comment1)
+            this.Property(t => t.CommentMessage)
                 .IsRequired()
                 .HasMaxLength(50);
 
@@ -39,7 +39,7 @@ namespace FriendsDb.Models.Mapping
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.CommentId).HasColumnName("CommentId");
             this.Property(t => t.TypeId).HasColumnName("TypeId");
-            this.Property(t => t.Comment1).HasColumnName("Comment");
+            this.Property(t => t.CommentMessage).HasColumnName("CommentMessage");
             this.Property(t => t.Type).HasColumnName("Type");
             this.Property(t => t.UserId).HasColumnName("UserId");
             this.Property(t => t.CommentTime).HasColumnName("CommentTime");

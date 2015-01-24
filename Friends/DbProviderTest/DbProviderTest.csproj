@@ -65,6 +65,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="PostGenerator.cs" />
+    <Compile Include="PostRepositoryTest.cs" />
+    <Compile Include="PostResponseRepositoryTest.cs" />
     <Compile Include="UserGenerator.cs" />
     <Compile Include="UserRepositoryTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -13,7 +13,6 @@ namespace FriendsDb.Models
             this.Images = new List<Image>();
             this.Likes = new List<Like>();
             this.Posts = new List<Post>();
-            this.Posts1 = new List<Post>();
             this.UserRoles = new List<UserRole>();
         }
 
@@ -30,7 +29,6 @@ namespace FriendsDb.Models
         public virtual ICollection<Image> Images { get; set; }
         public virtual ICollection<Like> Likes { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<Post> Posts1 { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }

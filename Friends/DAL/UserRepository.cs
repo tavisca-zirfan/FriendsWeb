@@ -32,16 +32,16 @@ namespace DAL
             {
                 var user = (from ur in db.UserRoles
                     join r in db.Roles on ur.RoleId equals r.RoleId
-                    group r by ur.UserId
-                    into roles
+                group r by ur.UserId
+                into roles
                     join uc in db.UserCredentials on roles.Key equals uc.UserId
                     join up in db.UserProfiles on uc.UserId equals up.UserId
-                    where uc.Email == emailId
-                    select new {Credential = uc, Profile = up, Roles = roles}).FirstOrDefault();
-
+                where uc.Email == emailId
+                select new {Credential = uc, Profile = up, Roles = roles}).FirstOrDefault();
+                       
 
                 return user != null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null;
-            }
+        }
         }
 
         public User AddUser(User user,Profile profile)
@@ -49,24 +49,24 @@ namespace DAL
 
            // using (var Db = new FriendsContext())
             {
-                try
-                {
-                    var credential = new UserCredential();
-                    user.ToDbModel(credential);
-                    Db.UserCredentials.Add(credential);
+            try
+            {
+                var credential = new UserCredential();
+                user.ToDbModel(credential);
+                Db.UserCredentials.Add(credential);
                     var userProfile = new UserProfile { UserId = credential.UserId };
                     profile.ToDbModel(userProfile);
                     Db.UserProfiles.Add(userProfile);
                     if(user.Roles!=null)
                         AddRoles(credential.UserId,user.Roles.Select(r=>r.RoleId));
                     return user;
-                }
-                catch (Exception ex)
-                {
-                    var a = ex.Message;
-                    return null;
-                } 
             }
+            catch (Exception ex)
+            {
+                var a = ex.Message;
+                return null;
+            }
+        }
         }
 
         public Profile GetProfile(string userId)
@@ -85,14 +85,14 @@ namespace DAL
             {
                 var user = (from ur in db.UserRoles
                             join r in db.Roles on ur.RoleId equals r.RoleId
-                            group r by ur.UserId
-                                into roles
+                        group r by ur.UserId
+                            into roles
                                 join uc in db.UserCredentials on roles.Key equals uc.UserId
                                 join up in db.UserProfiles on uc.UserId equals up.UserId
                                 where uc.UserId == userId
-                                select new { Credential = uc, Profile = up, Roles = roles }).FirstOrDefault();
-                return user != null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null; 
-            }
+                            select new { Credential = uc, Profile = up, Roles = roles }).FirstOrDefault();
+            return user != null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null;
+        }
         }
 
         public bool CheckCredentialIfUserIdExist(string userId)

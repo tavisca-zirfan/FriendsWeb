@@ -12,6 +12,5 @@ namespace FriendsDb.Models
         public string Recipient { get; set; }
         public System.DateTime Time { get; set; }
         public virtual UserCredential UserCredential { get; set; }
-        public virtual UserCredential UserCredential1 { get; set; }
     }
 }
