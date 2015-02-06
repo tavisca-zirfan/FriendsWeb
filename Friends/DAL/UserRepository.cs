@@ -28,32 +28,45 @@ namespace DAL
         }
         public User GetUserByEmail(string emailId)
         {
-            var user = (from ur in Db.UserRoles
-                join r in Db.Roles on ur.RoleId equals r.RoleId
+            using (var db = new FriendsContext())
+            {
+                var user = (from ur in db.UserRoles
+                    join r in db.Roles on ur.RoleId equals r.RoleId
                 group r by ur.UserId
                 into roles
-                join uc in Db.UserCredentials on roles.Key equals uc.UserId
-                join up in Db.UserProfiles on uc.UserId equals up.UserId
+                    join uc in db.UserCredentials on roles.Key equals uc.UserId
+                    join up in db.UserProfiles on uc.UserId equals up.UserId
                 where uc.Email == emailId
                 select new {Credential = uc, Profile = up, Roles = roles}).FirstOrDefault();
                        
-            return user!=null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null;
+
+                return user != null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null;
+        }
         }
 
-        public User AddUser(User user)
+        public User AddUser(User user,Profile profile)
         {
+
+           // using (var Db = new FriendsContext())
+            {
             try
             {
                 var credential = new UserCredential();
                 user.ToDbModel(credential);
                 Db.UserCredentials.Add(credential);
-                return credential.ToBusinessModel();
+                    var userProfile = new UserProfile { UserId = credential.UserId };
+                    profile.ToDbModel(userProfile);
+                    Db.UserProfiles.Add(userProfile);
+                    if(user.Roles!=null)
+                        AddRoles(credential.UserId,user.Roles.Select(r=>r.RoleId));
+                    return user;
             }
             catch (Exception ex)
             {
                 var a = ex.Message;
                 return null;
             }
+        }
         }
 
         public Profile GetProfile(string userId)
@@ -68,40 +81,34 @@ namespace DAL
 
         public User GetUser(string userId)
         {
-            var user = (from ur in Db.UserRoles
-                        join r in Db.Roles on ur.RoleId equals r.RoleId
+            using (var db = new FriendsContext())
+            {
+                var user = (from ur in db.UserRoles
+                            join r in db.Roles on ur.RoleId equals r.RoleId
                         group r by ur.UserId
                             into roles
-                            join uc in Db.UserCredentials on roles.Key equals uc.UserId
-                            join up in Db.UserProfiles on uc.UserId equals up.UserId
-                            where uc.UserId == userId
+                                join uc in db.UserCredentials on roles.Key equals uc.UserId
+                                join up in db.UserProfiles on uc.UserId equals up.UserId
+                                where uc.UserId == userId
                             select new { Credential = uc, Profile = up, Roles = roles }).FirstOrDefault();
             return user != null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null;
+        }
         }
 
         public bool CheckCredentialIfUserIdExist(string userId)
         {
-            return Db.UserCredentials.Count(u => u.UserId == userId) > 0;
+            using (var db = new FriendsContext())
+            {
+                return db.UserCredentials.Count(u => u.UserId == userId) > 0; 
+            }
         }
 
         public bool CheckProfileIfUserIdExist(string userId)
         {
-            return Db.UserProfiles.Count(u => u.UserId == userId) > 0;
-        }
-
-        public Profile AddProfile(string userId,Profile profile)
-        {
-            try
+            using (var db =new FriendsContext())
             {
-                var userProfile = new UserProfile {UserId = userId};
-            profile.ToDbModel(userProfile);
-            Db.UserProfiles.Add(userProfile);
+                return db.UserProfiles.Count(u => u.UserId == userId) > 0; 
             }
-            catch (Exception ex)
-            {
-                return null;
-            }
-            return profile;
         }
 
         public void AddRoles(string userId, IEnumerable<int> roles)
@@ -136,18 +143,15 @@ namespace DAL
         {
             var credential = Db.UserCredentials.FirstOrDefault(u => u.UserId == userId);
             if (credential == null)
-                throw new Exception("User Not Found");
+                //throw new Exception("User Not Found");
+                return;
             Db.UserCredentials.Remove(credential);
-        }
-
-        public void DeleteProfile(string userId)
-        {
             var profile = Db.UserProfiles.FirstOrDefault(u => u.UserId == userId);
-            if (profile == null)
-                throw new Exception("User Not Found");
+            //if (profile == null)
+                //throw new Exception("User Not Found");
             Db.UserProfiles.Remove(profile);
+            Db.UserRoles.RemoveRange(Db.UserRoles.Where(ur => ur.UserId == userId));
         }
-
 
         public List<Infrastructure.Model.Role> GetRoles(string userId)
         {

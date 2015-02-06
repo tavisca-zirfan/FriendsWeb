@@ -47,9 +47,6 @@ namespace FriendsDb.Models.Mapping
             this.Property(t => t.CreatedBy).HasColumnName("CreatedBy");
 
             // Relationships
-            this.HasRequired(t => t.EventType1)
-                .WithMany(t => t.Events)
-                .HasForeignKey(d => d.EventType);
             this.HasRequired(t => t.UserCredential)
                 .WithMany(t => t.Events)
                 .HasForeignKey(d => d.CreatedBy);

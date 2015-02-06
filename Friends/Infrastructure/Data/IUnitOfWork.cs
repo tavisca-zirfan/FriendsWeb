@@ -13,5 +13,6 @@ namespace Infrastructure.Data
         void RegisterAdd(object entity,IUnitOfWorkRepository repository);
         void RegisterUpdate(object entity, IUnitOfWorkRepository repository);
         void RegisterDelete(object entity, IUnitOfWorkRepository repository);
+        void Refresh();
     }
 }
