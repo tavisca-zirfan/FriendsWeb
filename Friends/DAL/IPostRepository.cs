@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
 namespace DAL
 {

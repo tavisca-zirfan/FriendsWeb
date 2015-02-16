@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using FriendsDb.Models;
 using Infrastructure.Data;
 using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Role = FriendsDb.Models.Role;
 
 namespace DAL
@@ -153,7 +154,7 @@ namespace DAL
             Db.UserRoles.RemoveRange(Db.UserRoles.Where(ur => ur.UserId == userId));
         }
 
-        public List<Infrastructure.Model.Role> GetRoles(string userId)
+        public List<BusinessDomain.DomainObjects.Role> GetRoles(string userId)
         {
             var roles = (from ur in Db.UserRoles
                 join r in Db.Roles on ur.RoleId equals r.RoleId

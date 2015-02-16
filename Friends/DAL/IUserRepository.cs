@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using FriendsDb.Models;
 using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
 namespace DAL
 {
@@ -15,7 +16,7 @@ namespace DAL
         Profile GetProfile(string userId);
         User AddUser(User user,Profile profile);
         void AddRoles(string userId,IEnumerable<int> roles);
-        List<Infrastructure.Model.Role> GetRoles(string userId); 
+        List<BusinessDomain.DomainObjects.Role> GetRoles(string userId); 
         void UpdateCredential(User user);
         void UpdateProfile(string userId,Profile profile);
         void RemoveRoles(string userId, IEnumerable<int> roles);

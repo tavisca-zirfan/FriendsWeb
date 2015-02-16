@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Infrastructure.Model
+namespace Infrastructure.Events
 {
-    public enum OrderType
+    interface IEvent
     {
-        Ascending,
-        Descending
+
     }
 }

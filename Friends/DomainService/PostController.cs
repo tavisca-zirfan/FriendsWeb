@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using DAL;
 using Infrastructure.Data;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
-namespace BLL
+namespace DomainService
 {
     public class PostController:IPostController
     {
@@ -20,7 +20,7 @@ namespace BLL
             PostResponseRepository=new PostResponseRepository(UnitOfWork);
 
         }
-        public Infrastructure.Model.Post CreatePost(string authorId, string recipientId, string postMessage)
+        public BusinessDomain.DomainObjects.Post CreatePost(string authorId, string recipientId, string postMessage)
         {
             var post = new Post
             {

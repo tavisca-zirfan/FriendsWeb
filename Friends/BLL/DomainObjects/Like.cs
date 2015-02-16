@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Infrastructure.Model
+namespace BusinessDomain.DomainObjects
 {
-    public enum OrderType
+    public enum LikeType
     {
-        Ascending,
-        Descending
+        Like,
+        Dislike
     }
 }

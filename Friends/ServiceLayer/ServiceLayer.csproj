@@ -51,6 +51,7 @@
     <Compile Include="Model\CommentDTO.cs" />
     <Compile Include="Model\LoginRequest.cs" />
     <Compile Include="Model\LoginResponse.cs" />
+    <Compile Include="Model\RolesDTO.cs" />
     <Compile Include="Model\ServiceModelMapper.cs" />
     <Compile Include="Model\PostFetchRequest.cs" />
     <Compile Include="Model\PostDTO.cs" />
@@ -61,9 +62,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj">
+    <ProjectReference Include="..\BLL\BusinessDomain.csproj">
       <Project>{161eb738-aa0c-4239-b9a3-705a9fb6894b}</Project>
-      <Name>BLL</Name>
+      <Name>BusinessDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainService\DomainService.csproj">
+      <Project>{dd4c336b-177e-49a1-845a-dbaf3a42ae2b}</Project>
+      <Name>DomainService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{3d67b0de-1f6d-4e85-9927-206dc13f0d34}</Project>

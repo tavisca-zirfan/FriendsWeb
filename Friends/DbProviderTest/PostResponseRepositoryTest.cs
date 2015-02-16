@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using DAL;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Infrastructure.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

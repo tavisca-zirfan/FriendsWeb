@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
-using BLL;
+using DomainService;
 using Friends.Classes;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
 namespace Friends.Controllers
 {
@@ -14,7 +14,7 @@ namespace Friends.Controllers
         public CustomPrincipal AuthUser { get; set; }
         public PostController()
         {
-            BPostController = new BLL.PostController();
+            BPostController = new DomainService.PostController();
             AuthUser = HttpContext.Current.User as CustomPrincipal;
 
         }

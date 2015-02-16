@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
-using BLL;
+using DomainService;
 using DAL;
 using Infrastructure.Data;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 

@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{161EB738-AA0C-4239-B9A3-705A9FB6894B}</ProjectGuid>
+    <ProjectGuid>{DD4C336B-177E-49A1-845A-DBAF3A42AE2B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BLL</RootNamespace>
-    <AssemblyName>BLL</AssemblyName>
+    <RootNamespace>DomainService</RootNamespace>
+    <AssemblyName>DomainService</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="IPostController.cs" />
     <Compile Include="IPostResponseController.cs" />
     <Compile Include="IUserController.cs" />
@@ -48,6 +49,10 @@
     <Compile Include="UserController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BLL\BusinessDomain.csproj">
+      <Project>{161eb738-aa0c-4239-b9a3-705a9fb6894b}</Project>
+      <Name>BusinessDomain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DAL\DAL.csproj">
       <Project>{f851f664-7cdb-4c7b-abd2-efdf1eb5dcce}</Project>
       <Name>DAL</Name>

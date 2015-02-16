@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FriendsDb.Models;
 using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
 namespace DAL
 {
@@ -33,17 +34,17 @@ namespace DAL
             return user;
         }
 
-        public static Infrastructure.Model.Role ToBusinessModel(this FriendsDb.Models.Role role)
+        public static BusinessDomain.DomainObjects.Role ToBusinessModel(this FriendsDb.Models.Role role)
         {
-            return new Infrastructure.Model.Role
+            return new BusinessDomain.DomainObjects.Role
             {
                 RoleId = role.RoleId,RoleName = role.RoleName
             };
         }
 
-        public static List<Infrastructure.Model.Role> ToBusinessModel(this List<FriendsDb.Models.Role> role)
+        public static List<BusinessDomain.DomainObjects.Role> ToBusinessModel(this List<FriendsDb.Models.Role> role)
         {
-            var roles = new List<Infrastructure.Model.Role>();
+            var roles = new List<BusinessDomain.DomainObjects.Role>();
             role.ForEach(r=>roles.Add(r.ToBusinessModel()));
             return roles;
         }

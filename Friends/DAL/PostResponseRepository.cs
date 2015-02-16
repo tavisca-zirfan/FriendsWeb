@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FriendsDb.Models;
-using Model = Infrastructure.Model;
+using Model = BusinessDomain.DomainObjects;
 using Infrastructure.Data;
 
 namespace DAL
@@ -32,7 +32,7 @@ namespace DAL
             Db.Comments.Add(dbComment);
         }
 
-        public void UpdateComment(Infrastructure.Model.Comment comment)
+        public void UpdateComment(Model.Comment comment)
         {
             throw new NotImplementedException();
         }

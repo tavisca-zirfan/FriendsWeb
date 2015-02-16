@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FriendsDb.Models;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
-namespace BLL
+namespace DomainService
 {
     public interface IUserController
     {

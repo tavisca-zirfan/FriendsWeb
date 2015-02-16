@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using FriendsDb.Models;
 using Infrastructure.Data;
-using Model=Infrastructure.Model;
+using Model=BusinessDomain.DomainObjects;
 
 namespace DAL
 {
@@ -44,12 +44,12 @@ namespace DAL
             if (dbPost == null)
                 return null;
             Db.Posts.Remove(dbPost);
-            _postResponseRepository.DeleteComment(dbPost.Pid, Model.PostType.Post);
+            _postResponseRepository.DeleteComment(dbPost.Pid, post.PostType);
             _postResponseRepository.RemoveLike(new List<string>{dbPost.Pid},Model.PostType.Post );
             return dbPost.Pid;
         }
 
-        public void UpdatePost(Infrastructure.Model.Post post)
+        public void UpdatePost(Model.Post post)
         {
             throw new NotImplementedException();
         }

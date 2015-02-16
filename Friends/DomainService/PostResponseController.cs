@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using DAL;
 using Infrastructure.Data;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
-namespace BLL
+namespace DomainService
 {
     public class PostResponseController:IPostResponseController
     {
@@ -18,7 +18,7 @@ namespace BLL
             PostResponseRepository=new PostResponseRepository(UnitOfWork);
 
         }
-        public Infrastructure.Model.Comment AddComment(string authorId, string postId, Infrastructure.Model.PostType postType, string commentMessage)
+        public BusinessDomain.DomainObjects.Comment AddComment(string authorId, string postId, BusinessDomain.DomainObjects.PostType postType, string commentMessage)
         {
             var comment = new Comment
             {
@@ -40,7 +40,7 @@ namespace BLL
             return comment;
         }
 
-        public bool RemoveComment(string userId, string commentId, Infrastructure.Model.PostType postType)
+        public bool RemoveComment(string userId, string commentId, BusinessDomain.DomainObjects.PostType postType)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace BLL
             return true;
         }
 
-        public bool Like(string userId, Infrastructure.Model.PostType postType, string destinationId)
+        public bool Like(string userId, BusinessDomain.DomainObjects.PostType postType, string destinationId)
         {
             try
             {
@@ -73,7 +73,7 @@ namespace BLL
             return true;
         }
 
-        public bool Unlike(string userId, Infrastructure.Model.PostType postType, string destinationId)
+        public bool Unlike(string userId, BusinessDomain.DomainObjects.PostType postType, string destinationId)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace BLL
             return true;
         }
 
-        public bool Dislike(string userId, Infrastructure.Model.PostType postType, string destinationId)
+        public bool Dislike(string userId, BusinessDomain.DomainObjects.PostType postType, string destinationId)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace BLL
             return true;
         }
 
-        public bool RevertDislike(string userId, Infrastructure.Model.PostType postType, string destinationId)
+        public bool RevertDislike(string userId, BusinessDomain.DomainObjects.PostType postType, string destinationId)
         {
             try
             {

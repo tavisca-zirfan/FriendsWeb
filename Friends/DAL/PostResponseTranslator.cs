@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Model = Infrastructure.Model;
+using Model = BusinessDomain.DomainObjects;
 using FriendsDb.Models;
 
 namespace DAL

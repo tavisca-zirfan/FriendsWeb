@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using FriendsDb.Models;
-using Model = Infrastructure.Model;
+using Model = BusinessDomain.DomainObjects;
 using Post = FriendsDb.Models.Post;
 
 namespace DAL
@@ -23,7 +23,7 @@ namespace DAL
                 dbPost.Time = post.CreatedAt.Value;
         }
 
-        public static Infrastructure.Model.Post ToBusinessModel(this Post dbPost,int likes=0,int dislikes=0,Model.Profile profile=null,IEnumerable<Model.Comment> comments=null)
+        public static BusinessDomain.DomainObjects.Post ToBusinessModel(this Post dbPost,int likes=0,int dislikes=0,Model.Profile profile=null,IEnumerable<Model.Comment> comments=null)
         {
             var post = new Model.Post
             {

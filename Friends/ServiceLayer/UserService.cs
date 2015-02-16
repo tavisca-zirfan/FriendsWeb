@@ -1,8 +1,8 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
-using BLL;
-using Infrastructure.Model;
+using DomainService;
+using BusinessDomain.DomainObjects;
 using ServiceLayer.Model;
 
 namespace ServiceLayer

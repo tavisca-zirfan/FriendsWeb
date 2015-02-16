@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AutoMapper;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
 namespace ServiceLayer.Model
 {
@@ -14,7 +14,7 @@ namespace ServiceLayer.Model
             Mapper.CreateMap<User, UserDTO>();
             Mapper.CreateMap<Comment, CommentDTO>();
             Mapper.CreateMap<Post, PostDTO>();
-            Mapper.CreateMap<Infrastructure.Model.Profile, ProfileDTO>();
+            Mapper.CreateMap<BusinessDomain.DomainObjects.Profile, ProfileDTO>();
         }
     }
 }

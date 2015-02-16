@@ -6,9 +6,9 @@ using DAL;
 using FriendsDb.Models;
 using Infrastructure.Common;
 using Infrastructure.Data;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
-namespace BLL
+namespace DomainService
 {
     public class UserController:IUserController
     {
@@ -66,7 +66,8 @@ namespace BLL
         
         public Profile UpdateProfile(string userId, Profile profile)
         {
-            
+            UserRepository.UpdateProfile(userId,profile);
+            return profile;
         }
     }
 }
