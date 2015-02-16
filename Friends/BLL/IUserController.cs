@@ -13,7 +13,7 @@ namespace BLL
         User RegisterUser(User credentials, Profile profile);
         Profile GetProfile(string userId);
         Profile UpdateProfile(Profile profile);
-        bool ChangePassword(string userId,string password);
+        bool ChangePassword(string userId,string oldPassword,string newPassword);
         bool ChangeEmail(string userId, string email);
         Profile UpdateProfile(string userId, Profile profile);
     }

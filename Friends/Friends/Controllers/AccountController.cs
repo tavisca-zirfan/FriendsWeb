@@ -93,7 +93,7 @@ namespace Friends.Controllers
         public ActionResult SignUp(SignUpModel model)
         {
             var a = Request.Form;
-            var request = new UserRegistrationRequest
+            var request = new UserDTO
             {
                 DOB = new DateTime(model.YearDOB, model.MonthDOB, model.DateDOB),
                 Email = model.Email,
@@ -103,7 +103,7 @@ namespace Friends.Controllers
                 Password = model.Password,
                 Roles = new List<int>{2}
             };
-            var user = UserService.RegisterUser(request);
+            var user = UserService.Post(request);
             var result = AuthorizeUser(user);
             return result ?? RedirectToAction("Index","Home");
         }

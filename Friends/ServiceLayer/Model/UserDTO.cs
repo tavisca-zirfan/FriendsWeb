@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ServiceLayer.Model
 {
-    public class UserRegistrationRequest
+    public class UserDTO
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -14,6 +14,5 @@ namespace ServiceLayer.Model
         public string Gender { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public IEnumerable<int> Roles { get; set; }
     }
 }

@@ -9,9 +9,11 @@ namespace ServiceLayer
 {
     public interface IUserService
     {
-        User Authenticate(LoginRequest request);
-        User RegisterUser(UserRegistrationRequest request);
-        Profile GetProfile(string userid);
+        //User Authenticate(LoginRequest request);
+        void Post(UserDTO request);
+        UserDTO Get(string username, string password);
+        List<UserDTO> Get();
+        void Delete(string userId);
     }
     public class MockUserService : IUserService
     {
@@ -21,18 +23,14 @@ namespace ServiceLayer
         {
             UserController = new UserController();
         }
-        public User Authenticate(LoginRequest request)
+        
+        public void Post(UserDTO request)
         {
-            return UserController.GetUser(request.Username, request.Password);
-        }
-
-        public User RegisterUser(UserRegistrationRequest request)
-        {
-            return (this.UserController.RegisterUser(new User
+            this.UserController.RegisterUser(new User
             {
                 Email = request.Email,
-                Password = request.Password,
-                Roles = request.Roles.Select(r=>new Role{RoleId = r}).ToList()
+                ChangedPassword = request.Password,
+                Roles = new List<Role>{new Role{RoleId = 2}}
             },
                 new Profile
                 {
@@ -40,17 +38,26 @@ namespace ServiceLayer
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     Gender = request.Gender
-                }));
+                });
 
         }
-
-
-        public Profile GetProfile(string userid)
-        {
-            return UserController.GetProfile(userid);
-        }
-
         
+
+        public void Delete(string userId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public UserDTO Get(string username, string password)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public List<UserDTO> Get()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 }

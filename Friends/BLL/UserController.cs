@@ -32,11 +32,9 @@ namespace BLL
 
         public User RegisterUser(User user, Profile profile)
         {
-            
             user.UserId = new RainDrop().GetNextId();
             user.LastSeen = DateTime.Now;
             user.CreatedOn = DateTime.Now;
-            user.ChangedPassword = user.Password;
             UserRepository.AddUser(user,profile);
             UserRepository.AddRoles(user.UserId,new List<int>{2});
             UnitOfWork.Commit();
@@ -53,9 +51,12 @@ namespace BLL
             throw new NotImplementedException();
         }
 
-        public bool ChangePassword(string userId, string password)
+        public bool ChangePassword(string userId,string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            var user = new User{UserId = userId,Password=oldPassword,ChangedPassword = newPassword};
+            user.ChangedPassword = newPassword;
+            UserRepository.UpdateCredential(user);
+            return true;
         }
 
         public bool ChangeEmail(string userId, string email)
@@ -65,7 +66,7 @@ namespace BLL
         
         public Profile UpdateProfile(string userId, Profile profile)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
