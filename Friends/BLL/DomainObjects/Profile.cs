@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Infrastructure.Model;
 
 namespace BusinessDomain.DomainObjects
 {
-    public class Profile
+    public class Profile:EntityBase<string>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

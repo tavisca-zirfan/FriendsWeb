@@ -16,10 +16,16 @@ namespace DAL
     public class UserRepository:EfBaseRepository<UserCredential>,IUserRepository
     {
         private FriendsContext Db;
-        
-        public UserRepository(IUnitOfWork uow):base(uow)
+        public IUnitOfWork UnitOfWork { get; set; }
+        public UserRepository(IUnitOfWork unitOfWork):base(unitOfWork)
         {
-            Db = Context as FriendsContext;
+            UnitOfWork = unitOfWork;
+            if (unitOfWork == null)
+                Db = new FriendsContext();
+            else
+            {
+                Db = UnitOfWork.GetTransactionObject() as FriendsContext;
+            }
             
         } 
 
@@ -27,25 +33,26 @@ namespace DAL
         {
             Db = new FriendsContext();
         }
+
         public User GetUserByEmail(string emailId)
         {
             using (var db = new FriendsContext())
             {
                 var user = (from ur in db.UserRoles
                     join r in db.Roles on ur.RoleId equals r.RoleId
-                group r by ur.UserId
-                into roles
+                    group r by ur.UserId
+                    into roles
                     join uc in db.UserCredentials on roles.Key equals uc.UserId
                     join up in db.UserProfiles on uc.UserId equals up.UserId
-                where uc.Email == emailId
-                select new {Credential = uc, Profile = up, Roles = roles}).FirstOrDefault();
-                       
+                    where uc.Email == emailId
+                    select new {Credential = uc, Profile = up, Roles = roles}).FirstOrDefault();
+
 
                 return user != null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null;
-        }
+            }
         }
 
-        public User AddUser(User user,Profile profile)
+        public User AddUser(User user)
         {
 
            // using (var Db = new FriendsContext())
@@ -56,7 +63,7 @@ namespace DAL
                 user.ToDbModel(credential);
                 Db.UserCredentials.Add(credential);
                     var userProfile = new UserProfile { UserId = credential.UserId };
-                    profile.ToDbModel(userProfile);
+                    user.ToDbModel(userProfile);
                     Db.UserProfiles.Add(userProfile);
                     if(user.Roles!=null)
                         AddRoles(credential.UserId,user.Roles.Select(r=>r.RoleId));
@@ -120,7 +127,7 @@ namespace DAL
 
         public void UpdateCredential(User user)
         {
-            var credential = Db.UserCredentials.FirstOrDefault(uc => uc.UserId == user.UserId);
+            var credential = Db.UserCredentials.FirstOrDefault(uc => uc.UserId == user.Id);
             if(credential == null)
                 throw new Exception("User Not Found");
             user.ToDbModel(credential);

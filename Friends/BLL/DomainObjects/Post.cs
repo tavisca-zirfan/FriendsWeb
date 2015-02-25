@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Infrastructure.Model;
 
 namespace BusinessDomain.DomainObjects
 {
-    public class Post
+    public class Post:EntityBase<string>
     {
         public string PostId { get; set; }
         public string PostMessage { get; set; }

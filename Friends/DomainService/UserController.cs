@@ -32,11 +32,11 @@ namespace DomainService
 
         public User RegisterUser(User user, Profile profile)
         {
-            user.UserId = new RainDrop().GetNextId();
+            user.Id = new RainDrop().GetNextId();
             user.LastSeen = DateTime.Now;
             user.CreatedOn = DateTime.Now;
-            UserRepository.AddUser(user,profile);
-            UserRepository.AddRoles(user.UserId,new List<int>{2});
+            UserRepository.AddUser(user);
+            UserRepository.AddRoles(user.Id,new List<int>{2});
             UnitOfWork.Commit();
             return user;
         }
@@ -53,7 +53,7 @@ namespace DomainService
 
         public bool ChangePassword(string userId,string oldPassword, string newPassword)
         {
-            var user = new User{UserId = userId,Password=oldPassword,ChangedPassword = newPassword};
+            var user = new User{Id = userId,Password=oldPassword,ChangedPassword = newPassword};
             user.ChangedPassword = newPassword;
             UserRepository.UpdateCredential(user);
             return true;

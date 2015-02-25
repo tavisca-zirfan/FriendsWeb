@@ -16,9 +16,9 @@ namespace DAL
             dbPost.Pid = post.PostId;
             dbPost.PostMessage = post.PostMessage;
             if (post.Author != null)
-                dbPost.Author = post.Author.UserId;
+                dbPost.Author = post.Author.Id;
             if (post.Recipient != null)
-                dbPost.Recipient = post.Recipient.UserId;
+                dbPost.Recipient = post.Recipient.Id;
             if (post.CreatedAt.HasValue)
                 dbPost.Time = post.CreatedAt.Value;
         }
@@ -27,14 +27,14 @@ namespace DAL
         {
             var post = new Model.Post
             {
-                Author = new Model.User {UserId = dbPost.Author},
+                Author = new Model.User {Id = dbPost.Author},
                 CreatedAt = dbPost.Time,
                 Likes = likes,
                 Dislikes = dislikes,
                 PostId = dbPost.Pid,
                 PostMessage = dbPost.PostMessage,
                 PostType = Model.PostType.Post,
-                Recipient = new Model.User {UserId = dbPost.Recipient},
+                Recipient = new Model.User {Id = dbPost.Recipient},
                 Comments = comments==null?null:comments.Where(c=>c!=null).ToList()
             };
             return post;

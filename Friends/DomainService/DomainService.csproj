@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="EventHandlers\UserHandler.cs" />
     <Compile Include="IPostController.cs" />
     <Compile Include="IPostResponseController.cs" />
     <Compile Include="IUserController.cs" />

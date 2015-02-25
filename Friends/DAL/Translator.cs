@@ -15,7 +15,7 @@ namespace DAL
         {
             var user = new User
             {
-                UserId = credential.UserId,
+                Id = credential.UserId,
                 Email = credential.Email,
                 Password = credential.Password,
                 IsActive = credential.IsActive,
@@ -61,7 +61,7 @@ namespace DAL
                     throw new Exception("Credentials mismatch");
                 credential.Password = user.ChangedPassword;
             }
-            credential.UserId = user.UserId;
+            credential.UserId = user.Id;
         }
         public static void ToDbModel(this User user, UserProfile profile)
         {

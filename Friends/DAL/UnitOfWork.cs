@@ -65,7 +65,8 @@ namespace DAL
 
         public void Refresh()
         {
-            
+            _dbContext.Dispose();
+            _dbContext = new FriendsContext();
         }
     }
 }

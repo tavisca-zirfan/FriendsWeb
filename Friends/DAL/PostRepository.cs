@@ -40,7 +40,7 @@ namespace DAL
         public string DeletePost(Model.Post post)
         {
             var dbPost =
-                Db.Posts.FirstOrDefault(p => p.Pid == post.PostId && (p.Author == post.Author.UserId || p.Recipient == post.Recipient.UserId));
+                Db.Posts.FirstOrDefault(p => p.Pid == post.PostId && (p.Author == post.Author.Id || p.Recipient == post.Recipient.Id));
             if (dbPost == null)
                 return null;
             Db.Posts.Remove(dbPost);

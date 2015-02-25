@@ -39,6 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DomainEvents\Common\EntityCreateEvent.cs" />
+    <Compile Include="DomainEvents\Common\EntityDeleteEvent.cs" />
+    <Compile Include="DomainEvents\Common\EntityUpdateEvent.cs" />
+    <Compile Include="DomainEvents\UserEvents\ChangePasswordEvent.cs" />
     <Compile Include="DomainObjects\Class1.cs" />
     <Compile Include="DomainObjects\Comment.cs" />
     <Compile Include="DomainObjects\Like.cs" />
@@ -47,12 +51,17 @@
     <Compile Include="DomainObjects\Profile.cs" />
     <Compile Include="DomainObjects\Role.cs" />
     <Compile Include="DomainObjects\User.cs" />
+    <Compile Include="EventHandlers\EntityAddHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DomainEvents\" />
     <Folder Include="DomainServices\" />
-    <Folder Include="EventHandlers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
+      <Project>{3d67b0de-1f6d-4e85-9927-206dc13f0d34}</Project>
+      <Name>Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

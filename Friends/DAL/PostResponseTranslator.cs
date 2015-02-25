@@ -11,12 +11,12 @@ namespace DAL
     {
         public static void ToDbModel(this Model.Comment comment, Comment dbComment,string postId="")
         {
-            dbComment.CommentId = comment.CommentId;
+            dbComment.CommentId = comment.Id;
             dbComment.CommentMessage = comment.CommentMessage;
             if (comment.CommentedAt.HasValue)
                 dbComment.CommentTime = comment.CommentedAt.Value;
             if (comment.CommentedBy != null)
-                dbComment.UserId = comment.CommentedBy.UserId;
+                dbComment.UserId = comment.CommentedBy.Id;
             if (comment.PostType.HasValue)
                 dbComment.Type = comment.PostType.Value.ToString();
             if (!string.IsNullOrEmpty(postId))
@@ -31,12 +31,12 @@ namespace DAL
             {
                 CommentedBy = new Model.User
                 {
-                    UserId = dbComment.UserId
+                    Id = dbComment.UserId
                 },
                 CommentedAt = dbComment.CommentTime,
                 Likes = likes,
                 Dislikes = dislikes,
-                CommentId = dbComment.CommentId,
+                Id = dbComment.CommentId,
                 CommentMessage = dbComment.CommentMessage,
                 PostType = Model.PostType.Comment
             };

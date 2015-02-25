@@ -12,11 +12,11 @@ namespace DbProviderTest
         {
             return new Post
             {
-                Author = new User {UserId = userId},
+                Author = new User {Id = userId},
                 CreatedAt = DateTime.Now,
                 PostId = postId,
                 PostType = PostType.Post,
-                Recipient = new User {UserId = userId},
+                Recipient = new User {Id = userId},
                 PostMessage = "Post"
             };
         }
@@ -25,8 +25,8 @@ namespace DbProviderTest
         {
             return new Comment
             {
-                CommentId = commentId,
-                CommentedBy = new User {UserId = userId},
+                Id = commentId,
+                CommentedBy = new User {Id = userId},
                 CommentMessage = "Comment",
                 CommentedAt = DateTime.Now,
                 PostType = postType

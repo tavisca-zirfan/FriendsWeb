@@ -61,7 +61,7 @@ namespace BusinessControllerTest
         {
             var controller = new UserController();
             var ur = new Mock<IUserRepository>();
-            ur.Setup(m => m.AddUser(It.IsAny<User>(),It.IsAny<Profile>())).Returns(new User{UserId = "abc"});
+            ur.Setup(m => m.AddUser(It.IsAny<User>())).Returns(new User{Id = "abc"});
             //ur.Setup(m => m.AddProfile(It.IsAny<string>(), It.IsAny<Profile>())).Returns(new Profile());
             ur.Setup(m => m.AddRoles(It.IsAny<string>(), It.IsAny<List<int>>()));
             var uow = new Mock<IUnitOfWork>();

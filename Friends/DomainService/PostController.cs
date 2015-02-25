@@ -24,12 +24,12 @@ namespace DomainService
         {
             var post = new Post
             {
-                Author = new User {UserId = authorId},
+                Author = new User {Id = authorId},
                 CreatedAt = DateTime.UtcNow,
                 PostId = Guid.NewGuid().ToString(),
                 PostMessage = postMessage,
                 PostType = PostType.Post,
-                Recipient = new User {UserId = recipientId}
+                Recipient = new User {Id = recipientId}
             };
             try
             {

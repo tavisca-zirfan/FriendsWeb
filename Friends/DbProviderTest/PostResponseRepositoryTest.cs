@@ -22,8 +22,8 @@ namespace DbProviderTest
                 UserRepository.DeleteCredential(userId);
                 UnitOfWork.Commit();
                 var user = UserGenerator.CreateUserForCredential("test@test.com", "qwerty");
-                user.UserId = userId;
-                UserRepository.AddUser(user,UserGenerator.CreateProfile());
+                user.Id = userId;
+                UserRepository.AddUser(user);
                 UnitOfWork.Commit();
             }
             catch (Exception ex)
@@ -120,7 +120,7 @@ namespace DbProviderTest
             PostResponseRepository.AddComment(postId, comment);
             UnitOfWork.Commit();
             var curPost = PostRepository.GetPost(postId, PostType.Post, userId);
-            var curComment = curPost.Comments.FirstOrDefault(c => c.CommentId == commentId);
+            var curComment = curPost.Comments.FirstOrDefault(c => c.Id == commentId);
             Assert.IsNotNull(curComment);
             PostResponseRepository.DeleteComment(curComment);
             UnitOfWork.Commit();
@@ -133,7 +133,7 @@ namespace DbProviderTest
             var comment = PostGenerator.CreateComment(commentId, PostType.Post, userId);
             try
             {
-                comment.CommentedBy.UserId = "invalid";
+                comment.CommentedBy.Id = "invalid";
                 PostResponseRepository.AddComment(postId, comment);
                 UnitOfWork.Commit();
             }
@@ -155,8 +155,8 @@ namespace DbProviderTest
             PostResponseRepository.DeleteComment(comment);
             UnitOfWork.Commit();
             var curPost = PostRepository.GetPost(postId, PostType.Post);
-            var curComment = curPost.Comments.FirstOrDefault(c => c.CommentId == commentId);
-            var curComment2 = curPost.Comments.FirstOrDefault(c => c.CommentId == commentId2);
+            var curComment = curPost.Comments.FirstOrDefault(c => c.Id == commentId);
+            var curComment2 = curPost.Comments.FirstOrDefault(c => c.Id == commentId2);
             Assert.IsNull(curComment);
             Assert.IsNotNull(curComment2);
         }
@@ -196,8 +196,8 @@ namespace DbProviderTest
             var curPost = PostRepository.GetPost(postId, PostType.Post, userId);
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId).Likes, 2);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId2).Dislikes, 1);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 2);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId2).Dislikes, 1);
         }
 
         [TestMethod]
@@ -219,15 +219,15 @@ namespace DbProviderTest
             var curPost = PostRepository.GetPost(postId, PostType.Post, userId);
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId).Likes, 2);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId2).Dislikes, 1);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 2);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId2).Dislikes, 1);
             PostResponseRepository.RemoveLike(userId,commentId,PostType.Comment,LikeType.Like);
             UnitOfWork.Commit();
             curPost = PostRepository.GetPost(postId, PostType.Post, userId);
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId).Likes, 0);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId).Dislikes, 1);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 0);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Dislikes, 1);
         }
 
 

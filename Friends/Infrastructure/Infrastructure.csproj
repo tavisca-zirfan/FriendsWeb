@@ -44,7 +44,11 @@
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\IUnitOfWork.cs" />
     <Compile Include="Data\IUnitOfWorkRepo.cs" />
+    <Compile Include="Events\EventBase.cs" />
+    <Compile Include="Events\IDispatcher.cs" />
     <Compile Include="Events\IEvent.cs" />
+    <Compile Include="Events\IEventHandler.cs" />
+    <Compile Include="Model\EntityBase.cs" />
     <Compile Include="Model\IEntity.cs" />
     <Compile Include="Model\OrderType.cs" />
     <Compile Include="Model\SearchFilter.cs" />

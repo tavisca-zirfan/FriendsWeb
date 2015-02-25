@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Infrastructure.Model;
 
 namespace BusinessDomain.DomainObjects
 {
-    public class Role
+    public class Role:EntityBase<string>
     {
         public int RoleId { get; set; }
         public string RoleName { get; set; }

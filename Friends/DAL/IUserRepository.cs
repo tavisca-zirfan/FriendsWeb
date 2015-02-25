@@ -14,7 +14,7 @@ namespace DAL
         User GetUserByEmail(string emailId);
         User GetUser(string userId);
         Profile GetProfile(string userId);
-        User AddUser(User user,Profile profile);
+        User AddUser(User user);
         void AddRoles(string userId,IEnumerable<int> roles);
         List<BusinessDomain.DomainObjects.Role> GetRoles(string userId); 
         void UpdateCredential(User user);

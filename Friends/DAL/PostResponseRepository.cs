@@ -41,7 +41,7 @@ namespace DAL
         {
             var dbComment =
                 Db.Comments.FirstOrDefault(
-                    c => c.CommentId == comment.CommentId && c.UserId == comment.CommentedBy.UserId);
+                    c => c.CommentId == comment.Id && c.UserId == comment.CommentedBy.Id);
             if (dbComment == null)
                 return null;
             RemoveLike(new List<string>{dbComment.CommentId},Model.PostType.Comment );
