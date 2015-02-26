@@ -98,7 +98,7 @@ namespace DAL
 
         public static Profile ToProfile(this User user)
         {
-            return new Profile{DOB = user.DOB,Email = user.Email,FirstName=user.FirstName,LastName = user.LastName,Gender=user.Gender,LastSeen = user.LastSeen};
+            return new Profile{Id = user.Id, DOB = user.DOB,Email = user.Email,FirstName=user.FirstName,LastName = user.LastName,Gender=user.Gender,LastSeen = user.LastSeen};
         }
 
         public static void AddProfileInformation(this User user,Profile profile)

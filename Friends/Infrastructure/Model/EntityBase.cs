@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Infrastructure.Common;
 using Infrastructure.Events;
 
 namespace Infrastructure.Model
 {
-    public class EntityBase<T>
+    public class EntityBase<T>:ISavable
     {
         public T Id { get; set; }
         private List<IEvent> _events;

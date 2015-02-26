@@ -10,7 +10,7 @@ namespace ServiceLayer
     public interface IPostService
     {
         IEnumerable<PostDTO> Get(PostFetchRequest request);
-        IEnumerable<PostDTO> Get(string postId);
+        PostDTO Get(string postId);
         void Post(PostDTO request);
         void Delete(string postId);
     }

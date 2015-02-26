@@ -10,8 +10,7 @@ namespace BusinessDomain.DomainEvents.Common
         {
             Entity = entity;
         }
-        public IDispatcher Dispatcher { get; set; }
-        public override void Raise(IEvent<T> raisedEvent)
+        public override void Raise()
         {
             Dispatcher.Dispatch(this);
         }

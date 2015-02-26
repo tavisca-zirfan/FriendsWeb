@@ -18,7 +18,7 @@ namespace DAL
         void AddRoles(string userId,IEnumerable<int> roles);
         List<BusinessDomain.DomainObjects.Role> GetRoles(string userId); 
         void UpdateCredential(User user);
-        void UpdateProfile(string userId,Profile profile);
+        void UpdateProfile(Profile profile);
         void RemoveRoles(string userId, IEnumerable<int> roles);
         void DeleteCredential(string userId);
         bool CheckCredentialIfUserIdExist(string userId);

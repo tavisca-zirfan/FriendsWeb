@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using BusinessDomain.DomainEvents;
+﻿
+using BusinessDomain.DomainEvents.Common;
 using BusinessDomain.DomainObjects;
 using DAL;
 using Infrastructure.Data;

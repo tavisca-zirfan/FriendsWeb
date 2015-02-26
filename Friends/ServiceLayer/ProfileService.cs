@@ -11,8 +11,29 @@ namespace ServiceLayer
     {
         void Put(ProfileDTO request);
         ProfileDTO Get(string userId);
+        List<ProfileDTO> Get(List<string> ids);
+        List<ProfileDTO> Get(SearchFilter filters);
     }
-    class ProfileService
+    public class ProfileService:IProfileService
     {
+        public void Put(ProfileDTO request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ProfileDTO Get(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ProfileDTO> Get(List<string> ids)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<ProfileDTO> Get(SearchFilter filters)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

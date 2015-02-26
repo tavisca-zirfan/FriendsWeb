@@ -10,11 +10,10 @@ namespace DomainService
     public interface IUserController
     {
         User GetUser(string email, string password);
-        User RegisterUser(User credentials, Profile profile);
+        User RegisterUser(User user);
         Profile GetProfile(string userId);
         Profile UpdateProfile(Profile profile);
         bool ChangePassword(string userId,string oldPassword,string newPassword);
         bool ChangeEmail(string userId, string email);
-        Profile UpdateProfile(string userId, Profile profile);
     }
 }

@@ -11,13 +11,15 @@ namespace ServiceLayer
     {
         //User Authenticate(LoginRequest request);
         void Post(UserDTO request);
-        UserDTO Get(string username, string password);
-        List<UserDTO> Get();
-        void Delete(string userId);
+        UserDTO Get(string email, string password);
+        void Delete();
+        void ChangePassword(string oldpassword, string newpassword);
+        void ChangePassword(string email ,string oldpassword, string newpassword);
     }
     public class MockUserService : IUserService
     {
        IUserController UserController { get; set; }
+        public string UserId { get; set; }
 
         public MockUserService()
         {
@@ -30,20 +32,17 @@ namespace ServiceLayer
             {
                 Email = request.Email,
                 ChangedPassword = request.Password,
-                Roles = new List<Role>{new Role{RoleId = 2}}
-            },
-                new Profile
-                {
-                    DOB = request.DOB,
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                    Gender = request.Gender
-                });
+                Roles = new List<Role>{new Role{RoleId = 2}},
+                DOB = request.DOB,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Gender = request.Gender
+            });
 
         }
         
 
-        public void Delete(string userId)
+        public void Delete()
         {
             throw new System.NotImplementedException();
         }
@@ -54,9 +53,18 @@ namespace ServiceLayer
             throw new System.NotImplementedException();
         }
 
-        public List<UserDTO> Get()
+        public void ChangePassword( string oldpassword, string newpassword)
         {
-            throw new System.NotImplementedException();
+            var user = new User {Id = UserId};
+            user.ChangePassword(oldpassword,newpassword);
+            user.Save();
+        }
+
+        public void ChangePassword(string email, string oldpassword, string newpassword)
+        {
+            var user = UserController.GetUser(email, oldpassword);
+            user.ChangePassword(newpassword);
+            user.Save();
         }
     }
 

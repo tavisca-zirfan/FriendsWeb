@@ -8,13 +8,11 @@ namespace BusinessDomain.DomainEvents.Common
 {
     public class EntityDeleteEvent<T>:EventBase<T>
     {
-        public IDispatcher Dispatcher { get; set; }
-
         public EntityDeleteEvent(T entity)
         {
             this.Entity = entity;
         }
-        public override void Raise(IEvent<T> raisedEvent)
+        public override void Raise()
         {
             Dispatcher.Dispatch(this);
         }

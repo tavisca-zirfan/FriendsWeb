@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ILikable.cs" />
+    <Compile Include="Common\ISavable.cs" />
     <Compile Include="Common\RainDrop.cs" />
     <Compile Include="Data\IReadRepository.cs" />
     <Compile Include="Data\IRepository.cs" />

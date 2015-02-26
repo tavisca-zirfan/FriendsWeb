@@ -42,8 +42,9 @@
     <Compile Include="DomainEvents\Common\EntityCreateEvent.cs" />
     <Compile Include="DomainEvents\Common\EntityDeleteEvent.cs" />
     <Compile Include="DomainEvents\Common\EntityUpdateEvent.cs" />
+    <Compile Include="DomainEvents\Common\AddLikeEvent.cs" />
+    <Compile Include="DomainEvents\Common\RemoveLikeEvent.cs" />
     <Compile Include="DomainEvents\UserEvents\ChangePasswordEvent.cs" />
-    <Compile Include="DomainObjects\Class1.cs" />
     <Compile Include="DomainObjects\Comment.cs" />
     <Compile Include="DomainObjects\Like.cs" />
     <Compile Include="DomainObjects\Post.cs" />
@@ -51,12 +52,9 @@
     <Compile Include="DomainObjects\Profile.cs" />
     <Compile Include="DomainObjects\Role.cs" />
     <Compile Include="DomainObjects\User.cs" />
-    <Compile Include="EventHandlers\EntityAddHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DomainServices\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{3d67b0de-1f6d-4e85-9927-206dc13f0d34}</Project>

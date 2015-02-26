@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using DAL;
 using BusinessDomain.DomainObjects;
@@ -164,7 +163,7 @@ namespace DbProviderTest
             var profile = user.ToProfile();
             profile.FirstName = "ChangedFirstName";
             profile.LastName = "ChangedLastName";
-            UserRepository.UpdateProfile(user.Id, profile);
+            UserRepository.UpdateProfile(profile);
             UOW.Commit();
             var modifiedProfile = UserRepository.GetProfile(user.Id);
             Assert.AreEqual(modifiedProfile.FirstName, "ChangedFirstName");
@@ -176,10 +175,10 @@ namespace DbProviderTest
         [TestMethod]
         public void UpdateUserProfileShouldFailIfUserDoesNotExist()
         {
-            var profile = new Profile {FirstName = "invaliduser", LastName = "invaliduser", Email = "newemail"};
+            var profile = new Profile {FirstName = "invaliduser", LastName = "invaliduser", Email = "newemail",Id="invaliduser"};
             try
             {
-                UserRepository.UpdateProfile("invaliduser", profile);
+                UserRepository.UpdateProfile( profile);
                 UOW.Commit();
             }
             catch (Exception ex)

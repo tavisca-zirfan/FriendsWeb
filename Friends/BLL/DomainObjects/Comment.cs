@@ -1,9 +1,11 @@
 ﻿using System;
+using BusinessDomain.DomainEvents.Common;
+using Infrastructure.Common;
 using Infrastructure.Model;
 
 namespace BusinessDomain.DomainObjects
 {
-    public class Comment:EntityBase<string>
+    public class Comment:EntityBase<string>,ILikable
     {
         public string CommentMessage { get; set; }
         public int Likes { get; set; }
@@ -11,5 +13,15 @@ namespace BusinessDomain.DomainObjects
         public DateTime? CommentedAt { get; set; }
         public User CommentedBy { get; set; }
         public PostType? PostType { get; set; }
+
+        public void Like(string userId)
+        {
+            AddEvent(new AddLikeEvent(Id,DomainObjects.PostType.Comment, LikeType.Like));
+        }
+
+        public void Dislike(string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

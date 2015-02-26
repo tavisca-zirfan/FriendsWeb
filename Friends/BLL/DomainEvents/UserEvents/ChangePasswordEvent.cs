@@ -13,7 +13,7 @@ namespace BusinessDomain.DomainEvents.UserEvents
         {
             Entity = user;
         }
-        public override void Raise(IEvent<User> raisedEvent)
+        public override void Raise()
         {
             Dispatcher.Dispatch(this);
         }

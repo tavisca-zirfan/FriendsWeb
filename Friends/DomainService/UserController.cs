@@ -30,7 +30,7 @@ namespace DomainService
             }
         }
 
-        public User RegisterUser(User user, Profile profile)
+        public User RegisterUser(User user)
         {
             user.Id = new RainDrop().GetNextId();
             user.LastSeen = DateTime.Now;
@@ -48,7 +48,8 @@ namespace DomainService
 
         public Profile UpdateProfile(Profile profile)
         {
-            throw new NotImplementedException();
+            UserRepository.UpdateProfile(profile);
+            return profile;
         }
 
         public bool ChangePassword(string userId,string oldPassword, string newPassword)
@@ -64,10 +65,6 @@ namespace DomainService
             throw new NotImplementedException();
         }
         
-        public Profile UpdateProfile(string userId, Profile profile)
-        {
-            UserRepository.UpdateProfile(userId,profile);
-            return profile;
-        }
+        
     }
 }

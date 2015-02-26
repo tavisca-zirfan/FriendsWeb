@@ -7,12 +7,12 @@ namespace Infrastructure.Events
 {
     public interface IDispatcher
     {
-        void Dispatch<T>(IEvent<T> raisedEvent);
+        void Dispatch(IEvent raisedEvent);
     }
 
     public class Dispatcher : IDispatcher
     {
-        public void Dispatch<T>(IEvent<T> raisedEvent)
+        public void Dispatch(IEvent raisedEvent)
         {
             throw new NotImplementedException();
         }

@@ -133,9 +133,9 @@ namespace DAL
             user.ToDbModel(credential);
         }
 
-        public void UpdateProfile(string userId, Profile profile)
+        public void UpdateProfile(Profile profile)
         {
-            var userProfile = Db.UserProfiles.FirstOrDefault(up => up.UserId == userId);
+            var userProfile = Db.UserProfiles.FirstOrDefault(up => up.UserId == profile.Id);
             if (userProfile == null)
                 throw new Exception("User Not Found");
             profile.ToDbModel(userProfile);
