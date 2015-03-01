@@ -68,7 +68,7 @@ namespace BusinessControllerTest
             uow.Setup(m => m.Commit());
             controller.UserRepository = ur.Object;
             controller.UnitOfWork = uow.Object;
-            var user = controller.RegisterUser(new User(), new Profile());
+            var user = controller.RegisterUser(new User());
             Assert.IsNotNull(user);
         }
         

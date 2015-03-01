@@ -85,5 +85,11 @@ namespace DAL
                         l.LikeType == (int) likeType && l.TypeId == postId && l.Type == postType.ToString() &&
                         (l.UserId == userId || userId == ""));
         }
+
+
+        public IEnumerable<string> DeleteComment(IEnumerable<string> commentIds)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

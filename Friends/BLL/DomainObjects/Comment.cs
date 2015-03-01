@@ -13,10 +13,10 @@ namespace BusinessDomain.DomainObjects
         public DateTime? CommentedAt { get; set; }
         public User CommentedBy { get; set; }
         public PostType? PostType { get; set; }
-
+        public string  PostId { get; set; }
         public void Like(string userId)
         {
-            AddEvent(new AddLikeEvent(Id,DomainObjects.PostType.Comment, LikeType.Like));
+            AddEvent(new AddLikeEvent(Id,userId,DomainObjects.PostType.Comment, LikeType.Like));
         }
 
         public void Dislike(string userId)

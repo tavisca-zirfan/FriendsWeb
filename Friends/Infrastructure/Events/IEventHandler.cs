@@ -6,6 +6,6 @@ namespace Infrastructure.Events
 {
     public interface IEventHandler<T>
     {
-        void Handle(T eventObject,IUnitOfWork unitOfWork);
+        void Handle(T eventObject);
     }
 }

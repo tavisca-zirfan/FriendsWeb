@@ -49,14 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\IdGenerator.cs" />
     <Compile Include="Common\ILikable.cs" />
     <Compile Include="Common\ISavable.cs" />
     <Compile Include="Common\RainDrop.cs" />
     <Compile Include="Configuration\Configurations.cs" />
+    <Compile Include="Configuration\ContainerSetting.cs" />
     <Compile Include="Configuration\IConfigurationFile.cs" />
     <Compile Include="Configuration\IConfigurationSection.cs" />
+    <Compile Include="Configuration\IContainerSetup.cs" />
     <Compile Include="Container\DependencyContainer.cs" />
     <Compile Include="Container\IDependencyContainer.cs" />
+    <Compile Include="Container\IDependencyContainerFactory.cs" />
+    <Compile Include="Container\ObjectFactory.cs" />
     <Compile Include="Data\IReadRepository.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\IUnitOfWork.cs" />

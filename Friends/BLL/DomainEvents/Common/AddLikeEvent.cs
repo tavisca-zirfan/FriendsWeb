@@ -9,14 +9,14 @@ namespace BusinessDomain.DomainEvents.Common
 {
     public class AddLikeEvent:IEvent
     {
-        public string Id { get; private set; }
+        public string PostId { get; private set; }
         public PostType PostType { get; private set; }
         public string UserId { get; private set; }
         public LikeType LikeType { get; private set; }
         public IDispatcher Dispatcher { get; set; } 
-        public AddLikeEvent(string id,string userId,PostType postType,LikeType likeType)
+        public AddLikeEvent(string postId,string userId,PostType postType,LikeType likeType)
         {
-            Id = id;
+            PostId = postId;
             UserId = userId;
             PostType = postType;
             LikeType = likeType;
