@@ -21,15 +21,15 @@ namespace BusinessDomain.DomainObjects
 
         public void Like(string userId)
         {
-            AddEvent(new RemoveLikeEvent(this.Id,userId,this.PostType));
-            AddEvent(new AddLikeEvent(this.Id,userId,this.PostType,LikeType.Like));
+            AddSaveEvent(new RemoveLikeEvent(this.Id,userId,this.PostType));
+            AddSaveEvent(new AddLikeEvent(this.Id,userId,this.PostType,LikeType.Like));
             Save();
         }
 
         public void Dislike(string userId)
         {
-            AddEvent(new RemoveLikeEvent(Id,userId,PostType));
-            AddEvent(new AddLikeEvent(this.Id, userId, this.PostType, LikeType.Dislike));
+            AddSaveEvent(new RemoveLikeEvent(Id,userId,PostType));
+            AddSaveEvent(new AddLikeEvent(this.Id, userId, this.PostType, LikeType.Dislike));
             Save();
         }
 
@@ -38,7 +38,7 @@ namespace BusinessDomain.DomainObjects
             var canDelete = (userId == comment.CommentedBy.Id) || (userId == this.Author.Id) ||
                             (userId == this.Recipient.Id);
             if(canDelete)
-                AddEvent(new RemoveCommentEvent(null,comment.Id));
+                AddSaveEvent(new RemoveCommentEvent(null,comment.Id));
         }
 
         public Comment AddComment(string userId,string commentMessage)
@@ -52,7 +52,7 @@ namespace BusinessDomain.DomainObjects
                 PostType = PostType.Comment,
                 PostId = this
             };
-            AddEvent(new EntityCreateEvent<Comment>(comment));
+            AddSaveEvent(new EntityCreateEvent<Comment>(comment));
             this.Save();
             Comments.Add(comment);
             return comment;

@@ -12,28 +12,35 @@ namespace Infrastructure.Model
     public class EntityBase<T>:ISavable
     {
         public T Id { get; set; }
-        private List<IEvent> _events;
+        private List<IEvent> _eventsToSave;
+        private List<IEvent> _eventsToLoad;
         public EntityBase()
         {
-            _events = new List<IEvent>();
+            _eventsToSave = new List<IEvent>();
+            _eventsToLoad = new List<IEvent>();
         }
 
-        public void AddEvent(IEvent raisedEvent)  
+        public void AddSaveEvent(IEvent raisedEvent)  
         {
-            _events.Add(raisedEvent);
+            _eventsToSave.Add(raisedEvent);
+        }
+
+        public void AddLoadEvent(IEvent raisedEvent)
+        {
+            _eventsToLoad.Add(raisedEvent);
         }
 
         public virtual void Save()
         {
             var unitOfWork = ObjectFactory.Resolve<IUnitOfWork>();
-            _events.ForEach(e=>e.Raise());
+            _eventsToSave.ForEach(e=>e.Raise());
             unitOfWork.Commit();
             unitOfWork.Refresh();
         }
 
         public virtual void Load()
         {
-            
+            _eventsToLoad.ForEach(e => e.Raise());
         }
     }
 }

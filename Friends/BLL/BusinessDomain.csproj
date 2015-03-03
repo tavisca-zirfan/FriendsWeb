@@ -45,7 +45,9 @@
     <Compile Include="DomainEvents\Common\AddLikeEvent.cs" />
     <Compile Include="DomainEvents\Common\RemoveLikeEvent.cs" />
     <Compile Include="DomainEvents\PostResponseEvent\RemoveCommentEvent.cs" />
+    <Compile Include="DomainEvents\UserEvents\AddFriendEvent.cs" />
     <Compile Include="DomainEvents\UserEvents\ChangePasswordEvent.cs" />
+    <Compile Include="DomainEvents\UserEvents\LoadFriendsEvent.cs" />
     <Compile Include="DomainObjects\Comment.cs" />
     <Compile Include="DomainObjects\Like.cs" />
     <Compile Include="DomainObjects\Post.cs" />

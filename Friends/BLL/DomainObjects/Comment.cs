@@ -16,7 +16,7 @@ namespace BusinessDomain.DomainObjects
         public string  PostId { get; set; }
         public void Like(string userId)
         {
-            AddEvent(new AddLikeEvent(Id,userId,DomainObjects.PostType.Comment, LikeType.Like));
+            AddSaveEvent(new AddLikeEvent(Id,userId,DomainObjects.PostType.Comment, LikeType.Like));
         }
 
         public void Dislike(string userId)
