@@ -18,7 +18,7 @@ namespace Friends.Controllers
 
         public AccountController()
         {
-            UserService = new MockUserService();
+            UserService = new UserService();
         }
 
         private ActionResult AuthorizeUser(UserDTO user)

@@ -1,6 +1,7 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
 using DomainService;
 using BusinessDomain.DomainObjects;
 using ServiceLayer.Model;
@@ -10,35 +11,29 @@ namespace ServiceLayer
     public interface IUserService
     {
         //User Authenticate(LoginRequest request);
-        void Post(UserDTO request);
+        UserDTO Post(UserDTO request);
         UserDTO Get(string email, string password);
         void Delete();
         void ChangePassword(string oldpassword, string newpassword);
         void ChangePassword(string email ,string oldpassword, string newpassword);
     }
-    public class MockUserService : IUserService
+    public class UserService : IUserService
     {
-       IUserController UserController { get; set; }
+        public IUserController UserController { get; set; }
         public string UserId { get; set; }
 
-        public MockUserService()
+        public UserService()
         {
             UserController = new UserController();
         }
         
-        public void Post(UserDTO request)
+        public UserDTO Post(UserDTO request)
         {
-            this.UserController.RegisterUser(new User
-            {
-                Email = request.Email,
-                ChangedPassword = request.Password,
-                Roles = new List<Role>{new Role{RoleId = 2}},
-                DOB = request.DOB,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Gender = request.Gender
-            });
-
+            var user = Mapper.Map<User>(request);
+            user.Roles = new List<Role> {new Role {RoleId = 2}};
+            this.UserController.RegisterUser(user);
+            request.UserId = user.Id;
+            return request;
         }
         
 
@@ -50,13 +45,15 @@ namespace ServiceLayer
 
         public UserDTO Get(string username, string password)
         {
-            throw new System.NotImplementedException();
+            var user = UserController.GetUser(username, password);
+            var userDto = Mapper.Map<User, UserDTO>(user);
+            return userDto;
         }
 
         public void ChangePassword( string oldpassword, string newpassword)
         {
             var user = new User {Id = UserId};
-            user.ChangePassword(oldpassword,newpassword);
+            user.ChangePassword(newpassword);
             user.Save();
         }
 

@@ -13,7 +13,7 @@ namespace DAL
     {
         public static void ToDbModel(this Model.Post post, Post dbPost)
         {
-            dbPost.Pid = post.PostId;
+            dbPost.Pid = post.Id;
             dbPost.PostMessage = post.PostMessage;
             if (post.Author != null)
                 dbPost.Author = post.Author.Id;
@@ -31,7 +31,7 @@ namespace DAL
                 CreatedAt = dbPost.Time,
                 Likes = likes,
                 Dislikes = dislikes,
-                PostId = dbPost.Pid,
+                Id = dbPost.Pid,
                 PostMessage = dbPost.PostMessage,
                 PostType = Model.PostType.Post,
                 Recipient = new Model.User {Id = dbPost.Recipient},

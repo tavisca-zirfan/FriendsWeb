@@ -10,8 +10,8 @@ namespace BusinessDomain.DomainEvents.UserEvents
     public class LoadFriendsEvent:EventBase
     {
         public string UserId { get; private set; }
-        public IList<User> Friends { get; private set; }
-        public LoadFriendsEvent(string userId,IList<User> friends)
+        public IList<Profile> Friends { get; private set; }
+        public LoadFriendsEvent(string userId,IList<Profile> friends)
         {
             UserId = userId;
             Friends = friends;

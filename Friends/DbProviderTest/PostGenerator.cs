@@ -14,7 +14,7 @@ namespace DbProviderTest
             {
                 Author = new User {Id = userId},
                 CreatedAt = DateTime.Now,
-                PostId = postId,
+                Id = postId,
                 PostType = PostType.Post,
                 Recipient = new User {Id = userId},
                 PostMessage = "Post"

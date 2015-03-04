@@ -169,5 +169,11 @@ namespace DAL
                 select r).ToList();
             return roles.ToBusinessModel();
         }
+
+
+        public IEnumerable<Profile> GetFriends(string userId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

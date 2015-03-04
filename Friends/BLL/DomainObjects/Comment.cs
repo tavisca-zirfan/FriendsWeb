@@ -16,12 +16,16 @@ namespace BusinessDomain.DomainObjects
         public string  PostId { get; set; }
         public void Like(string userId)
         {
-            AddSaveEvent(new AddLikeEvent(Id,userId,DomainObjects.PostType.Comment, LikeType.Like));
+            AddSaveEvent(new RemoveLikeEvent(this.Id, userId, DomainObjects.PostType.Comment));
+            AddSaveEvent(new AddLikeEvent(this.Id, userId, DomainObjects.PostType.Comment, LikeType.Like));
+            Save();
         }
 
         public void Dislike(string userId)
         {
-            throw new NotImplementedException();
+            AddSaveEvent(new RemoveLikeEvent(Id, userId, DomainObjects.PostType.Comment));
+            AddSaveEvent(new AddLikeEvent(this.Id, userId, DomainObjects.PostType.Comment, LikeType.Dislike));
+            Save();
         }
     }
 }

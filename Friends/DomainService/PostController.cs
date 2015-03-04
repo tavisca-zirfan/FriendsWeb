@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DAL;
+using Infrastructure.Common;
 using Infrastructure.Data;
 using BusinessDomain.DomainObjects;
 
@@ -26,7 +27,7 @@ namespace DomainService
             {
                 Author = new User {Id = authorId},
                 CreatedAt = DateTime.UtcNow,
-                PostId = Guid.NewGuid().ToString(),
+                Id = IdGenerator.GenerateId(),
                 PostMessage = postMessage,
                 PostType = PostType.Post,
                 Recipient = new User {Id = recipientId}

@@ -22,8 +22,8 @@ namespace BusinessDomain.DomainObjects
         public int IsActive { get; set; }
         public DateTime LastSeen { get; set; }
         public DateTime CreatedOn { get; set; }
-        private IList<User> _friends; 
-        public IList<User> Friends
+        private IList<Profile> _friends; 
+        public IList<Profile> Friends
         {
             get
             {
@@ -38,7 +38,7 @@ namespace BusinessDomain.DomainObjects
 
         public User()
         {
-            _friends = new List<User>();
+            _friends = new List<Profile>();
         }
         public void ChangePassword(string oldPassword,string newPassword)
         {

@@ -50,7 +50,7 @@ namespace BusinessDomain.DomainObjects
                 CommentMessage = commentMessage,
                 Id = IdGenerator.GenerateId(),
                 PostType = PostType.Comment,
-                PostId = this
+                PostId = this.Id
             };
             AddSaveEvent(new EntityCreateEvent<Comment>(comment));
             this.Save();

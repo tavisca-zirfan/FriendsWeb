@@ -22,6 +22,6 @@ namespace DAL
         void RemoveRoles(string userId, IEnumerable<int> roles);
         void DeleteCredential(string userId);
         bool CheckCredentialIfUserIdExist(string userId);
-        
+        IEnumerable<Profile> GetFriends(string userId);
     }
 }
