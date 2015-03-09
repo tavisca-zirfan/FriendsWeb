@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using BusinessDomain.DomainEvents.Common;
 using BusinessDomain.DomainObjects;
+using DAL;
 using DomainService;
 using Infrastructure.Configuration;
+using Infrastructure.Data;
 using Infrastructure.Events;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -20,7 +22,7 @@ namespace ServiceTest
         public UserServiceTest()
         {
             _userService = new UserService();
-            _userService.UserId = "1278";
+            _userService.User = new User {Id = "1278"};
             ServiceModelMapper.CreateMap();
         }
         [TestMethod]
@@ -41,22 +43,35 @@ namespace ServiceTest
             };
 
             var res=_userService.Post(userDto);
-            Assert.AreEqual(user.Id,"1278");
+            Assert.AreEqual("1278",res.Id);
         }
 
         [TestMethod]
         public void ShouldGetUserByUsernamePassword()
         {
+            var user = this.CreateUserForCredential("zbi@g.com", "123456");
+            var mockController = new Mock<IUserController>();
+            mockController.Setup(m => m.GetUser(It.IsAny<string>(),It.IsAny<string>())).Returns(user);
+            _userService.UserController = mockController.Object;
+            var res = _userService.Get("zbi@g.com","123456");
+            Assert.AreEqual(res.Id, "1278");
         }
 
         [TestMethod]
         public void ShouldChangePasswordForLoggedUser()
         {
+            var user = this.CreateUserForCredential("zbi@g.com", "123456");
+            var service = new UserService();
+            service.ChangePassword("zbi@g.com","123456","abcdef");
+            Assert.AreEqual(1,user.IsActive);
         }
 
         [TestMethod]
         public void ShouldChangePasswordForUnloggedUser()
         {
+            var user = this.CreateUserForCredential("zbi@g.com", "123456");
+            user.ChangePassword("123456","abcdef");
+            Assert.AreEqual(1, user.IsActive);
         }
 
         public User CreateUserForCredential(string email, string password)
@@ -84,7 +99,8 @@ namespace ServiceTest
         public void Setup(Infrastructure.Container.IDependencyContainer container)
         {
             container.Register<IEventHandler<EntityUpdateEvent<User>>, MockUserEventHandler>("userupdatehandler")
-                .Register<IDispatcher, Dispatcher>();
+                .Register<IDispatcher, Dispatcher>()
+                .Register<IUnitOfWork,UnitOfWork>();
         }
     }
 

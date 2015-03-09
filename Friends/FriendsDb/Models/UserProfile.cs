@@ -5,6 +5,13 @@ namespace FriendsDb.Models
 {
     public partial class UserProfile
     {
+        public UserProfile()
+        {
+            this.Posts = new List<Post>();
+            this.PostRecipients = new List<PostRecipient>();
+            this.PostTags = new List<PostTag>();
+        }
+
         public int Id { get; set; }
         public string UserId { get; set; }
         public string FirstName { get; set; }
@@ -15,6 +22,9 @@ namespace FriendsDb.Models
         public Nullable<int> StatusId { get; set; }
         public Nullable<int> LocationId { get; set; }
         public string Status { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<PostRecipient> PostRecipients { get; set; }
+        public virtual ICollection<PostTag> PostTags { get; set; }
         public virtual UserCredential UserCredential { get; set; }
     }
 }

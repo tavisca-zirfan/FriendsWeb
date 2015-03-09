@@ -12,6 +12,7 @@ namespace FriendsDb.Models
         public string UserId { get; set; }
         public int LikeType { get; set; }
         public Nullable<System.DateTime> Time { get; set; }
+        public virtual Post Post { get; set; }
         public virtual UserCredential UserCredential { get; set; }
     }
 }

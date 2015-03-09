@@ -28,7 +28,7 @@ namespace Friends.Controllers
                 var roles = user.Roles.Select(r => r.RoleName).ToArray();
 
                 var serializeModel = new UserModel();
-                serializeModel.UserId = user.UserId;
+                serializeModel.UserId = user.Id;
                 serializeModel.FirstName = user.FirstName;
                 serializeModel.LastName = user.LastName;
                 serializeModel.Roles = user.Roles.Select(r => r.RoleName).ToArray();
@@ -101,7 +101,7 @@ namespace Friends.Controllers
                 LastName = model.LastName,
                 Gender = model.Gender,
                 Password = model.Password,
-                Roles = new List<RolesDTO>{new RolesDTO{RoleId = 2}}
+                Roles = new List<RolesDTO>{new RolesDTO{Id = 2}}
             };
             
             return RedirectToAction("Index","Home");

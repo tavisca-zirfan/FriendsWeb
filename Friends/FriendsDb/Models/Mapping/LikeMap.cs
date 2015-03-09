@@ -41,6 +41,8 @@ namespace FriendsDb.Models.Mapping
             this.Property(t => t.Time).HasColumnName("Time");
 
             // Relationships
+            this.HasRequired(t => t.Post)
+                .WithOptional(t => t.Like);
             this.HasRequired(t => t.UserCredential)
                 .WithMany(t => t.Likes)
                 .HasForeignKey(d => d.UserId);

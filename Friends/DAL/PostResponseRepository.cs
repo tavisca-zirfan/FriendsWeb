@@ -39,41 +39,34 @@ namespace DAL
 
         public string DeleteComment(Model.Comment comment)
         {
-            var dbComment =
-                Db.Comments.FirstOrDefault(
-                    c => c.CommentId == comment.Id && c.UserId == comment.CommentedBy.Id);
-            if (dbComment == null)
-                return null;
-            RemoveLike(new List<string>{dbComment.CommentId},Model.PostType.Comment );
-            Db.Comments.Remove(dbComment);
-            return dbComment.CommentId;
+            return comment.Id;
         }
 
         public IEnumerable<string> DeleteComment(string postId, Model.PostType postType)
         {
-            var dbComment = Db.Comments.Where(c => c.TypeId == postId && c.Type == postType.ToString());
+            var dbComment = Db.Comments.Where(c => c.ForPostId == postId);
             var deletedIds = dbComment.Select(c => c.CommentId).ToList();
-            Db.Comments.RemoveRange(dbComment);
+            //Db.Comments.RemoveRange(dbComment);
             RemoveLike(deletedIds,Model.PostType.Comment);
             return deletedIds;
         }
 
         public void AddLike(string userId, string likeId, string postId, Model.PostType postType, Model.LikeType likeType, DateTime time)
         {
-            Db.Likes.Add(new Like {LikeId = likeId,LikeType = (int)likeType,Time = time,Type=postType.ToString(),TypeId=postId,UserId = userId});
+           // Db.Likes.Add(new Like {LikeId = likeId,LikeType = (int)likeType,Time = time,Type=postType.ToString(),TypeId=postId,UserId = userId});
         }
 
         public void RemoveLike(string userId, string postId, Model.PostType postType, Model.LikeType likeType)
         {
-            Db.Likes.RemoveRange(Db.Likes.Where(
-                l =>
-                    l.TypeId == postId && l.UserId == userId && l.Type == postType.ToString() &&
-                    l.LikeType == (int) likeType));
+            //Db.Likes.RemoveRange(Db.Likes.Where(
+            //    l =>
+            //        l.TypeId == postId && l.UserId == userId && l.Type == postType.ToString() &&
+            //        l.LikeType == (int) likeType));
         }
 
         public void RemoveLike(List<string> postIds, Model.PostType postType)
         {
-            Db.Likes.RemoveRange(Db.Likes.Where(l =>postIds.Contains(l.TypeId)  && l.Type == postType.ToString()));
+            //Db.Likes.RemoveRange(Db.Likes.Where(l =>postIds.Contains(l.TypeId)  && l.Type == postType.ToString()));
         }
 
 

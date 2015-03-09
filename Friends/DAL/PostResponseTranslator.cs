@@ -13,14 +13,7 @@ namespace DAL
         {
             dbComment.CommentId = comment.Id;
             dbComment.CommentMessage = comment.CommentMessage;
-            if (comment.CommentedAt.HasValue)
-                dbComment.CommentTime = comment.CommentedAt.Value;
-            if (comment.CommentedBy != null)
-                dbComment.UserId = comment.CommentedBy.Id;
-            if (comment.PostType.HasValue)
-                dbComment.Type = comment.PostType.Value.ToString();
-            if (!string.IsNullOrEmpty(postId))
-                dbComment.TypeId = postId;
+            
         }
 
         public static Model.Comment ToBusinessModel(this Comment dbComment, int likes = 0, int dislikes = 0)
@@ -29,11 +22,7 @@ namespace DAL
                 return null;
             var comment = new Model.Comment
             {
-                CommentedBy = new Model.User
-                {
-                    Id = dbComment.UserId
-                },
-                CommentedAt = dbComment.CommentTime,
+                
                 Likes = likes,
                 Dislikes = dislikes,
                 Id = dbComment.CommentId,

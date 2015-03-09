@@ -7,7 +7,7 @@ namespace BusinessDomain.DomainObjects
 {
     public enum PostType
     {
-        Post,
+        PostText,
         Event,
         Comment,
         Picture

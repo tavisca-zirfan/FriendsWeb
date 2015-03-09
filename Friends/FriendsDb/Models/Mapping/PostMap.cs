@@ -18,28 +18,24 @@ namespace FriendsDb.Models.Mapping
                 .IsRequired()
                 .HasMaxLength(50);
 
-            this.Property(t => t.PostMessage)
-                .IsRequired()
-                .HasMaxLength(500);
-
             this.Property(t => t.Author)
                 .IsRequired()
                 .HasMaxLength(50);
 
-            this.Property(t => t.Recipient)
+            this.Property(t => t.Type)
+                .IsRequired()
                 .HasMaxLength(50);
 
             // Table & Column Mappings
             this.ToTable("Post");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Pid).HasColumnName("Pid");
-            this.Property(t => t.PostMessage).HasColumnName("PostMessage");
             this.Property(t => t.Author).HasColumnName("Author");
-            this.Property(t => t.Recipient).HasColumnName("Recipient");
             this.Property(t => t.Time).HasColumnName("Time");
+            this.Property(t => t.Type).HasColumnName("Type");
 
             // Relationships
-            this.HasRequired(t => t.UserCredential)
+            this.HasRequired(t => t.UserProfile)
                 .WithMany(t => t.Posts)
                 .HasForeignKey(d => d.Author);
 

@@ -11,33 +11,77 @@ namespace DAL
 {
     public static class PostTranslator
     {
-        public static void ToDbModel(this Model.Post post, Post dbPost)
+        public static void ToBaseDbModel(this Model.Post post, Post dbPost)
         {
             dbPost.Pid = post.Id;
-            dbPost.PostMessage = post.PostMessage;
+            dbPost.Type = post.PostType.ToString();
             if (post.Author != null)
                 dbPost.Author = post.Author.Id;
-            if (post.Recipient != null)
-                dbPost.Recipient = post.Recipient.Id;
+            if (post.Recipients != null && post.Recipients.Count > 0)
+            {
+                foreach (var recipient in post.Recipients)
+                {
+                    dbPost.PostRecipients.Add(new PostRecipient{PostId = dbPost.Pid,RecipientId = recipient.Id,PostType = dbPost.Type});
+                }
+            }
+            if (post.Tags != null && post.Tags.Count > 0)
+            {
+                foreach (var recipient in post.Tags)
+                {
+                    dbPost.PostTags.Add(new PostTag { PostId = dbPost.Pid, UserId = recipient.Id });
+                }
+            }
             if (post.CreatedAt.HasValue)
                 dbPost.Time = post.CreatedAt.Value;
         }
 
-        public static BusinessDomain.DomainObjects.Post ToBusinessModel(this Post dbPost,int likes=0,int dislikes=0,Model.Profile profile=null,IEnumerable<Model.Comment> comments=null)
+        public static BusinessDomain.DomainObjects.Post ToBusinessModel(this Post dbPost, Model.Post post, int likes = 0,
+            int dislikes = 0, Model.Profile profile = null)
         {
-            var post = new Model.Post
-            {
-                Author = new Model.User {Id = dbPost.Author},
-                CreatedAt = dbPost.Time,
-                Likes = likes,
-                Dislikes = dislikes,
-                Id = dbPost.Pid,
-                PostMessage = dbPost.PostMessage,
-                PostType = Model.PostType.Post,
-                Recipient = new Model.User {Id = dbPost.Recipient},
-                Comments = comments==null?null:comments.Where(c=>c!=null).ToList()
-            };
+
+            post.Author = dbPost.UserProfile.ToBusinessModel();
+            post.CreatedAt = dbPost.Time;
+            post.Likes = likes;
+            post.Dislikes = dislikes;
+            post.Id = dbPost.Pid;
+            post.Recipients = dbPost.PostRecipients.Select(p => p.UserProfile.ToBusinessModel()).ToList();
             return post;
+        }
+    }
+
+    public static class TextPostTranslator
+    {
+        public static void ToDbModel(this Model.TextPost post, PostText dbPost)
+        {
+            dbPost.PostId = post.Id;
+            dbPost.Text = post.Message;
+        }
+
+        public static Model.TextPost ToBusinessModel(this PostText dbPost, Model.TextPost textPost=null)
+        {
+            if(textPost==null)
+                textPost=new Model.TextPost();
+            textPost.Message = dbPost.Text;
+            return textPost;
+        }
+    }
+
+    public static class CommentTranslator
+    {
+        public static void ToDbModel(this Model.Comment post, Comment dbComment)
+        {
+            dbComment.CommentMessage = post.CommentMessage;
+            dbComment.ForPostId = post.PostId;
+        }
+
+        public static Model.Comment ToCommentBusinessModel(this Post dbPost, Model.Comment comment=null)
+        {
+            if (comment == null)
+                comment = new Model.Comment();
+            comment.ToBaseDbModel(dbPost);
+            comment.CommentMessage = dbPost.Comment.CommentMessage;
+            comment.PostId = dbPost.Comment.ForPostId;
+            return comment;
         }
     }
 }

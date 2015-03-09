@@ -8,16 +8,17 @@ namespace DbProviderTest
 {
     public static class PostGenerator
     {
-        public static Post CreatePost(string postId,string userId)
+        public static Post CreateTextPost(string postId,string userId)
         {
-            return new Post
+            return new TextPost
             {
-                Author = new User {Id = userId},
+                Author = new Profile {Id = userId},
                 CreatedAt = DateTime.Now,
                 Id = postId,
-                PostType = PostType.Post,
-                Recipient = new User {Id = userId},
-                PostMessage = "Post"
+                PostType = PostType.PostText,
+                Recipients = new List<Profile>{new Profile {Id = userId}},
+                Tags = new List<Profile> { new Profile { Id = userId } },
+                Message = "Post Text Message"
             };
         }
 

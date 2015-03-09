@@ -20,7 +20,7 @@ namespace ServiceLayer
     public class UserService : IUserService
     {
         public IUserController UserController { get; set; }
-        public string UserId { get; set; }
+        public User User { get; set; }
 
         public UserService()
         {
@@ -31,8 +31,8 @@ namespace ServiceLayer
         {
             var user = Mapper.Map<User>(request);
             user.Roles = new List<Role> {new Role {RoleId = 2}};
-            this.UserController.RegisterUser(user);
-            request.UserId = user.Id;
+            user=this.UserController.RegisterUser(user);
+            request.Id = user.Id;
             return request;
         }
         
@@ -46,15 +46,14 @@ namespace ServiceLayer
         public UserDTO Get(string username, string password)
         {
             var user = UserController.GetUser(username, password);
-            var userDto = Mapper.Map<User, UserDTO>(user);
+            var userDto = Mapper.Map<UserDTO>(user);
             return userDto;
         }
 
         public void ChangePassword( string oldpassword, string newpassword)
         {
-            var user = new User {Id = UserId};
-            user.ChangePassword(newpassword);
-            user.Save();
+            User.ChangePassword(newpassword);
+            User.Save();
         }
 
         public void ChangePassword(string email, string oldpassword, string newpassword)

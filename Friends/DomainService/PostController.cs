@@ -6,6 +6,7 @@ using DAL;
 using Infrastructure.Common;
 using Infrastructure.Data;
 using BusinessDomain.DomainObjects;
+using Infrastructure.Model;
 
 namespace DomainService
 {
@@ -23,14 +24,14 @@ namespace DomainService
         }
         public BusinessDomain.DomainObjects.Post CreatePost(string authorId, string recipientId, string postMessage)
         {
-            var post = new Post
+            var post = new TextPost
             {
-                Author = new User {Id = authorId},
+                Author = new Profile {Id = authorId},
                 CreatedAt = DateTime.UtcNow,
                 Id = IdGenerator.GenerateId(),
-                PostMessage = postMessage,
-                PostType = PostType.Post,
-                Recipient = new User {Id = recipientId}
+                Message = postMessage,
+                PostType = PostType.PostText,
+                Recipients = new List<Profile>{new Profile {Id = recipientId}}
             };
             try
             {
@@ -50,7 +51,7 @@ namespace DomainService
         {
             try
             {
-                var post = PostRepository.GetPost(postId, PostType.Post, userId);
+                var post = PostRepository.GetPost(postId, PostType.PostText, userId);
                 PostRepository.DeletePost(post);
                 UnitOfWork.Commit();
             }
@@ -61,9 +62,9 @@ namespace DomainService
             return true;
         }
 
-        public IEnumerable<Post> GetPosts(string userId)
+        public IEnumerable<Post> GetPosts(SearchFilter filter)
         {
-            return PostRepository.GetPosts(PostType.Post, userId);
+            return PostRepository.GetPosts(filter);
         }
     }
 }

@@ -14,6 +14,6 @@ namespace DAL
         string DeletePost(Post post);
         void UpdatePost(Post post);
         Post GetPost(string postId, PostType postType,string userId);
-        IEnumerable<Post> GetPosts(PostType postType,string userId);
+        IEnumerable<Post> GetPosts(SearchFilter filter);
     }
 }

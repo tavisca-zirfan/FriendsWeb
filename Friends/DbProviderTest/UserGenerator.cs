@@ -11,7 +11,12 @@ namespace DbProviderTest
         public static User CreateUserForCredential(string email,string password)
         {
             return new User { Email = email, IsActive = 1, Password = password, ChangedPassword = password
-                , Id = Guid.NewGuid().ToString(), LastSeen = DateTime.Now, CreatedOn = DateTime.Now, Roles = new List<Role>{new Role{RoleId = 2}}};
+                , Id = Guid.NewGuid().ToString(), LastSeen = DateTime.Now, CreatedOn = DateTime.Now, Roles = new List<Role>{new Role{RoleId = 2}},
+                              DOB = new DateTime(1988, 10, 27),
+                              FirstName = "John",
+                              Gender = "M",
+                              LastName = "Doe"
+            };
         }
 
         public static Profile CreateProfile()

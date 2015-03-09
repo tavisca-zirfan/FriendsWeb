@@ -57,8 +57,11 @@ namespace DAL
             credential.CreatedOn = user.CreatedOn;
             if (!string.IsNullOrEmpty(user.ChangedPassword))
             {
-                if(credential.Password.Trim()!=user.Password.Trim())
-                    throw new Exception("Credentials mismatch");
+                if (!string.IsNullOrEmpty(credential.Password))
+                {
+                    if (credential.Password.Trim() != user.Password.Trim())
+                        throw new Exception("Credentials mismatch");
+                }
                 credential.Password = user.ChangedPassword;
             }
             credential.UserId = user.Id;

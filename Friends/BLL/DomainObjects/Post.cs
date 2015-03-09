@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using BusinessDomain.DomainEvents.Common;
 using BusinessDomain.DomainEvents.PostResponseEvent;
 using Infrastructure.Common;
@@ -7,14 +8,13 @@ using Infrastructure.Model;
 
 namespace BusinessDomain.DomainObjects
 {
-    public class Post:EntityBase<string>,ILikable
+    public abstract class Post:EntityBase<string>,ILikable
     {
-        public string PostMessage { get; set; }
-        public User Author { get; set; }
-        public User Recipient { get; set; }
-        public List<User> Recipients { get; set; }
+        public Profile Author { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public IList<Comment> Comments { get; set; }  
+        public IList<Comment> Comments { get; set; } 
+        public IList<Profile> Recipients { get; set; }
+        public IList<Profile> Tags { get; set; } 
         public int Likes { get; set; }
         public int Dislikes { get; set; }
         public PostType PostType;
@@ -36,7 +36,7 @@ namespace BusinessDomain.DomainObjects
         public void RemoveComment(string userId,Comment comment)
         {
             var canDelete = (userId == comment.CommentedBy.Id) || (userId == this.Author.Id) ||
-                            (userId == this.Recipient.Id);
+                            (this.Recipients.Select(p=>p.Id).Contains(userId));
             if(canDelete)
                 AddSaveEvent(new RemoveCommentEvent(null,comment.Id));
         }

@@ -5,7 +5,7 @@ using Infrastructure.Model;
 
 namespace BusinessDomain.DomainObjects
 {
-    public class Comment:EntityBase<string>,ILikable
+    public class Comment:Post
     {
         public string CommentMessage { get; set; }
         public int Likes { get; set; }
@@ -14,18 +14,5 @@ namespace BusinessDomain.DomainObjects
         public User CommentedBy { get; set; }
         public PostType? PostType { get; set; }
         public string  PostId { get; set; }
-        public void Like(string userId)
-        {
-            AddSaveEvent(new RemoveLikeEvent(this.Id, userId, DomainObjects.PostType.Comment));
-            AddSaveEvent(new AddLikeEvent(this.Id, userId, DomainObjects.PostType.Comment, LikeType.Like));
-            Save();
-        }
-
-        public void Dislike(string userId)
-        {
-            AddSaveEvent(new RemoveLikeEvent(Id, userId, DomainObjects.PostType.Comment));
-            AddSaveEvent(new AddLikeEvent(this.Id, userId, DomainObjects.PostType.Comment, LikeType.Dislike));
-            Save();
-        }
     }
 }
