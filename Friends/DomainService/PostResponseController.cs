@@ -23,8 +23,8 @@ namespace DomainService
             var comment = new Comment
             {
                 Id = Guid.NewGuid().ToString(),
-                CommentedAt = DateTime.UtcNow,
-                CommentedBy = new User { Id = authorId },
+                CreatedAt = DateTime.UtcNow,
+                Author = new Profile { Id = authorId },
                 CommentMessage = commentMessage,
                 PostType = postType
             };
@@ -44,7 +44,7 @@ namespace DomainService
         {
             try
             {
-                PostResponseRepository.DeleteComment(new Comment { CommentedBy = new User { Id = userId }, Id = commentId, PostType = postType });
+                PostResponseRepository.DeleteComment(new Comment { Author = new Profile { Id = userId }, Id = commentId, PostType = postType });
                 PostResponseRepository.RemoveLike(new List<string>{commentId},PostType.Comment );
                 UnitOfWork.Commit();
             }

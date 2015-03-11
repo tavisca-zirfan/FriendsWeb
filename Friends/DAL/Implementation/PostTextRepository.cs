@@ -12,7 +12,7 @@ namespace DAL.Implementation
         public override BusinessDomain.DomainObjects.Post ParsePost(FriendsDb.Models.Post post)
         {
             var textPost = post.PostText.ToBusinessModel();
-            post.ToBusinessModel(textPost);
+            //post.ToBusinessModel(textPost);
             return textPost;
         }
 
@@ -28,7 +28,9 @@ namespace DAL.Implementation
 
         public override void RemovePost(FriendsDb.Models.Post post)
         {
-            throw new NotImplementedException();
+            var dbPost = Db.PostTexts.FirstOrDefault(p => p.PostId == post.Pid);
+            if (dbPost == null)
+                return;
+            Db.PostTexts.Remove(dbPost);
         }
     }
-}

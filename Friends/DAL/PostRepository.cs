@@ -52,9 +52,10 @@ namespace DAL
         public string DeletePost(Model.Post post)
         {
             var dbPost =
-                Db.Posts.FirstOrDefault(p => p.Pid == post.Id && (p.Author == post.Author.Id ));
+                Db.Posts.FirstOrDefault(p => p.Pid == post.Id);
             if (dbPost == null)
                 return null;
+
             //Db.Posts.Remove(dbPost);
             _postResponseRepository.DeleteComment(dbPost.Pid, post.PostType);
             _postResponseRepository.RemoveLike(new List<string>{dbPost.Pid},Model.PostType.PostText );
@@ -89,15 +90,36 @@ namespace DAL
         //        post.Comments.Select(c => c.Comment.ToBusinessModel(c.Likes, c.Dislikes)).ToList());
         //}
 
-        public Model.Post GetPost(string postId, Model.PostType postType, string userId = "")
+        public Model.Post GetPost(string postId, Model.PostType postType)
         {
-            var post =
-                Db.Posts.Include(postType.ToString())
-                    .Include("UserProfile")
-                    .Include("PostRecipients")
+            var tables = new List<string> {postType.ToString()};
+            var dbPost =
+                GetPosts(tables)
                     .FirstOrDefault(p=>p.Pid==postId);
             var postTypeRepo = ObjectFactory.Resolve<IPostTypeRepository>(postType.ToString());
-            return postTypeRepo.ParsePost(post);
+            var comments = GetComments(new List<string> {dbPost.Pid});
+            var post= postTypeRepo.ParsePost(dbPost);
+            dbPost.ToBusinessModel(post);
+            post.Comments = comments.ToList();
+            return post;
+        }
+
+        private IEnumerable<Model.Comment> GetComments(IEnumerable<string> postIds)
+        {
+            var tables = new List<string> { Model.PostType.Comment.ToString() };
+            var dbComments = GetPosts(tables)
+                .Where(p => postIds.Contains(p.Comment.ForPostId)).ToList();
+            var commentRepo = ObjectFactory.Resolve<IPostTypeRepository>(Model.PostType.Comment.ToString());
+            return dbComments.Select(commentRepo.ParsePost).Cast<Model.Comment>();
+        }
+
+        private IQueryable<Post> GetPosts(IEnumerable<string> tables)
+        {
+            var posts = Db.Posts
+                .Include("UserProfile")
+                    .Include("PostRecipients");
+            posts = tables.Aggregate(posts, (current, table) => current.Include(table));
+            return posts;
         }
 
         public IEnumerable<Model.Post> GetPosts(SearchFilter filter)

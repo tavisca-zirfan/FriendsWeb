@@ -36,15 +36,16 @@ namespace DAL
         }
 
         public static BusinessDomain.DomainObjects.Post ToBusinessModel(this Post dbPost, Model.Post post, int likes = 0,
-            int dislikes = 0, Model.Profile profile = null)
+            int dislikes = 0)
         {
-
+            
             post.Author = dbPost.UserProfile.ToBusinessModel();
             post.CreatedAt = dbPost.Time;
             post.Likes = likes;
             post.Dislikes = dislikes;
             post.Id = dbPost.Pid;
             post.Recipients = dbPost.PostRecipients.Select(p => p.UserProfile.ToBusinessModel()).ToList();
+            post.Tags = dbPost.PostTags.Select(p => p.UserProfile.ToBusinessModel()).ToList();
             return post;
         }
     }
@@ -71,17 +72,9 @@ namespace DAL
         public static void ToDbModel(this Model.Comment post, Comment dbComment)
         {
             dbComment.CommentMessage = post.CommentMessage;
-            dbComment.ForPostId = post.PostId;
+            dbComment.ForPostId = post.ForPostId;
         }
 
-        public static Model.Comment ToCommentBusinessModel(this Post dbPost, Model.Comment comment=null)
-        {
-            if (comment == null)
-                comment = new Model.Comment();
-            comment.ToBaseDbModel(dbPost);
-            comment.CommentMessage = dbPost.Comment.CommentMessage;
-            comment.PostId = dbPost.Comment.ForPostId;
-            return comment;
-        }
+        
     }
 }

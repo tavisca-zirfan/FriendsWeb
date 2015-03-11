@@ -71,7 +71,7 @@ namespace DbProviderTest
         public void GetPost()
         {
             var r = new PostRepository();
-            var p = r.GetPost(postId, PostType.PostText, "zbi");
+            var p = r.GetPost(postId, PostType.PostText);
            Assert.IsNotNull(p);
         }
 

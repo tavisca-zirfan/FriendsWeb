@@ -51,7 +51,7 @@ namespace DomainService
         {
             try
             {
-                var post = PostRepository.GetPost(postId, PostType.PostText, userId);
+                var post = PostRepository.GetPost(postId, PostType.PostText);
                 PostRepository.DeletePost(post);
                 UnitOfWork.Commit();
             }

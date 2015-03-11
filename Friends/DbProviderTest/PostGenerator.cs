@@ -27,9 +27,9 @@ namespace DbProviderTest
             return new Comment
             {
                 Id = commentId,
-                CommentedBy = new User {Id = userId},
+                Author = new Profile {Id = userId},
                 CommentMessage = "Comment",
-                CommentedAt = DateTime.Now,
+                CreatedAt = DateTime.Now,
                 PostType = postType
             };
         }

@@ -13,7 +13,7 @@ namespace DAL
         void AddPost(Post post);
         string DeletePost(Post post);
         void UpdatePost(Post post);
-        Post GetPost(string postId, PostType postType,string userId);
+        Post GetPost(string postId, PostType postType);
         IEnumerable<Post> GetPosts(SearchFilter filter);
     }
 }

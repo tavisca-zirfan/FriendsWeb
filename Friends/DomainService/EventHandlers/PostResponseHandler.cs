@@ -25,7 +25,7 @@ namespace DomainService.EventHandlers
 
         public void Handle(EntityCreateEvent<Comment> eventObject)
         {
-            _postResponseRepository.AddComment(eventObject.Entity.PostId,eventObject.Entity);
+            _postResponseRepository.AddComment(eventObject.Entity.ForPostId,eventObject.Entity);
         }
     }
 }

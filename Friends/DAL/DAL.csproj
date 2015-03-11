@@ -51,6 +51,7 @@
     <Compile Include="ContainerSetup.cs" />
     <Compile Include="EFBaseRepository.cs" />
     <Compile Include="Implementation\BasePostTypeRepository.cs" />
+    <Compile Include="Implementation\CommentRepository.cs" />
     <Compile Include="Implementation\PostTextRepository.cs" />
     <Compile Include="Interfaces\IPostTypeRepository.cs" />
     <Compile Include="IPostRepository.cs" />

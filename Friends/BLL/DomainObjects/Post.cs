@@ -35,7 +35,7 @@ namespace BusinessDomain.DomainObjects
 
         public void RemoveComment(string userId,Comment comment)
         {
-            var canDelete = (userId == comment.CommentedBy.Id) || (userId == this.Author.Id) ||
+            var canDelete = (userId == comment.Author.Id) || (userId == this.Author.Id) ||
                             (this.Recipients.Select(p=>p.Id).Contains(userId));
             if(canDelete)
                 AddSaveEvent(new RemoveCommentEvent(null,comment.Id));
@@ -45,12 +45,12 @@ namespace BusinessDomain.DomainObjects
         {
             var comment = new Comment
             {
-                CommentedAt = DateTime.Now,
-                CommentedBy = new User {Id = userId},
+                CreatedAt = DateTime.Now,
+                Author = new Profile {Id = userId},
                 CommentMessage = commentMessage,
                 Id = IdGenerator.GenerateId(),
                 PostType = PostType.Comment,
-                PostId = this.Id
+                ForPostId = this.Id
             };
             AddSaveEvent(new EntityCreateEvent<Comment>(comment));
             this.Save();
