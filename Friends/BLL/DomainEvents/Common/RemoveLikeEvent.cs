@@ -7,20 +7,16 @@ using Infrastructure.Events;
 
 namespace BusinessDomain.DomainEvents.Common
 {
-    public class RemoveLikeEvent : IEvent
+    public class RemoveLikeEvent : EventBase
     {
-        public string Id { get; private set; }
-        public PostType PostType { get; private set; }
+        public string PostId { get; private set; }
         public string UserId { get; private set; }
-        public IDispatcher Dispatcher { get; set; }
-        public RemoveLikeEvent(string id, string userId, PostType postType)
+        public RemoveLikeEvent(string postId, string userId)
         {
-            Id = id;
+            PostId = postId;
             UserId = userId;
-            PostType = postType;
-            Dispatcher = new Dispatcher();
         }
-        public void Raise()
+        public override void Raise()
         {
             Dispatcher.Dispatch(this);
         }

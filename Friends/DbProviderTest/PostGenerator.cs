@@ -22,7 +22,7 @@ namespace DbProviderTest
             };
         }
 
-        public static Comment CreateComment(string commentId,PostType postType,string userId)
+        public static Comment CreateComment(string commentId,string forPostId,string userId)
         {
             return new Comment
             {
@@ -30,7 +30,10 @@ namespace DbProviderTest
                 Author = new Profile {Id = userId},
                 CommentMessage = "Comment",
                 CreatedAt = DateTime.Now,
-                PostType = postType
+                Recipients = new List<Profile> { new Profile { Id = userId } },
+                Tags = new List<Profile> { new Profile { Id = userId } },
+                PostType = PostType.Comment,
+                ForPostId = forPostId
             };
         }
     }

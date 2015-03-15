@@ -13,7 +13,9 @@ namespace DAL
     {
         public void Setup(Infrastructure.Container.IDependencyContainer container)
         {
-            container.Register<IPostTypeRepository, PostTextRepository>(PostType.PostText.ToString());
+            container.Register<IPostTypeRepository, PostTextRepository>(PostType.PostText.ToString())
+                .Register<IPostTypeRepository, CommentRepository>(PostType.Comment.ToString());
+
         }
     }
 }

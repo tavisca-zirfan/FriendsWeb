@@ -21,7 +21,7 @@ namespace DomainService
         }
         public User GetUser(string username, string password)
         {
-            var user = UserRepository.GetUser(username);
+            var user = GetUserByEmail(username);
             if (user!=null && user.Password == password)
                 return user;
             else
@@ -29,6 +29,7 @@ namespace DomainService
                 return null;
             }
         }
+
 
         public User RegisterUser(User user)
         {
@@ -41,30 +42,55 @@ namespace DomainService
             return user;
         }
 
-        public Profile GetProfile(string userId)
+        public Profile GetProfile(string userId, User authUser)
         {
             return UserRepository.GetProfile(userId);
         }
 
-        public Profile UpdateProfile(Profile profile)
+        public Profile UpdateProfile(Profile profile, User authUser)
         {
             UserRepository.UpdateProfile(profile);
+            UnitOfWork.Commit();
             return profile;
         }
 
-        public bool ChangePassword(string userId,string oldPassword, string newPassword)
+        public bool ChangePassword(User authUser,string oldPassword, string newPassword)
         {
-            var user = new User{Id = userId,Password=oldPassword,ChangedPassword = newPassword};
+            var user = new User{Id = authUser.Id,Password=oldPassword,ChangedPassword = newPassword};
             user.ChangedPassword = newPassword;
             UserRepository.UpdateCredential(user);
+            UnitOfWork.Commit();
             return true;
         }
 
-        public bool ChangeEmail(string userId, string email)
+        public bool ChangeEmail(User authUser, string email)
         {
             throw new NotImplementedException();
         }
-        
-        
+
+
+
+
+        public User GetUserByEmail(string email)
+        {
+            return UserRepository.GetUserByEmail(email);
+        }
+
+        public User GetUserById(string userId)
+        {
+            return UserRepository.GetUser(userId);
+        }
+
+
+        public IEnumerable<Profile> GetProfiles(IEnumerable<string> userIds, User authUser)
+        {
+            return UserRepository.GetProfiles(userIds);
+        }
+
+
+        public IEnumerable<Profile> GetProfiles(Infrastructure.Model.SearchFilter filter, User authUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -22,17 +22,8 @@ namespace DomainService
             PostResponseRepository=new PostResponseRepository(UnitOfWork);
 
         }
-        public BusinessDomain.DomainObjects.Post CreatePost(string authorId, string recipientId, string postMessage)
+        public BusinessDomain.DomainObjects.Post CreatePost(Post post, User authUser)
         {
-            var post = new TextPost
-            {
-                Author = new Profile {Id = authorId},
-                CreatedAt = DateTime.UtcNow,
-                Id = IdGenerator.GenerateId(),
-                Message = postMessage,
-                PostType = PostType.PostText,
-                Recipients = new List<Profile>{new Profile {Id = recipientId}}
-            };
             try
             {
                 PostRepository.AddPost(post);
@@ -45,9 +36,9 @@ namespace DomainService
             return post;
         }
 
-        
 
-        public bool RemovePost(string userId, string postId)
+
+        public bool RemovePost(string postId, User authUser)
         {
             try
             {
@@ -62,9 +53,15 @@ namespace DomainService
             return true;
         }
 
-        public IEnumerable<Post> GetPosts(SearchFilter filter)
+        public IEnumerable<Post> GetPosts(SearchFilter filter, IEnumerable<PostType> types, User authUser)
         {
-            return PostRepository.GetPosts(filter);
+            return PostRepository.GetPosts(filter,types);
+        }
+
+
+        public Post GetPost(string postId, User authUser, PostType postType)
+        {
+            return PostRepository.GetPost(postId, postType);
         }
     }
 }

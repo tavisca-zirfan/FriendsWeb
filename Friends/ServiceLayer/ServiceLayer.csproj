@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="CommentService.cs" />
     <Compile Include="LikeService.cs" />
+    <Compile Include="Model\TextPostDTO.cs" />
     <Compile Include="PostService.cs" />
     <Compile Include="Model\ChangePasswordRequest.cs" />
     <Compile Include="Model\CommentDTO.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Model\ProfileDTO.cs" />
     <Compile Include="Model\UserDTO.cs" />
     <Compile Include="ProfileService.cs" />
+    <Compile Include="Translator.cs" />
     <Compile Include="UserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

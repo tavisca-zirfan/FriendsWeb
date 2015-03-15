@@ -9,9 +9,9 @@ namespace ServiceLayer
 {
     public interface ICommentService
     {
-        IEnumerable<CommentDTO> Get(string postId);
-        void Post(CommentDTO request);
-        void Delete(string commentId);
+        IEnumerable<CommentDTO> Get(string postId, UserDTO authUser);
+        void Post(CommentDTO request, UserDTO authUser);
+        void Delete(string commentId, UserDTO authUser);
     }
     class CommentService
     {

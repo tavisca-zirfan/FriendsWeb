@@ -75,7 +75,7 @@ namespace DAL
             return
                 Db.Likes.Count(
                     l =>
-                        l.LikeType == (int) likeType && l.TypeId == postId && l.Type == postType.ToString() &&
+                        l.LikeType == (int) likeType && l.PostId == postId  &&
                         (l.UserId == userId || userId == ""));
         }
 

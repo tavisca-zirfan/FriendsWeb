@@ -9,8 +9,9 @@ namespace DomainService
 {
     public interface IPostController
     {
-        Post CreatePost(string authorId, string recipientId, string postMessage);
-        bool RemovePost(string userId, string postId);
-        IEnumerable<Post> GetPosts(SearchFilter filter);
+        Post CreatePost(Post post,User authUser);
+        bool RemovePost(string postId, User authUser);
+        IEnumerable<Post> GetPosts(SearchFilter filter, IEnumerable<PostType> types, User authUser);
+        Post GetPost(string postId, User authUser, PostType postType);
     }
 }

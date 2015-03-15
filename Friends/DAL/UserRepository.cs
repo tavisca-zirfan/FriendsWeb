@@ -153,12 +153,18 @@ namespace DAL
             if (credential == null)
                 //throw new Exception("User Not Found");
                 return;
-            Db.UserCredentials.Remove(credential);
-            var profile = Db.UserProfiles.FirstOrDefault(u => u.UserId == userId);
-            //if (profile == null)
-                //throw new Exception("User Not Found");
-            Db.UserProfiles.Remove(profile);
+            Db.Likes.RemoveRange(credential.UserProfile.Likes);
+            Db.PostRecipients.RemoveRange(credential.UserProfile.PostRecipients);
+            Db.PostTags.RemoveRange(credential.UserProfile.PostTags);
+            Db.PostTexts.RemoveRange(
+                credential.UserProfile.Posts.Where(p => p.Type == PostType.PostText.ToString()).Select(p => p.PostText));
+            Db.Comments.RemoveRange(
+                credential.UserProfile.Posts.Where(p => p.Type == PostType.Comment.ToString()).Select(p => p.Comment));
+            Db.Posts.RemoveRange(credential.UserProfile.Posts);
+            Db.UserProfiles.Remove(credential.UserProfile);
             Db.UserRoles.RemoveRange(Db.UserRoles.Where(ur => ur.UserId == userId));
+            Db.UserCredentials.Remove(credential);
+            
         }
 
         public List<BusinessDomain.DomainObjects.Role> GetRoles(string userId)
@@ -172,6 +178,19 @@ namespace DAL
 
 
         public IEnumerable<Profile> GetFriends(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+
+        public IEnumerable<Profile> GetProfiles(IEnumerable<string> userIds)
+        {
+            var profiles = Db.UserProfiles.Where(u => userIds.Contains(u.UserId)).ToList();
+            return profiles.Select(p => p.ToBusinessModel());
+        }
+
+
+        public IEnumerable<Profile> GetProfiles(SearchFilter filter)
         {
             throw new NotImplementedException();
         }

@@ -10,9 +10,9 @@ namespace ServiceLayer
 {
     public interface IUserService
     {
-        //User Authenticate(LoginRequest request);
         UserDTO Post(UserDTO request);
         UserDTO Get(string email, string password);
+        UserDTO Get(string id);
         void Delete();
         void ChangePassword(string oldpassword, string newpassword);
         void ChangePassword(string email ,string oldpassword, string newpassword);
@@ -61,6 +61,13 @@ namespace ServiceLayer
             var user = UserController.GetUser(email, oldpassword);
             user.ChangePassword(newpassword);
             user.Save();
+        }
+
+
+        public UserDTO Get(string id)
+        {
+            var user = UserController.GetUserById(id);
+            return Mapper.Map<UserDTO>(user);
         }
     }
 

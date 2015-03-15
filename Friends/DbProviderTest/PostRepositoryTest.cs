@@ -37,16 +37,17 @@ namespace DbProviderTest
         {
             try
             {
-                //UserRepository.DeleteCredential(userId);
-                //UnitOfWork.Commit();
-                //var user = UserGenerator.CreateUserForCredential("test@test.com", "qwerty");
-                //user.Id = userId;
-                //UserRepository.AddUser(user);
-                //UnitOfWork.Commit();
+                UserRepository.DeleteCredential(userId);
+                UnitOfWork.Commit();
+                var user = UserGenerator.CreateUserForCredential("test@test.com", "qwerty");
+                user.Id = userId;
+                UserRepository.AddUser(user);
+                UnitOfWork.Commit();
             }
             catch (Exception ex)
             {
                 UnitOfWork.Refresh();
+                
             }
         }
 
@@ -67,28 +68,180 @@ namespace DbProviderTest
                 UnitOfWork.Refresh();
             }
         }
+
+        [TestCleanup]
+        public void TestDispose()
+        {
+            try
+            {
+                UnitOfWork = new UnitOfWork();
+                PostResponseRepository = new PostResponseRepository(UnitOfWork);
+                PostRepository = new PostRepository(UnitOfWork);
+                UserRepository = new UserRepository(UnitOfWork);
+                var postToBeDeleted = PostRepository.GetPost(postId, PostType.PostText);
+                if(postToBeDeleted!=null)
+                PostRepository.DeletePost(postToBeDeleted);
+                UnitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                UnitOfWork.Refresh();
+            }
+        }
+
+        [TestInitialize]
+        public void TestStartUp()
+        {
+            try
+            {
+                UnitOfWork = new UnitOfWork();
+                PostResponseRepository = new PostResponseRepository(UnitOfWork);
+                PostRepository = new PostRepository(UnitOfWork);
+                UserRepository = new UserRepository(UnitOfWork);
+                var postToBeDeleted = PostRepository.GetPost(postId, PostType.PostText);
+                if(postToBeDeleted!=null)
+                PostRepository.DeletePost(postToBeDeleted);
+                UnitOfWork.Commit();
+            }
+            catch (Exception ex)
+            {
+                UnitOfWork.Refresh();
+            }
+        }
+
         [TestMethod]
         public void GetPost()
         {
-            var r = new PostRepository();
-            var p = r.GetPost(postId, PostType.PostText);
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            var p = PostRepository.GetPost(postId, PostType.PostText);
            Assert.IsNotNull(p);
         }
 
         [TestMethod]
         public void AddPost()
         {
-            try
-            {
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            var p = PostRepository.GetPost(postId, PostType.PostText);
+            Assert.IsNotNull(p);
+        }
+
+        [TestMethod]
+        public void AddComment()
+        {
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            PostRepository.AddPost(comment);
+            UnitOfWork.Commit();
+            var p = PostRepository.GetPost(postId, PostType.PostText);
+            Assert.IsNotNull(p);
+            Assert.AreEqual(1,p.Comments.Count);
+            Assert.AreEqual(1,p.Comments[0].Tags.Count);
+            Assert.AreEqual(1, p.Comments[0].Recipients.Count);
+        }
+
+        [TestMethod]
+        public void AddLike()
+        {
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            PostRepository.AddLike(textpost.Id,userId,LikeType.Like);
+            UnitOfWork.Commit();
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            Assert.AreEqual(1,myPost.Likes.Count);
+        }
+
+        [TestMethod]
+        public void AddDislike()
+        {
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            PostRepository.AddLike(textpost.Id, userId, LikeType.Dislike);
+            UnitOfWork.Commit();
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            Assert.AreEqual(1, myPost.Dislikes.Count);
+        }
+
+        [TestMethod]
+        public void AddLikeAndDislike()
+        {
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            PostRepository.AddLike(textpost.Id, userId, LikeType.Like);
+            PostRepository.AddLike(textpost.Id, userId, LikeType.Dislike);
+            UnitOfWork.Commit();
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            Assert.AreEqual(1, myPost.Likes.Count);
+        }
+
+        [TestMethod]
+        public void AddTag()
+        {
+
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            PostRepository.AddTag(textpost.Id, userId);
+            UnitOfWork.Commit();
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            Assert.AreEqual(2, myPost.Tags.Count);
+        }
+
+        [TestMethod]
+        public void RemoveTag()
+        {
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            PostRepository.AddTag(textpost.Id, userId);
+            UnitOfWork.Commit();
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            Assert.AreEqual(2, myPost.Tags.Count);
+            PostRepository.RemoveTag(textpost.Id, userId);
+            UnitOfWork.Commit();
+            myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            Assert.AreEqual(1, myPost.Tags.Count);
+        }
+
+        [TestMethod]
+        public void AddRecipient()
+        {
+            
                 var textpost = PostGenerator.CreateTextPost(postId, userId);
                 PostRepository.AddPost(textpost);
                 UnitOfWork.Commit();
-            }
-            catch (Exception ex)
-            {
-                
-            }
+                PostRepository.AddRecipient(textpost.Id, userId);
+                UnitOfWork.Commit();
+                var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+                Assert.AreEqual(2, myPost.Recipients.Count);
+            
         }
+
+        [TestMethod]
+        public void RemoveRecipient()
+        {
+            var textpost = PostGenerator.CreateTextPost(postId, userId);
+            PostRepository.AddPost(textpost);
+            UnitOfWork.Commit();
+            PostRepository.AddRecipient(textpost.Id, userId);
+            UnitOfWork.Commit();
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            Assert.AreEqual(2, myPost.Recipients.Count);
+            PostRepository.RemoveRecipient(textpost.Id, userId);
+            UnitOfWork.Commit();
+            myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            Assert.AreEqual(1, myPost.Recipients.Count);
+        }
+
+
     }
 
     

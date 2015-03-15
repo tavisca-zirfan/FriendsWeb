@@ -8,12 +8,9 @@ namespace FriendsDb.Models.Mapping
         public PostTagMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.Id, t.PostId, t.UserId });
+            this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
             this.Property(t => t.PostId)
                 .IsRequired()
                 .HasMaxLength(50);

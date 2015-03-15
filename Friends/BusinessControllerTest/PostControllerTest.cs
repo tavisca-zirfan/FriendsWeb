@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DbProviderTest;
 using DomainService;
 using DAL;
 using BusinessDomain.DomainObjects;
@@ -30,7 +31,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostRepository>();
             mockRepository.Setup(r => r.AddPost(It.IsAny<Post>()));
             PostController.PostRepository = mockRepository.Object;
-            var post = PostController.CreatePost(authorId, recipientId, postMessage);
+            var post = PostController.CreatePost(PostGenerator.CreateTextPost("",""),It.IsAny<User>());
             Assert.IsNotNull(post);
         }
 
@@ -40,7 +41,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostRepository>();
             mockRepository.Setup(r => r.AddPost(It.IsAny<Post>())).Throws<Exception>();
             PostController.PostRepository = mockRepository.Object;
-            var post = PostController.CreatePost(authorId, recipientId, postMessage);
+            var post = PostController.CreatePost(PostGenerator.CreateTextPost(It.IsAny<string>(), It.IsAny<string>()), It.IsAny<User>());
             Assert.IsNull(post);
         }
         [TestMethod]
@@ -77,7 +78,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostRepository>();
             mockRepository.Setup(r => r.DeletePost(It.IsAny<Post>()));
             PostController.PostRepository = mockRepository.Object;
-            var post = PostController.RemovePost(authorId, recipientId);
+            var post = PostController.RemovePost(It.IsAny<string>(),  It.IsAny<User>());
             Assert.IsTrue(true);
         }
         [TestMethod]
@@ -86,7 +87,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostRepository>();
             mockRepository.Setup(r => r.DeletePost(It.IsAny<Post>())).Throws<Exception>();
             PostController.PostRepository = mockRepository.Object;
-            var post = PostController.RemovePost(authorId, recipientId);
+            var post = PostController.RemovePost(authorId, It.IsAny<User>());
             Assert.IsFalse(post);
         }
         [TestMethod]

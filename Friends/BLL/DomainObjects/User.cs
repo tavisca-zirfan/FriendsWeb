@@ -22,6 +22,7 @@ namespace BusinessDomain.DomainObjects
         public int IsActive { get; set; }
         public DateTime LastSeen { get; set; }
         public DateTime CreatedOn { get; set; }
+        public string ImageUrl { get; set; }
         private IList<Profile> _friends; 
         public IList<Profile> Friends
         {
@@ -67,6 +68,7 @@ namespace BusinessDomain.DomainObjects
 
         public bool IsFriendWith(User user)
         {
+            return true;
             return Friends.Any(f => f.Id == user.Id);
         }
     }

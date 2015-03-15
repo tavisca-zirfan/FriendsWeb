@@ -55,10 +55,19 @@ namespace DAL
                 Db.Posts.FirstOrDefault(p => p.Pid == post.Id);
             if (dbPost == null)
                 return null;
-
-            //Db.Posts.Remove(dbPost);
-            _postResponseRepository.DeleteComment(dbPost.Pid, post.PostType);
-            _postResponseRepository.RemoveLike(new List<string>{dbPost.Pid},Model.PostType.PostText );
+            if (post.PostType != Model.PostType.Comment && post.Comments.Count>0)
+            {
+                var commentRepo = GetRepository(Model.PostType.Comment);
+                commentRepo.RemovePosts(post.Comments);
+                var commentsToBeRemoved = post.Comments.Select(c => c.Id).ToList();
+                Db.Posts.RemoveRange(Db.Posts.Where(p => commentsToBeRemoved.Contains(p.Pid)));
+            }
+            var childRepository = GetRepository(post.PostType);
+            childRepository.RemovePost(post);
+            Db.PostTags.RemoveRange(Db.PostTags.Where(t => t.PostId == post.Id));
+            Db.PostRecipients.RemoveRange(Db.PostRecipients.Where(r => r.PostId == post.Id));
+            Db.Likes.RemoveRange(Db.Likes.Where(l => l.PostId == post.Id));
+            Db.Posts.Remove(dbPost);
             return dbPost.Pid;
         }
 
@@ -67,39 +76,17 @@ namespace DAL
             throw new NotImplementedException();
         }
 
-        //public Model.Post GetPost(string postId, Model.PostType postType, string userId)
-        //{
-        //    var post = (from c in Db.Comments
-        //                where c.Type == Model.PostType.Post.ToString()
-        //                let cl = Db.Likes.Where(l => l.TypeId == c.CommentId && l.Type == Model.PostType.Comment.ToString())
-        //                group new { Comment = c, Likes = cl.Count(l => l.LikeType == (int)Model.LikeType.Like), Dislikes = cl.Count(l => l.LikeType == (int)Model.LikeType.Dislike) } by c.TypeId
-        //                    into com
-        //                    join p in Db.Posts on com.Key equals p.Pid
-        //                    where p.Pid == postId
-        //                    let pl = Db.Likes.Where(l => l.TypeId == p.Pid && l.Type == Model.PostType.Post.ToString())
-        //                    select new
-        //                    {
-        //                        Post = p,
-        //                        Comments = com.Select(c => c),
-        //                        Likes = pl.Count(l => l.LikeType == (int)Model.LikeType.Like),
-        //                        Dislikes = pl.Count(l => l.LikeType == (int)Model.LikeType.Dislike),
-        //                    }).FirstOrDefault();
-        //    if (post == null)
-        //        return null;
-        //    return post.Post.ToBusinessModel(post.Likes, post.Dislikes, null,
-        //        post.Comments.Select(c => c.Comment.ToBusinessModel(c.Likes, c.Dislikes)).ToList());
-        //}
-
         public Model.Post GetPost(string postId, Model.PostType postType)
         {
             var tables = new List<string> {postType.ToString()};
             var dbPost =
                 GetPosts(tables)
                     .FirstOrDefault(p=>p.Pid==postId);
+            if (dbPost == null)
+                return null;
             var postTypeRepo = ObjectFactory.Resolve<IPostTypeRepository>(postType.ToString());
             var comments = GetComments(new List<string> {dbPost.Pid});
             var post= postTypeRepo.ParsePost(dbPost);
-            dbPost.ToBusinessModel(post);
             post.Comments = comments.ToList();
             return post;
         }
@@ -110,63 +97,75 @@ namespace DAL
             var dbComments = GetPosts(tables)
                 .Where(p => postIds.Contains(p.Comment.ForPostId)).ToList();
             var commentRepo = ObjectFactory.Resolve<IPostTypeRepository>(Model.PostType.Comment.ToString());
-            return dbComments.Select(commentRepo.ParsePost).Cast<Model.Comment>();
+            return dbComments.Select(commentRepo.ParsePost).Cast<Model.Comment>().ToList();
         }
 
-        private IQueryable<Post> GetPosts(IEnumerable<string> tables)
+        private IQueryable<Post> GetPosts(IEnumerable<string> types)
         {
-            var posts = Db.Posts
+            IQueryable<Post> posts = Db.Posts
                 .Include("UserProfile")
-                    .Include("PostRecipients");
-            posts = tables.Aggregate(posts, (current, table) => current.Include(table));
-            return posts;
+                    .Include("PostRecipients").Include("PostTags").Include("Likes");
+            return types.Select(ObjectFactory.Resolve<IPostTypeRepository>)
+                .Aggregate(posts, (current, childRepository) => childRepository.IncludeTables(current));
         }
 
-        public IEnumerable<Model.Post> GetPosts(SearchFilter filter)
+        public IEnumerable<Model.Post> GetPosts(SearchFilter filter,IEnumerable<Model.PostType> types)
         {
-            //var post = (from p in Db.Posts
-            //            from c in Db.Comments
-            //                .Where(
-            //                    com =>
-            //                        com.TypeId == p.Pid && com.Type == Model.PostType.Post.ToString()  &&
-            //                        (p.Author == filter.FilterProperties["authorid"].ToString() || p.Recipient == filter.FilterProperties["recipientid"].ToString())).DefaultIfEmpty()
-            //            group c by p
-            //                into com
-            //                select new
-            //                {
-            //                    Likes =
-            //                        Db.Likes.Count(
-            //                            l =>
-            //                                l.TypeId == com.Key.Pid && l.Type == Model.PostType.Post.ToString() &&
-            //                                l.LikeType == (int)Model.LikeType.Like),
-            //                    Dislikes =
-            //                        Db.Likes.Count(
-            //                            l =>
-            //                                l.TypeId == com.Key.Pid && l.Type == Model.PostType.Post.ToString() &&
-            //                                l.LikeType == (int)Model.LikeType.Dislike),
-            //                    Post = com.Key,
-            //                    Comments = com.Select(c => new
-            //                    {
-            //                        Comment = c,
-            //                        like = Db.Likes.Count(
-            //                            l =>
-            //                                l.TypeId == c.CommentId && l.Type == Model.PostType.Comment.ToString() &&
-            //                                l.LikeType == (int)Model.LikeType.Like)
-            //                        ,
-            //                        dislike = Db.Likes.Count(
-            //                            l =>
-            //                                l.TypeId == c.CommentId && l.Type == Model.PostType.Comment.ToString() &&
-            //                                l.LikeType == (int)Model.LikeType.Dislike)
-            //                    })
-
-
-            //                })
-            ////var p = Db.Posts.FirstOrDefault();p.
-            ////var post = Db.Posts.Include("Comments").Include("")
-            //return post.Select(p=>p.Post.ToBusinessModel(p.Likes, p.Dislikes, null,
-            //    p.Comments.Select(c =>c.Comment==null?null:c.Comment.ToBusinessModel(c.like,c.dislike)).ToList()));
-            throw new NotImplementedException();
+            var postsTable = GetPosts(types.Select(t=>t.ToString()));
+            var posts =
+                postsTable.Where(
+                    p =>
+                        p.Author == filter.FilterProperties["authorid"].ToString() ||
+                        p.PostRecipients.Select(r => r.RecipientId).Contains(filter.FilterProperties["recipientid"].ToString()))
+                    .ToList();
+            var comments = GetComments(posts.Select(p => p.Pid));
+            var finalList = posts.Select(p =>
+            {
+                var childRepository = ObjectFactory.Resolve<IPostTypeRepository>(p.Type);
+                var post= p.ToBusinessModel(childRepository.ParsePost(p));
+                post.Comments = comments.Where(c => c.ForPostId == p.Pid) as IList<BusinessDomain.DomainObjects.Comment>;
+                return post;
+            }).ToList();
+            return finalList;
         }
 
+
+
+        public void AddLike(string postId, string userId, Model.LikeType likeType)
+        {
+            Db.Likes.Add(new Like {PostId = postId, LikeType = (int) likeType, Time = DateTime.Now, UserId = userId});
+        }
+
+        public void RemoveLike(string postId, string userId)
+        {
+            var like = Db.Likes.Where(l => l.PostId == postId && l.UserId== userId);
+            Db.Likes.RemoveRange(like);
+        }
+
+        public void AddRecipient(string postId, string userId)
+        {
+            Db.PostRecipients.Add(new PostRecipient {PostId = postId, RecipientId = userId});
+        }
+
+        public void RemoveRecipient(string postId, string userId)
+        {
+            var recipient = Db.PostRecipients.First(r => r.PostId == postId && r.RecipientId == userId);
+            if (recipient == null)
+                return;
+            Db.PostRecipients.Remove(recipient);
+        }
+
+        public void AddTag(string postId, string userId)
+        {
+            Db.PostTags.Add(new PostTag { PostId = postId, UserId = userId });
+        }
+
+        public void RemoveTag(string postId, string userId)
+        {
+            var tag = Db.PostTags.First(l => l.PostId == postId && l.UserId == userId);
+            if (tag == null)
+                return;
+            Db.PostTags.Remove(tag);
+        }
     }
 }

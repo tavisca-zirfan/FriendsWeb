@@ -130,9 +130,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CacheExtension.cs" />
     <Compile Include="Classes\CustomAuthorizeAttribute.cs" />
     <Compile Include="Classes\CustomPrincipal.cs" />
+    <Compile Include="Classes\Translator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\PostResponseController.cs" />
     <Compile Include="Global.asax.cs">

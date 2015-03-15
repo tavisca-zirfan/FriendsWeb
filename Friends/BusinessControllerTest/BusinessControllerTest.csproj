@@ -78,6 +78,10 @@
       <Project>{f851f664-7cdb-4c7b-abd2-efdf1eb5dcce}</Project>
       <Name>DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DbProviderTest\DbProviderTest.csproj">
+      <Project>{2227b537-ca17-41e9-8690-471aa1491e13}</Project>
+      <Name>DbProviderTest</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DomainService\DomainService.csproj">
       <Project>{dd4c336b-177e-49a1-845a-dbaf3a42ae2b}</Project>
       <Name>DomainService</Name>

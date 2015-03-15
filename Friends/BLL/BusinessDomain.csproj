@@ -51,7 +51,8 @@
     <Compile Include="DomainEvents\Common\EntityUpdateEvent.cs" />
     <Compile Include="DomainEvents\Common\AddLikeEvent.cs" />
     <Compile Include="DomainEvents\Common\RemoveLikeEvent.cs" />
-    <Compile Include="DomainEvents\PostResponseEvent\RemoveCommentEvent.cs" />
+    <Compile Include="DomainEvents\PostEvent\AddPostRecipient.cs" />
+    <Compile Include="DomainEvents\PostEvent\AddPostTag.cs" />
     <Compile Include="DomainEvents\UserEvents\AddFriendEvent.cs" />
     <Compile Include="DomainEvents\UserEvents\ChangePasswordEvent.cs" />
     <Compile Include="DomainEvents\UserEvents\LoadFriendsEvent.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="DomainObjects\TextPost.cs" />
     <Compile Include="DomainObjects\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Translator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

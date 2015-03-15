@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using BusinessDomain;
 using DAL;
 using BusinessDomain.DomainObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -69,7 +70,7 @@ namespace DbProviderTest
             user = UserRepository.AddUser(user);
             //UserRepository.AddProfile(user.UserId, profile);
             UOW.Commit();
-            var isUserSaved = UserRepository.CheckCredentialIfUserIdExist(user.Id);
+            var isUserSaved = UserRepository.GetUser(user.Id)!=null;
             Assert.IsTrue(isUserSaved);
             profile = UserRepository.GetProfile(user.Id);
             Assert.IsNotNull(profile);

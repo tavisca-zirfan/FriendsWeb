@@ -8,7 +8,6 @@ namespace FriendsDb.Models
         public int Id { get; set; }
         public string RecipientId { get; set; }
         public string PostId { get; set; }
-        public string PostType { get; set; }
         public virtual Post Post { get; set; }
         public virtual UserProfile UserProfile { get; set; }
     }

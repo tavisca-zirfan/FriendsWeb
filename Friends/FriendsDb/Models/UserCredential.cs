@@ -9,7 +9,6 @@ namespace FriendsDb.Models
         {
             this.EventInviteds = new List<EventInvited>();
             this.Images = new List<Image>();
-            this.Likes = new List<Like>();
             this.UserRoles = new List<UserRole>();
         }
 
@@ -22,7 +21,6 @@ namespace FriendsDb.Models
         public int IsActive { get; set; }
         public virtual ICollection<EventInvited> EventInviteds { get; set; }
         public virtual ICollection<Image> Images { get; set; }
-        public virtual ICollection<Like> Likes { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }

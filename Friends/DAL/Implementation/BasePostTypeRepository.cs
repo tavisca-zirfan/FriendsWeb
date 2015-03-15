@@ -21,14 +21,14 @@ namespace DAL.Implementation
         }
 
         public abstract Post ParsePost(FriendsDb.Models.Post post);
-
+        public abstract IQueryable<FriendsDb.Models.Post> IncludeTables(IQueryable<FriendsDb.Models.Post> posts); 
 
         public abstract void InsertPost(Post post);
 
 
-        public abstract void RemovePost(FriendsDb.Models.Post post);
+        public abstract void RemovePost(Post post);
 
-
+        public abstract void RemovePosts(IEnumerable<Post> posts);
 
         public void SetUnitOfWork(IUnitOfWork uow)
         {

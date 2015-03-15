@@ -12,10 +12,12 @@ namespace ServiceLayer.Model
         public static void CreateMap()
         {
             Mapper.CreateMap<User, UserDTO>().ReverseMap();
-            //Mapper.CreateMap<UserDTO, User>();
-            Mapper.CreateMap<Comment, CommentDTO>().ReverseMap();
-            Mapper.CreateMap<Post, PostDTO>().ReverseMap();
-            Mapper.CreateMap<BusinessDomain.DomainObjects.Profile, ProfileDTO>().ReverseMap();
+            Mapper.CreateMap<Comment, CommentDTO>();
+            Mapper.CreateMap<Post, PostDTO>().Include<TextPost,TextPostDTO>().Include<Comment,CommentDTO>();
+            Mapper.CreateMap<TextPost, TextPostDTO>();
+            Mapper.CreateMap<Comment, CommentDTO>();
+            Mapper.CreateMap<BusinessDomain.DomainObjects.Profile, ProfileDTO>();
+            Mapper.CreateMap<BusinessDomain.DomainObjects.Profile, ProfileThumbnailDTO>();
             Mapper.CreateMap<Role, RolesDTO>().ReverseMap();
         }
     }

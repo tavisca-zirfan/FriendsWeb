@@ -9,5 +9,8 @@ namespace ServiceLayer.Model
     {
         public string AuthorId { get; set; }
         public string RecipientId { get; set; }
+        public int PageNumber { get; set; }
+        public int TotalRecords { get; set; }
+        public int RecordsPerPage { get; set; }
     }
 }

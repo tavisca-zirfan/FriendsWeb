@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using BusinessDomain.DomainEvents.Common;
-using BusinessDomain.DomainEvents.PostResponseEvent;
+using BusinessDomain.DomainEvents.PostEvent;
 using Infrastructure.Common;
 using Infrastructure.Model;
 
@@ -12,25 +12,34 @@ namespace BusinessDomain.DomainObjects
     {
         public Profile Author { get; set; }
         public DateTime? CreatedAt { get; set; }
-        public IList<Comment> Comments { get; set; } 
+        public IList<Comment> Comments { get; set; }
+        public IList<Profile> Likes; 
         public IList<Profile> Recipients { get; set; }
-        public IList<Profile> Tags { get; set; } 
-        public int Likes { get; set; }
-        public int Dislikes { get; set; }
+        public IList<Profile> Tags { get; set; }
+        public IList<Profile> Dislikes { get; set; }
+
+        public int NumberOfLikes
+        {
+            get { return Likes.Count; }
+        }
+
+        public int NumberOfDislikes
+        {
+            get { return Dislikes.Count; }
+        }
+
         public PostType PostType;
 
         public void Like(string userId)
         {
-            AddSaveEvent(new RemoveLikeEvent(this.Id,userId,this.PostType));
-            AddSaveEvent(new AddLikeEvent(this.Id,userId,this.PostType,LikeType.Like));
-            Save();
+            AddSaveEvent(new RemoveLikeEvent(this.Id,userId));
+            AddSaveEvent(new AddLikeEvent(this.Id,userId,LikeType.Like));
         }
 
         public void Dislike(string userId)
         {
-            AddSaveEvent(new RemoveLikeEvent(Id,userId,PostType));
-            AddSaveEvent(new AddLikeEvent(this.Id, userId, this.PostType, LikeType.Dislike));
-            Save();
+            AddSaveEvent(new RemoveLikeEvent(Id,userId));
+            AddSaveEvent(new AddLikeEvent(this.Id, userId, LikeType.Dislike));
         }
 
         public void RemoveComment(string userId,Comment comment)
@@ -38,7 +47,7 @@ namespace BusinessDomain.DomainObjects
             var canDelete = (userId == comment.Author.Id) || (userId == this.Author.Id) ||
                             (this.Recipients.Select(p=>p.Id).Contains(userId));
             if(canDelete)
-                AddSaveEvent(new RemoveCommentEvent(null,comment.Id));
+                AddSaveEvent(new EntityDeleteEvent<Post>(comment));
         }
 
         public Comment AddComment(string userId,string commentMessage)
@@ -52,10 +61,19 @@ namespace BusinessDomain.DomainObjects
                 PostType = PostType.Comment,
                 ForPostId = this.Id
             };
-            AddSaveEvent(new EntityCreateEvent<Comment>(comment));
-            this.Save();
+            AddSaveEvent(new EntityCreateEvent<Post>(comment));
             Comments.Add(comment);
             return comment;
+        }
+
+        public void AddRecipients(IEnumerable<string> userIds)
+        {
+            AddSaveEvent(new AddPostRecipient(this,userIds));
+        }
+
+        public void AddTags(IEnumerable<string> userIds)
+        {
+            AddSaveEvent(new AddPostTag(this,userIds));
         }
     }
 }

@@ -21,7 +21,7 @@ namespace DAL
             {
                 foreach (var recipient in post.Recipients)
                 {
-                    dbPost.PostRecipients.Add(new PostRecipient{PostId = dbPost.Pid,RecipientId = recipient.Id,PostType = dbPost.Type});
+                    dbPost.PostRecipients.Add(new PostRecipient{PostId = dbPost.Pid,RecipientId = recipient.Id});
                 }
             }
             if (post.Tags != null && post.Tags.Count > 0)
@@ -41,8 +41,8 @@ namespace DAL
             
             post.Author = dbPost.UserProfile.ToBusinessModel();
             post.CreatedAt = dbPost.Time;
-            post.Likes = likes;
-            post.Dislikes = dislikes;
+            post.Likes = dbPost.Likes.Where(l=>l.LikeType==(int)Model.LikeType.Like).Select(l=>l.UserProfile.ToBusinessModel()).ToList();
+            post.Dislikes = dbPost.Likes.Where(l => l.LikeType == (int)Model.LikeType.Dislike).Select(l => l.UserProfile.ToBusinessModel()).ToList(); ;
             post.Id = dbPost.Pid;
             post.Recipients = dbPost.PostRecipients.Select(p => p.UserProfile.ToBusinessModel()).ToList();
             post.Tags = dbPost.PostTags.Select(p => p.UserProfile.ToBusinessModel()).ToList();
@@ -71,6 +71,7 @@ namespace DAL
     {
         public static void ToDbModel(this Model.Comment post, Comment dbComment)
         {
+            dbComment.CommentId = post.Id;
             dbComment.CommentMessage = post.CommentMessage;
             dbComment.ForPostId = post.ForPostId;
         }

@@ -116,7 +116,7 @@ namespace DbProviderTest
         public void AddComment()
         {
 
-            var comment = PostGenerator.CreateComment(commentId, PostType.PostText, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             UnitOfWork.Commit();
             var curPost = PostRepository.GetPost(postId, PostType.PostText);
@@ -130,7 +130,7 @@ namespace DbProviderTest
         public void ShouldNotAddCommentIfUserNotExist()
         {
 
-            var comment = PostGenerator.CreateComment(commentId, PostType.PostText, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
             try
             {
                 comment.Author.Id = "invalid";
@@ -147,8 +147,8 @@ namespace DbProviderTest
         [TestMethod]
         public void DeleteCommentByPassingCommentInfo()
         {
-            var comment = PostGenerator.CreateComment(commentId, PostType.PostText, userId);
-            var comment2 = PostGenerator.CreateComment(commentId2, PostType.PostText, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            var comment2 = PostGenerator.CreateComment(commentId2, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             PostResponseRepository.AddComment(postId, comment2);
             UnitOfWork.Commit();
@@ -165,8 +165,8 @@ namespace DbProviderTest
         public void DeleteCommentByPassingPostInfo()
         {
 
-            var comment = PostGenerator.CreateComment(commentId, PostType.PostText, userId);
-            var comment2 = PostGenerator.CreateComment(commentId2, PostType.PostText, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            var comment2 = PostGenerator.CreateComment(commentId2, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             PostResponseRepository.AddComment(postId, comment2);
             UnitOfWork.Commit();
@@ -185,8 +185,8 @@ namespace DbProviderTest
             PostResponseRepository.AddLike(userId, "lt1", postId, PostType.PostText, LikeType.Like, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt2", postId, PostType.PostText, LikeType.Like, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt3", postId, PostType.PostText, LikeType.Dislike, DateTime.Now);
-            var comment = PostGenerator.CreateComment(commentId, PostType.PostText, userId);
-            var comment2 = PostGenerator.CreateComment(commentId2, PostType.PostText, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            var comment2 = PostGenerator.CreateComment(commentId2, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             PostResponseRepository.AddComment(postId, comment2);
             PostResponseRepository.AddLike(userId, "lt4", commentId, PostType.Comment, LikeType.Like, DateTime.Now);
@@ -207,8 +207,8 @@ namespace DbProviderTest
             PostResponseRepository.AddLike(userId, "lt1", postId, PostType.PostText, LikeType.Like, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt2", postId, PostType.PostText, LikeType.Like, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt3", postId, PostType.PostText, LikeType.Dislike, DateTime.Now);
-            var comment = PostGenerator.CreateComment(commentId, PostType.PostText, userId);
-            var comment2 = PostGenerator.CreateComment(commentId2, PostType.PostText, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            var comment2 = PostGenerator.CreateComment(commentId2, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             PostResponseRepository.AddComment(postId, comment2);
             PostResponseRepository.AddLike(userId, "lt4", commentId, PostType.Comment, LikeType.Like, DateTime.Now);

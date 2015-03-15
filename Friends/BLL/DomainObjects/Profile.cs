@@ -25,6 +25,7 @@ namespace BusinessDomain.DomainObjects
         public string Location { get; set; }
         public string Status { get; set; }
         public string Email { get; set; }
+        public string ImageUrl { get; set; }
         public System.DateTime LastSeen { get; set; }
     }
 }

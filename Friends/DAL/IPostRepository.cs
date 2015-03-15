@@ -14,6 +14,12 @@ namespace DAL
         string DeletePost(Post post);
         void UpdatePost(Post post);
         Post GetPost(string postId, PostType postType);
-        IEnumerable<Post> GetPosts(SearchFilter filter);
+        IEnumerable<Post> GetPosts(SearchFilter filter,IEnumerable<PostType> types);
+        void AddLike(string postId, string userId, LikeType likeType);
+        void RemoveLike(string postId, string userId);
+        void AddRecipient(string postId, string userId);
+        void RemoveRecipient(string postId, string userId);
+        void AddTag(string postId, string userId);
+        void RemoveTag(string postId, string userId);
     }
 }

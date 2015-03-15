@@ -5,28 +5,23 @@ using System.Web.Http;
 using DomainService;
 using Friends.Classes;
 using BusinessDomain.DomainObjects;
+using ServiceLayer;
 
 namespace Friends.Controllers
 {
-    public class PostController : ApiController
+    public class PostController : BaseApiController
     {
-        public IPostController BPostController { get; set; }
-        public CustomPrincipal AuthUser { get; set; }
+        public IPostService PostService { get; set; }
         public PostController()
         {
-            BPostController = new DomainService.PostController();
-            AuthUser = HttpContext.Current.User as CustomPrincipal;
+            PostService = new PostService();
 
         }
-        [HttpPut]
-        public Post CreatePost(string message,string recipient)
-        {
-            return BPostController.CreatePost(AuthUser.UserId, recipient, message);
-        }
+        
         [HttpDelete]
-        public bool DeletePost(string postId)
+        public void DeletePost(string postId)
         {
-            return BPostController.RemovePost(AuthUser.UserId, postId);
+            PostService.Delete(postId,UserData);
         }
         //[HttpGet]
         //public IEnumerable<Post> GetPosts()

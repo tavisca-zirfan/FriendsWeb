@@ -7,6 +7,7 @@ namespace FriendsDb.Models
     {
         public Post()
         {
+            this.Likes = new List<Like>();
             this.PostRecipients = new List<PostRecipient>();
             this.PostTags = new List<PostTag>();
         }
@@ -18,7 +19,7 @@ namespace FriendsDb.Models
         public string Type { get; set; }
         public virtual Comment Comment { get; set; }
         public virtual Event Event { get; set; }
-        public virtual Like Like { get; set; }
+        public virtual ICollection<Like> Likes { get; set; }
         public virtual UserProfile UserProfile { get; set; }
         public virtual ICollection<PostRecipient> PostRecipients { get; set; }
         public virtual ICollection<PostTag> PostTags { get; set; }

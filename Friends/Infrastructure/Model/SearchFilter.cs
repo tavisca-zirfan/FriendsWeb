@@ -9,10 +9,14 @@ namespace Infrastructure.Model
     public class SearchFilter
     {
         public int PageNumber { get; set; }
-        public int TotalRecords { get; set; }
         public int RecordsPerPage { get; set; }
         public OrderType Order { get; set; }
         public string OrderProperty { get; set; }
-        public Dictionary<string,object> FilterProperties { get; set; } 
+        public Dictionary<string,object> FilterProperties { get; set; }
+
+        public SearchFilter()
+        {
+            FilterProperties = new Dictionary<string, object>();
+        }
     }
 }
