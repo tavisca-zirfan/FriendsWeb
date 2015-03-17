@@ -48,12 +48,26 @@ namespace ServiceLayer
             return profile;
         }
 
-        public static Post ToBusinessModel(this PostDTO postDto, Post post)
+        public static Post ToBusinessModel(this PostDTO postDto, Post post=null)
         {
-            return null;
+            switch (postDto.PostType)
+            {
+                    case PostType.PostText:
+                    post = ToPostBusinessModel((TextPostDTO) postDto, (TextPost)post);
+                    break;
+                    case PostType.Comment:
+                    post = ToPostBusinessModel((TextPostDTO)postDto, (TextPost)post);
+                    break;
+            }
+            if (post != null)
+            {
+                post.Tags = postDto.Tags.Select(t => new Profile {Id = t.Id}).ToList();
+                post.Recipients = postDto.Recipients.Select(r => new Profile {Id = r.Id}).ToList();
+            }
+            return post;
         }
 
-        public static TextPost ToBusinessModel(this TextPostDTO postDto, TextPost post=null)
+        private static TextPost ToPostBusinessModel(TextPostDTO postDto, TextPost post=null)
         {
             if(post==null)
                 post = new TextPost();
@@ -62,7 +76,19 @@ namespace ServiceLayer
             {
                 post.Id = post.Id;
             }
+            return post;
+        }
 
+        private static Comment ToPostBusinessModel(CommentDTO postDto, Comment post = null)
+        {
+            if (post == null)
+                post = new Comment();
+            post.CommentMessage = postDto.CommentMessage;
+            if (string.IsNullOrEmpty(post.Id))
+            {
+                post.Id = post.Id;
+            }
+            return post;
         }
     }
 }

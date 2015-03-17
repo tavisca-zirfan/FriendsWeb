@@ -22,7 +22,6 @@ namespace ServiceTest
         public UserServiceTest()
         {
             _userService = new UserService();
-            _userService.User = new User {Id = "1278"};
             ServiceModelMapper.CreateMap();
         }
         [TestMethod]

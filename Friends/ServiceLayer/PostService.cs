@@ -15,11 +15,12 @@ namespace ServiceLayer
     {
         IEnumerable<PostDTO> Get(PostFetchRequest request, UserDTO authUser);
         PostDTO Get(string postId,UserDTO authUser,PostType postType);
-        void Post(PostDTO request, UserDTO authUser);
+        PostDTO Put(PostDTO request, UserDTO authUser);
+        PostDTO Post(PostDTO request, UserDTO authUser);
         void Delete(string postId,UserDTO authUser);
     }
 
-    public class PostService : IPostService
+    public class PostService : IPostService,ILikeService
     {
         public IPostController PostController { get; set; }
 
@@ -45,14 +46,35 @@ namespace ServiceLayer
             return Mapper.Map<PostDTO>(PostController.GetPost(postId,authUser.ToBusinessModel(), postType));
         }
 
-        public void Post(PostDTO request, UserDTO authUser)
+        public PostDTO Post(PostDTO request, UserDTO authUser)
         {
-            PostController.CreatePost(Mapper.Map<Post>(request),authUser.ToBusinessModel());
+            var post=PostController.CreatePost(request.ToBusinessModel(),authUser.ToBusinessModel());
+            return Mapper.Map<PostDTO>(post);
         }
 
         public void Delete(string postId, UserDTO authUser)
         {
             PostController.RemovePost(postId, authUser.ToBusinessModel());
+        }
+
+
+        public PostDTO Put(PostDTO request, UserDTO authUser)
+        {
+            var post = PostController.UpdatePost(request.ToBusinessModel(), authUser.ToBusinessModel());
+            return Mapper.Map<PostDTO>(post);
+        }
+
+        public void Post(string postId, PostType postType, LikeType likeType, UserDTO authUser)
+        {
+            var post = PostController.GetPost(postId, authUser.ToBusinessModel(), postType);
+            if (likeType == LikeType.Like)
+            {
+                post.Like(authUser.ToBusinessModel());
+            }
+            else
+            {
+                post.Dislike(authUser.ToBusinessModel());
+            }
         }
     }
 

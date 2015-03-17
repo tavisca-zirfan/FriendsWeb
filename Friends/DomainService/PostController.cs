@@ -63,5 +63,11 @@ namespace DomainService
         {
             return PostRepository.GetPost(postId, postType);
         }
+
+
+        public Post UpdatePost(Post post, User authUser)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

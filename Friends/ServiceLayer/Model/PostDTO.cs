@@ -9,8 +9,9 @@ namespace ServiceLayer.Model
     public class PostDTO
     {
         public string Id { get; set; }
-        public Profile Author { get; set; }
+        public ProfileThumbnailDTO Author { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public PostType PostType { get; set; }
         public IList<CommentDTO> Comments { get; set; }
         public IList<ProfileThumbnailDTO> Likes;
         public IList<ProfileThumbnailDTO> Recipients { get; set; }

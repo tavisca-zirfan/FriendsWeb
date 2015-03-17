@@ -14,6 +14,7 @@ namespace DomainService.EventHandlers
 {
     public class PostHandler:IEventHandler<EntityCreateEvent<Post>>,IEventHandler<EntityDeleteEvent<Post>>
         ,IEventHandler<AddPostTag>,IEventHandler<AddPostRecipient>,IEventHandler<AddLikeEvent>,IEventHandler<RemoveLikeEvent>
+        ,IEventHandler<RemovePostTag>,IEventHandler<RemovePostRecipient>
     {
         private IPostRepository _postRepository;
         private IUnitOfWork _unitOfWork;
@@ -58,6 +59,22 @@ namespace DomainService.EventHandlers
         public void Handle(RemoveLikeEvent eventObject)
         {
             _postRepository.RemoveLike(eventObject.PostId, eventObject.UserId);
+        }
+
+        public void Handle(RemovePostRecipient eventObject)
+        {
+            foreach (var userId in eventObject.UserIds)
+            {
+                _postRepository.RemoveRecipient(eventObject.Post.Id,userId);
+            }
+        }
+
+        public void Handle(RemovePostTag eventObject)
+        {
+            foreach (var userId in eventObject.UserIds)
+            {
+                _postRepository.RemoveTag(eventObject.Post.Id, userId);
+            }
         }
     }
 }
