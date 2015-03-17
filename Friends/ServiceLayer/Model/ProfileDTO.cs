@@ -15,7 +15,6 @@ namespace ServiceLayer.Model
         public string About { get; set; }
         public Nullable<int> StatusId { get; set; }
         public Nullable<int> LocationId { get; set; }
-        public IEnumerable<ProfileThumbnailDTO> Friends { get; set; } 
         public string ImageUrl { get; set; }
     }
 

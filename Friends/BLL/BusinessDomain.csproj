@@ -53,6 +53,8 @@
     <Compile Include="DomainEvents\Common\RemoveLikeEvent.cs" />
     <Compile Include="DomainEvents\PostEvent\AddPostRecipient.cs" />
     <Compile Include="DomainEvents\PostEvent\AddPostTag.cs" />
+    <Compile Include="DomainEvents\PostEvent\RemovePostRecipient.cs" />
+    <Compile Include="DomainEvents\PostEvent\RemovePostTag.cs" />
     <Compile Include="DomainEvents\UserEvents\AddFriendEvent.cs" />
     <Compile Include="DomainEvents\UserEvents\ChangePasswordEvent.cs" />
     <Compile Include="DomainEvents\UserEvents\LoadFriendsEvent.cs" />

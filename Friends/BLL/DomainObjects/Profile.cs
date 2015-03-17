@@ -1,4 +1,5 @@
 ﻿using System;
+using BusinessDomain.DomainEvents.Common;
 using Infrastructure.Model;
 
 namespace BusinessDomain.DomainObjects
@@ -27,5 +28,11 @@ namespace BusinessDomain.DomainObjects
         public string Email { get; set; }
         public string ImageUrl { get; set; }
         public System.DateTime LastSeen { get; set; }
+
+        public void Update()
+        {
+            AddSaveEvent(new EntityUpdateEvent<Profile>(this));
+            Save();
+        }
     }
 }

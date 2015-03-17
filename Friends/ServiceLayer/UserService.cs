@@ -14,13 +14,12 @@ namespace ServiceLayer
         UserDTO Get(string email, string password);
         UserDTO Get(string id);
         void Delete();
-        void ChangePassword(string oldpassword, string newpassword);
+        void ChangePassword(UserDTO authUser,string oldpassword, string newpassword);
         void ChangePassword(string email ,string oldpassword, string newpassword);
     }
     public class UserService : IUserService
     {
         public IUserController UserController { get; set; }
-        public User User { get; set; }
 
         public UserService()
         {
@@ -29,7 +28,7 @@ namespace ServiceLayer
         
         public UserDTO Post(UserDTO request)
         {
-            var user = Mapper.Map<User>(request);
+            var user = request.ToBusinessModel();
             user.Roles = new List<Role> {new Role {RoleId = 2}};
             user=this.UserController.RegisterUser(user);
             request.Id = user.Id;
@@ -50,10 +49,11 @@ namespace ServiceLayer
             return userDto;
         }
 
-        public void ChangePassword( string oldpassword, string newpassword)
+        public void ChangePassword(UserDTO authUser, string oldpassword, string newpassword)
         {
-            User.ChangePassword(newpassword);
-            User.Save();
+            var user = authUser.ToBusinessModel();
+            user.ChangePassword(newpassword);
+            user.Save();
         }
 
         public void ChangePassword(string email, string oldpassword, string newpassword)

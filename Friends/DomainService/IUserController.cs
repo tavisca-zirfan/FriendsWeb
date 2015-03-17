@@ -15,10 +15,10 @@ namespace DomainService
         User GetUserById(string userId);
         User RegisterUser(User user);
         Profile GetProfile(string userId,User authUser);
-        Profile UpdateProfile(Profile profile, User authUser);
+        //Profile UpdateProfile(Profile profile, User authUser);
         IEnumerable<Profile> GetProfiles(IEnumerable<string> userIds, User authUser);
         IEnumerable<Profile> GetProfiles(SearchFilter filter, User authUser);
-        bool ChangePassword(User authUser,string oldPassword,string newPassword);
-        bool ChangeEmail(User authUser, string email);
+        //bool ChangePassword(User authUser,string oldPassword,string newPassword);
+        //bool ChangeEmail(User authUser, string email);
     }
 }

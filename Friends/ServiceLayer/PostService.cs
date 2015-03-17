@@ -14,9 +14,9 @@ namespace ServiceLayer
     public interface IPostService
     {
         IEnumerable<PostDTO> Get(PostFetchRequest request, UserDTO authUser);
-        PostDTO Get(string postId,UserDTO user,PostType postType);
+        PostDTO Get(string postId,UserDTO authUser,PostType postType);
         void Post(PostDTO request, UserDTO authUser);
-        void Delete(string postId,UserDTO user);
+        void Delete(string postId,UserDTO authUser);
     }
 
     public class PostService : IPostService
@@ -36,8 +36,6 @@ namespace ServiceLayer
                 PageNumber = request.PageNumber,
                 RecordsPerPage = request.RecordsPerPage
             };
-            filter.FilterProperties.Add("authorid",request.AuthorId);
-            filter.FilterProperties.Add("recipientid",request.RecipientId);
             var posts = PostController.GetPosts(filter, listOfTypes,authUser.ToBusinessModel());
             return posts.Select(Mapper.Map<PostDTO>);
         }

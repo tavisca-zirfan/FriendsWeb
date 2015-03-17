@@ -28,8 +28,9 @@ namespace ServiceLayer
 
         public void Put(ProfileDTO request, UserDTO authUser)
         {
-            var profile = Mapper.Map<BusinessDomain.DomainObjects.Profile>(request);
-            UserController.UpdateProfile(profile,authUser.ToBusinessModel());
+            var profile = UserController.GetProfile(authUser.Id, authUser.ToBusinessModel());
+            request.ToBusinessModel(profile);
+            profile.Update();
         }
 
         public ProfileDTO Get(string userId, UserDTO authUser)

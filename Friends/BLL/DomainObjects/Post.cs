@@ -75,5 +75,15 @@ namespace BusinessDomain.DomainObjects
         {
             AddSaveEvent(new AddPostTag(this,userIds));
         }
+
+        public void RemoveRecipients(IEnumerable<string> userIds)
+        {
+            AddSaveEvent(new RemovePostRecipient(this, userIds));
+        }
+
+        public void RemoveTags(IEnumerable<string> userIds)
+        {
+            AddSaveEvent(new RemovePostTag(this, userIds));
+        }
     }
 }

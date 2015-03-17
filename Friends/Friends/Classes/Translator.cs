@@ -17,7 +17,6 @@ namespace Friends.Classes
                 Gender = user.Gender,
                 DOB = user.DOB,
                 Id = user.Id,
-                Friends = user.Friends.Select(u=>new ProfileThumbnailDTO{Id = u})
             };
             return profile;
         }
