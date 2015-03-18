@@ -6,6 +6,7 @@ using DomainService;
 using Friends.Classes;
 using BusinessDomain.DomainObjects;
 using ServiceLayer;
+using ServiceLayer.Model;
 
 namespace Friends.Controllers
 {
@@ -19,23 +20,16 @@ namespace Friends.Controllers
         }
         
         [HttpDelete]
-        public void DeletePost(string postId)
+        public void Delete(string postId)
         {
             PostService.Delete(postId,UserData);
         }
-        //[HttpGet]
-        //public IEnumerable<Post> GetPosts()
-        //{
-        //    return BPostController.GetPosts("");
-        //}
-
         [HttpGet]
-        public string GetFilterObject([FromUri] List<Filter> filter)
+        public IEnumerable<PostDTO> Get(PostFetchRequest request)
         {
-            var str = "";
-            filter.ForEach(f => str = str + f.Name + ":" + f.Value + ";");
-            return str;
+            return PostService.Get(request,UserData);
         }
+        
     }
 
     public class Filter
