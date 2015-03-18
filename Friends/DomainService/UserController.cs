@@ -36,6 +36,7 @@ namespace DomainService
             user.Id = new RainDrop().GetNextId();
             user.LastSeen = DateTime.Now;
             user.CreatedOn = DateTime.Now;
+            user.ChangedPassword = user.Password;
             UserRepository.AddUser(user);
             UserRepository.AddRoles(user.Id,new List<int>{2});
             UnitOfWork.Commit();

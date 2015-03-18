@@ -13,13 +13,11 @@ namespace DomainService
     public class PostController:IPostController
     {
         public IPostRepository PostRepository { get; set; }
-        public IPostResponseRepository PostResponseRepository { get; set; }
         public IUnitOfWork UnitOfWork { get; set; }
         public PostController()
         {
             UnitOfWork = new UnitOfWork();
             PostRepository=new PostRepository(UnitOfWork);
-            PostResponseRepository=new PostResponseRepository(UnitOfWork);
 
         }
         public BusinessDomain.DomainObjects.Post CreatePost(Post post, User authUser)

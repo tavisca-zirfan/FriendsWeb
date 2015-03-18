@@ -179,7 +179,7 @@ namespace DAL
 
         public IEnumerable<Profile> GetFriends(string userId)
         {
-            throw new NotImplementedException();
+            return new List<Profile>();
         }
 
 

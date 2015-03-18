@@ -19,7 +19,7 @@ namespace DomainService.EventHandlers
         public UserEventHandler()
         {
             _unitOfWork = ObjectFactory.Resolve<IUnitOfWork>();
-            _userRepository = ObjectFactory.Resolve<IUserRepository>();
+            _userRepository = new UserRepository(_unitOfWork);
         }
         public void Handle(EntityCreateEvent<User> eventObject)
         {

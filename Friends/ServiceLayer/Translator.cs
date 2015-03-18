@@ -23,7 +23,8 @@ namespace ServiceLayer
             {
                 user.Id = userDto.Id;
             }
-            user.Friends = userDto.Friends.Select(f => new Profile {Id = f}).ToList();
+            if(userDto.Friends!=null)
+                user.Friends = userDto.Friends.Select(f => new Profile {Id = f}).ToList();
             user.Password = userDto.Password;
             user.Roles = userDto.Roles.Select(r => new Role {RoleId = r.Id, RoleName = r.RoleName});
             return user;

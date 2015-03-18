@@ -28,7 +28,7 @@ namespace BusinessDomain.DomainObjects
         {
             get
             {
-                if (_friends.Any())
+                if (_friends!=null)
                     return _friends;
                 AddLoadEvent(new LoadFriendsEvent(Id, _friends));
                 Load();
@@ -39,7 +39,7 @@ namespace BusinessDomain.DomainObjects
 
         public User()
         {
-            _friends = new List<Profile>();
+            
         }
         public void ChangePassword(string oldPassword,string newPassword)
         {

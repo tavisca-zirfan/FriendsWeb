@@ -6,6 +6,7 @@ using BusinessDomain.DomainObjects;
 using DAL.Implementation;
 using DAL.Interfaces;
 using Infrastructure.Configuration;
+using Infrastructure.Data;
 
 namespace DAL
 {
@@ -14,7 +15,9 @@ namespace DAL
         public void Setup(Infrastructure.Container.IDependencyContainer container)
         {
             container.Register<IPostTypeRepository, PostTextRepository>(PostType.PostText.ToString())
-                .Register<IPostTypeRepository, CommentRepository>(PostType.Comment.ToString());
+                .Register<IPostTypeRepository, CommentRepository>(PostType.Comment.ToString())
+                .RegisterAsSingleton<IUnitOfWork>(new UnitOfWork())
+                ;
 
         }
     }

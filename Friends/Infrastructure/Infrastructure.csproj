@@ -66,6 +66,7 @@
     <Compile Include="Configuration\IConfigurationFile.cs" />
     <Compile Include="Configuration\IConfigurationSection.cs" />
     <Compile Include="Configuration\IContainerSetup.cs" />
+    <Compile Include="ContainerSetup.cs" />
     <Compile Include="Container\DependencyContainer.cs" />
     <Compile Include="Container\IDependencyContainer.cs" />
     <Compile Include="Container\IDependencyContainerFactory.cs" />

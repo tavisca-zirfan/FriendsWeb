@@ -17,13 +17,13 @@ namespace DomainService.EventHandlers
         ,IEventHandler<RemovePostTag>,IEventHandler<RemovePostRecipient>
     {
         private IPostRepository _postRepository;
-        private IUnitOfWork _unitOfWork;
 
         public PostHandler()
         {
-            _postRepository = ObjectFactory.Resolve<IPostRepository>();
-            _unitOfWork = ObjectFactory.Resolve<IUnitOfWork>();
+            IUnitOfWork unitOfWork = ObjectFactory.Resolve<IUnitOfWork>();
+            _postRepository = new PostRepository(unitOfWork);
         }
+
         public void Handle(EntityDeleteEvent<Post> eventObject)
         {
             _postRepository.DeletePost(eventObject.Entity);

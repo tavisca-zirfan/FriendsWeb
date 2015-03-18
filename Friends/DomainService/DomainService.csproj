@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ContainerSetup.cs" />
     <Compile Include="EventHandlers\PostHandler.cs" />
     <Compile Include="EventHandlers\PostResponseHandler.cs" />
     <Compile Include="EventHandlers\UserHandler.cs" />

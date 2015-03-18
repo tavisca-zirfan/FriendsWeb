@@ -4,6 +4,7 @@ using System.Linq;
 using AutoMapper;
 using DomainService;
 using BusinessDomain.DomainObjects;
+using Infrastructure.Container;
 using ServiceLayer.Model;
 
 namespace ServiceLayer
@@ -23,7 +24,7 @@ namespace ServiceLayer
 
         public UserService()
         {
-            UserController = new UserController();
+            UserController = ObjectFactory.Resolve<IUserController>();
         }
         
         public UserDTO Post(UserDTO request)
