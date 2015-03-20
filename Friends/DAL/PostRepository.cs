@@ -111,19 +111,24 @@ namespace DAL
 
         public IEnumerable<Model.Post> GetPosts(SearchFilter filter,IEnumerable<Model.PostType> types)
         {
-            var postsTable = GetPosts(types.Select(t=>t.ToString()));
+            var recipient = filter.FilterProperties["recipientid"].ToString();
+            var author = filter.FilterProperties["authorid"].ToString();
+            var postTypes = types as IList<Model.PostType> ?? types.ToList();
+            var strTypes = postTypes.Select(t => t.ToString()).ToList();
+            var postsTable = GetPosts(strTypes);
             var posts =
                 postsTable.Where(
                     p =>
-                        p.Author == filter.FilterProperties["authorid"].ToString() ||
-                        p.PostRecipients.Select(r => r.RecipientId).Contains(filter.FilterProperties["recipientid"].ToString()))
+                        strTypes.Contains(p.Type)&&(
+                        p.Author ==  author||
+                        p.PostRecipients.Select(r => r.RecipientId).Contains(recipient)))
                     .ToList();
             var comments = GetComments(posts.Select(p => p.Pid));
             var finalList = posts.Select(p =>
             {
                 var childRepository = ObjectFactory.Resolve<IPostTypeRepository>(p.Type);
                 var post= p.ToBusinessModel(childRepository.ParsePost(p));
-                post.Comments = comments.Where(c => c.ForPostId == p.Pid) as IList<BusinessDomain.DomainObjects.Comment>;
+                post.Comments = comments.Where(c => c.ForPostId == p.Pid).ToList();
                 return post;
             }).ToList();
             return finalList;

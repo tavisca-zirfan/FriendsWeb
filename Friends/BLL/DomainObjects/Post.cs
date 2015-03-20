@@ -14,7 +14,7 @@ namespace BusinessDomain.DomainObjects
         public Profile Author { get; set; }
         public DateTime? CreatedAt { get; set; }
         public IList<Comment> Comments { get; set; }
-        public IList<Profile> Likes;
+        public IList<Profile> Likes { get; set; }
         private IList<Profile> _recipients;
 
         public IList<Profile> Recipients
@@ -57,12 +57,15 @@ namespace BusinessDomain.DomainObjects
 
         public int NumberOfLikes
         {
-            get { return Likes.Count; }
+            get
+            {
+                return Likes!=null ? Likes.Count : 0;
+            }
         }
 
         public int NumberOfDislikes
         {
-            get { return Dislikes.Count; }
+            get { return Dislikes!=null? Dislikes.Count:0; }
         }
 
         public PostType PostType;

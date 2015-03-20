@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 using Friends.Classes;
 using ServiceLayer;
@@ -10,7 +11,7 @@ using ServiceLayer.Model;
 
 namespace Friends.Controllers
 {
-    public class BaseApiController : Controller
+    public class BaseApiController : ApiController
     {
         //
         // GET: /BaseApi/

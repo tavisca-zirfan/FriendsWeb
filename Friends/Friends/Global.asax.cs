@@ -9,6 +9,7 @@ using Friends.App_Start;
 using Friends.Classes;
 using Friends.Models;
 using Newtonsoft.Json;
+using ServiceLayer.Model;
 
 namespace Friends
 {
@@ -19,7 +20,7 @@ namespace Friends
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-
+            ServiceModelMapper.CreateMap();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

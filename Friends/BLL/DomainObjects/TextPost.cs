@@ -8,5 +8,10 @@ namespace BusinessDomain.DomainObjects
     public class TextPost:Post
     {
         public string Message { get; set; }
+
+        public TextPost()
+        {
+            PostType=PostType.PostText;
+        }
     }
 }

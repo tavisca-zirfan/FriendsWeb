@@ -37,6 +37,8 @@ namespace ServiceLayer
                 PageNumber = request.PageNumber,
                 RecordsPerPage = request.RecordsPerPage
             };
+            filter.FilterProperties.Add("recipientid",authUser.Id);
+            filter.FilterProperties.Add("authorid", authUser.Id);
             var posts = PostController.GetPosts(filter, listOfTypes,authUser.ToBusinessModel());
             return posts.Select(Mapper.Map<PostDTO>);
         }

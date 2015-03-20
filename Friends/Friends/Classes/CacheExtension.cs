@@ -12,7 +12,7 @@ namespace Friends.Classes
         {
             if (cache[key] == null)
             {
-                cache[key] = generator(key);
+                cache[key] = generator(key.Substring(4));
             }
             return (T)cache[key];
         }

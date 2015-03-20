@@ -57,11 +57,14 @@ namespace ServiceLayer
                     post = ToPostBusinessModel((TextPostDTO) postDto, (TextPost)post);
                     break;
                     case PostType.Comment:
-                    post = ToPostBusinessModel((TextPostDTO)postDto, (TextPost)post);
+                    post = ToPostBusinessModel((CommentDTO)postDto, (Comment)post);
                     break;
             }
             if (post != null)
             {
+                if (!string.IsNullOrEmpty(postDto.Id))
+                    post.Id = postDto.Id;
+                post.Author = new Profile{Id=postDto.Author.Id};
                 post.Tags = postDto.Tags.Select(t => new Profile {Id = t.Id}).ToList();
                 post.Recipients = postDto.Recipients.Select(r => new Profile {Id = r.Id}).ToList();
             }
@@ -85,6 +88,7 @@ namespace ServiceLayer
             if (post == null)
                 post = new Comment();
             post.CommentMessage = postDto.CommentMessage;
+            post.ForPostId = postDto.ForPostId;
             if (string.IsNullOrEmpty(post.Id))
             {
                 post.Id = post.Id;

@@ -54,14 +54,12 @@ namespace ServiceLayer
         {
             var user = authUser.ToBusinessModel();
             user.ChangePassword(newpassword);
-            user.Save();
         }
 
         public void ChangePassword(string email, string oldpassword, string newpassword)
         {
             var user = UserController.GetUser(email, oldpassword);
             user.ChangePassword(newpassword);
-            user.Save();
         }
 
 

@@ -24,6 +24,8 @@ namespace DomainService
         {
             try
             {
+                post.Id = IdGenerator.GenerateId();
+                post.CreatedAt = DateTime.Now;
                 PostRepository.AddPost(post);
                 UnitOfWork.Commit();
             }

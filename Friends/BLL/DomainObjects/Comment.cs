@@ -9,5 +9,10 @@ namespace BusinessDomain.DomainObjects
     {
         public string CommentMessage { get; set; }
         public string  ForPostId { get; set; }
+
+        public Comment()
+        {
+            PostType=PostType.Comment;
+        }
     }
 }

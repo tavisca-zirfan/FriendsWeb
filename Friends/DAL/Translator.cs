@@ -19,13 +19,15 @@ namespace DAL
                 Email = credential.Email,
                 Password = credential.Password,
                 IsActive = credential.IsActive,
-                LastSeen = credential.LastSeen
+                LastSeen = credential.LastSeen,
+                CreatedOn = credential.CreatedOn,
             };
             if (profile != null)
             {
                 user.FirstName = profile.FirstName;
                 user.LastName = profile.LastName;
                 user.Gender = profile.Gender;
+                user.DOB = profile.DOB;
             }
             if (roles != null)
             {
@@ -54,7 +56,8 @@ namespace DAL
             credential.Email = user.Email;
             credential.IsActive = user.IsActive;
             credential.LastSeen = user.LastSeen;
-            credential.CreatedOn = user.CreatedOn;
+            if(credential.CreatedOn==default(DateTime))
+                credential.CreatedOn = user.CreatedOn;
             if (!string.IsNullOrEmpty(user.ChangedPassword))
             {
                 if (!string.IsNullOrEmpty(credential.Password))

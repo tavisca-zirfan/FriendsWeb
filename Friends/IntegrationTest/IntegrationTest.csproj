@@ -63,6 +63,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="PostGenerator.cs" />
+    <Compile Include="PostServiceTest.cs" />
     <Compile Include="UserGenerator.cs" />
     <Compile Include="UserServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

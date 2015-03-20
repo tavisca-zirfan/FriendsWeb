@@ -39,7 +39,7 @@ namespace BusinessDomain.DomainObjects
 
         public User()
         {
-            
+            LastSeen = DateTime.Now;
         }
         public void ChangePassword(string oldPassword,string newPassword)
         {
@@ -48,12 +48,14 @@ namespace BusinessDomain.DomainObjects
         }
         public void ChangePassword(string newPassword)
         {
+            this.LastSeen = DateTime.Now;
             this.ChangedPassword = newPassword;
             Update();
         }
 
         public void Update()
         {
+            this.LastSeen = DateTime.Now;
             AddSaveEvent(new EntityUpdateEvent<User>(this));
             Save();
         }

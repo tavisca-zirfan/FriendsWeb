@@ -138,6 +138,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\PostResponseController.cs" />
     <Compile Include="Controllers\TextPostController.cs" />
