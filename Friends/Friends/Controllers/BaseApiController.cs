@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Principal;
 using System.Web;
 using System.Web.Http;
@@ -17,8 +18,10 @@ namespace Friends.Controllers
         // GET: /BaseApi/
 
         public IUserService UserService { get; set; }
+        
         public CustomPrincipal AuthUser { get; set; }
         public UserDTO UserData { get; set; }
+        
 
         public BaseApiController()
         {
@@ -26,6 +29,8 @@ namespace Friends.Controllers
             UserService = new UserService();
             if(AuthUser!=null)
             UserData = HttpRuntime.Cache.Get("user" + AuthUser.UserId, UserService.Get);
+            
+
         }
 
     }

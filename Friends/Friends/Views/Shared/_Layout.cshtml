@@ -10,6 +10,7 @@
     <title>Friends &bull; @ViewBag.Title</title>
 
     @Styles.Render("~/css")
+    
 </head>
 <body>
     <!-- Fixed navbar -->
@@ -97,6 +98,10 @@
         
     </div>
     @Scripts.Render("~/js")
+    @Scripts.Render("~/scripts/primary")
+    <script type="text/javascript">
+        window.friends.user = (JSON.parse('@Html.Raw(Json.Encode(ViewBag.UserProfile))'));
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

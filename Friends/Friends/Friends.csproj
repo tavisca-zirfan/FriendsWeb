@@ -136,16 +136,19 @@
     <Compile Include="Classes\Translator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\PostResponseController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\TextPostController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PagedList.cs" />
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -214,8 +217,26 @@
     <Content Include="Scripts\BtJs\uglify.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />
     <Content Include="Scripts\jquery-2.0.2.min.js" />
+    <Content Include="Scripts\Library\backbone-min.js" />
+    <Content Include="Scripts\Library\backbone-nested.js" />
+    <Content Include="Scripts\Library\backbone.modelbinding.js" />
+    <Content Include="Scripts\Library\handlebars-1.3.js" />
+    <Content Include="Scripts\Library\init.js" />
+    <Content Include="Scripts\Library\jquery.validate.js" />
+    <Content Include="Scripts\Library\jquery.validate.min.js" />
+    <Content Include="Scripts\Library\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\Library\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Library\moment.js" />
+    <Content Include="Scripts\Model\commentModel.js" />
+    <Content Include="Scripts\Model\postModel.js" />
+    <Content Include="Scripts\Model\profileModel.js" />
     <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.css" />
     <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\Library\underscore-min.js" />
+    <Content Include="Scripts\Utils\searchFilter.js" />
+    <Content Include="Scripts\Views\basePostView.js" />
+    <Content Include="Scripts\Views\commentView.js" />
+    <Content Include="Scripts\Views\onlineListView.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -235,9 +256,11 @@
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Home\_Events.cshtml" />
+    <Content Include="Views\Shared\_PostTemplates.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Storage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

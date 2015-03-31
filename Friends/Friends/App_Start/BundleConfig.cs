@@ -27,6 +27,23 @@ namespace Friends.App_Start
                             .Include("~/Scripts/jquery-ui-{version}.js")
                             .Include("~/Scripts/Plugins/jquery-ui/jquery-ui.js")
                             .Include("~/Scripts/bootstrap.js"));
+
+            bundles.Add(new ScriptBundle("~/scripts/primary")
+                .Include("~/Scripts/Library/underscore-min.js")
+                .Include("~/Scripts/Library/handlebars-1.3.js")
+                .Include("~/Scripts/Library/backbone-min.js")
+                .IncludeDirectory("~/Scripts/Library","*.js")
+                .Include("~/Scripts/Utils/searchFilter.js")
+                );
+
+            // add scripts for post
+            bundles.Add(new ScriptBundle("~/scripts/post")
+                .Include("~/Scripts/Model/commentModel.js")
+                .Include("~/Scripts/Model/postModel.js")
+                .Include("~/Scripts/Model/profileModel.js")
+                .Include("~/Scripts/Views/basePostView.js")
+                .Include("~/Scripts/Views/commentView.js")
+                );
         }
     }
 }

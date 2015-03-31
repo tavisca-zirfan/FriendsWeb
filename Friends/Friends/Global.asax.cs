@@ -9,6 +9,7 @@ using Friends.App_Start;
 using Friends.Classes;
 using Friends.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ServiceLayer.Model;
 
 namespace Friends
@@ -25,6 +26,13 @@ namespace Friends
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            var jsonFormatter = formatters.JsonFormatter;
+            var settings = jsonFormatter.SerializerSettings;
+            settings.Formatting = Formatting.Indented;
+            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
         }
 
         protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)

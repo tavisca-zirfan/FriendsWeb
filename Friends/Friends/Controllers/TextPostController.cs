@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using BusinessDomain.DomainObjects;
+using Infrastructure.Model;
 using ServiceLayer;
 using ServiceLayer.Model;
 
@@ -20,9 +21,9 @@ namespace Friends.Controllers
         {
             PostService=new PostService();
         }
-        public IEnumerable<TextPostDTO> Get(PostFetchRequest request)
+        public PagedList<TextPostDTO> Get(SearchFilter request)
         {
-            return PostService.Get(request, UserData).Cast<TextPostDTO>();
+            return new PagedList<TextPostDTO> {Items = PostService.Get(request, UserData).Cast<TextPostDTO>().ToList()};
         }
 
         public TextPostDTO Get(string id)
@@ -33,6 +34,11 @@ namespace Friends.Controllers
         public TextPostDTO Put(TextPostDTO post)
         {
             return PostService.Put(post, UserData) as TextPostDTO;
+        }
+
+        public TextPostDTO Post(TextPostDTO post)
+        {
+            return PostService.Post(post, UserData) as TextPostDTO;
         }
 
         public void Delete(TextPostDTO post)

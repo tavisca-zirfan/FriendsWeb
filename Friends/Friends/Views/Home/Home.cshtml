@@ -1,4 +1,5 @@
-﻿@using Friends.Classes
+﻿@using System.Web.Optimization
+@using Friends.Classes
 @{
     ViewBag.Title = "Home";
 }
@@ -15,7 +16,7 @@
 
         </div>
     </div>
-    <div class="row">
+    @* <div class="row">
         <div class="col-md-8">
             @for (int i = 0; i < 10; i++)
             {
@@ -25,7 +26,7 @@
                             <img class="img-responsive" data-src="holder.js/40x40" style="width: 40px; height: 40px" src="~/Content/images/games.jpg" />
                         </div>
                         <div class="col-md-10 col-md-pull-1">
-                            <div><span>Zaid Bin Irfan</span><span class="text-muted"> Wrote</span> </div>
+                            <div><span>Zaid Bin Irfan</span><span class="text-muted"> Posted</span> </div>
                             <div class="text-muted">11 hours ago</div>
                         </div>
                     </div>
@@ -72,16 +73,16 @@
                         </div>
                     }
                     <div class="row comment">
-                            <div class="col-md-2">
-                                <img class="img-responsive" data-src="holder.js/40x40" style="width: 40px; height: 40px" src="~/Content/images/games.jpg" />
-                            </div>
-                            <div class="col-md-10 col-md-pull-1">
-                                <div class="form-group margin5-top">
-                                    <input type="text" class="form-control" placeholder="Comment here ..."/>
-                                </div>
-                                
-                            </div>
+                        <div class="col-md-2">
+                            <img class="img-responsive" data-src="holder.js/40x40" style="width: 40px; height: 40px" src="~/Content/images/games.jpg" />
                         </div>
+                        <div class="col-md-10 col-md-pull-1">
+                            <div class="form-group margin5-top">
+                                <input type="text" class="form-control" placeholder="Comment here ..."/>
+                            </div>
+                                
+                        </div>
+                    </div>
                 </div>
             }
             
@@ -89,11 +90,40 @@
         <div class="col-md-4">
             @Html.Partial("_Events")
         </div>
+    </div>*@
+    <div class="row">
+        <div class="col-md-8">
+            <div class="posts"></div>
+        </div>
     </div>
-    </div>
+
+</div>
+@Html.Partial("_PostTemplates")
+
 @section scripts
 {
+    @Scripts.Render("~/scripts/post")
+    
     <script type="text/javascript">
+        var lastUpdate;
+        setInterval(function () {
+            var filters = [];
+            if (lastUpdate) {
+                filters.push(new Filter('lastupdate', lastUpdate));
+            }
+            var searchFilter = friends.utils.Filter.createFilter(filters);
+            var posts = new window.friends.Collection.Post();
+            posts.fetch({
+                success: function (response) {
+                    _.forEach(response.models, function (post) {
+                        post.renderView($('.posts'));
+                    });
+                },
+                data:searchFilter
+            });
+            lastUpdate = new Date().toUTCString();
+        },5000);
+        
         $("#btnPlanEvent").on('click', function() {
             $("#eventModal").modal('show');
             $("#eventDate").datepicker();

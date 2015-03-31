@@ -17,6 +17,7 @@ namespace FriendsDb.Models
         public string Author { get; set; }
         public System.DateTime Time { get; set; }
         public string Type { get; set; }
+        public Nullable<System.DateTime> LastUpdate { get; set; }
         public virtual Comment Comment { get; set; }
         public virtual Event Event { get; set; }
         public virtual ICollection<Like> Likes { get; set; }

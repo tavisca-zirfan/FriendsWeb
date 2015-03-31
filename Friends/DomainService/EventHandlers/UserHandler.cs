@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.Linq;
 using BusinessDomain.DomainEvents.Common;
 using BusinessDomain.DomainEvents.UserEvents;
@@ -39,7 +40,10 @@ namespace DomainService.EventHandlers
 
         public void Handle(LoadFriendsEvent eventObject)
         {
-            eventObject.Friends = _userRepository.GetFriends(eventObject.UserId).ToList();
+            var profiles = _userRepository.GetFriends(eventObject.UserId).ToList();
+            var friends = eventObject.Friends as List<Profile>;
+            if(friends!=null)
+                friends.AddRange(profiles);
         }
 
         public void Handle(ChangePasswordEvent eventObject)

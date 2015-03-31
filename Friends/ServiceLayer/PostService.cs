@@ -13,7 +13,7 @@ namespace ServiceLayer
 {
     public interface IPostService
     {
-        IEnumerable<PostDTO> Get(PostFetchRequest request, UserDTO authUser);
+        IEnumerable<PostDTO> Get(SearchFilter request, UserDTO authUser);
         PostDTO Get(string postId,UserDTO authUser,PostType postType);
         PostDTO Put(PostDTO request, UserDTO authUser);
         PostDTO Post(PostDTO request, UserDTO authUser);
@@ -28,18 +28,13 @@ namespace ServiceLayer
         {
             PostController = ObjectFactory.Resolve<IPostController>();
         }
-        public IEnumerable<PostDTO> Get(PostFetchRequest request, UserDTO authUser)
+        public IEnumerable<PostDTO> Get(SearchFilter request, UserDTO authUser)
         {
             var listOfTypes = new List<PostType> {PostType.PostText};
-            var filter = new SearchFilter
-            {
-                Order = OrderType.Ascending,
-                PageNumber = request.PageNumber,
-                RecordsPerPage = request.RecordsPerPage
-            };
-            filter.FilterProperties.Add("recipientid",authUser.Id);
-            filter.FilterProperties.Add("authorid", authUser.Id);
-            var posts = PostController.GetPosts(filter, listOfTypes,authUser.ToBusinessModel());
+            
+            request.FilterProperties.Add(new Filter{Name = "recipientid",Value = authUser.Id});
+            request.FilterProperties.Add(new Filter { Name = "authorid", Value = authUser.Id });
+            var posts = PostController.GetPosts(request, listOfTypes,authUser.ToBusinessModel());
             return posts.Select(Mapper.Map<PostDTO>);
         }
 
@@ -66,16 +61,26 @@ namespace ServiceLayer
             return Mapper.Map<PostDTO>(post);
         }
 
-        public void Post(string postId, PostType postType, LikeType likeType, UserDTO authUser)
+        public bool Post(string postId, PostType postType, LikeType likeType, UserDTO authUser)
         {
-            var post = PostController.GetPost(postId, authUser.ToBusinessModel(), postType);
-            if (likeType == LikeType.Like)
+            try
             {
-                post.Like(authUser.ToBusinessModel());
+                var user = authUser.ToBusinessModel();
+                var post = PostController.GetPost(postId, user, postType);
+                if (likeType == LikeType.Like)
+                {
+                    post.Like(user);
+                }
+                else
+                {
+                    post.Dislike(user);
+                }
+                post.Save();
+                return true;
             }
-            else
+            catch (Exception ex)
             {
-                post.Dislike(authUser.ToBusinessModel());
+                return false;
             }
         }
     }

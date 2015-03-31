@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using BusinessDomain.DomainEvents.Common;
+using BusinessDomain.DomainEvents.UserEvents;
 using Infrastructure.Model;
 
 namespace BusinessDomain.DomainObjects
@@ -28,6 +30,8 @@ namespace BusinessDomain.DomainObjects
         public string Email { get; set; }
         public string ImageUrl { get; set; }
         public System.DateTime LastSeen { get; set; }
+        private IList<Profile> _friends;
+        
 
         public void Update()
         {

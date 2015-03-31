@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using DAL.Interfaces;
 using Infrastructure.Model;
 using BusinessDomain.DomainObjects;
 
@@ -14,7 +15,7 @@ namespace DAL
         string DeletePost(Post post);
         void UpdatePost(Post post);
         Post GetPost(string postId, PostType postType);
-        IEnumerable<Post> GetPosts(SearchFilter filter,IEnumerable<PostType> types);
+        IEnumerable<Post> GetPosts(SearchFilter filter,List<string> filterParser,IEnumerable<PostType> types);
         void AddLike(string postId, string userId, LikeType likeType);
         void RemoveLike(string postId, string userId);
         void AddRecipient(string postId, string userId);

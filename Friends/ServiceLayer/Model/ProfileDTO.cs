@@ -16,6 +16,7 @@ namespace ServiceLayer.Model
         public Nullable<int> StatusId { get; set; }
         public Nullable<int> LocationId { get; set; }
         public string ImageUrl { get; set; }
+        public string LastSeen { get; set; }
     }
 
     public class ProfileThumbnailDTO
@@ -24,5 +25,7 @@ namespace ServiceLayer.Model
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ImageUrl { get; set; }
+        public string FullName{get { return FirstName + " " + LastName; }}
+        public string LastSeen { get; set; }
     }
 }

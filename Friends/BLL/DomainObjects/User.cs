@@ -30,6 +30,7 @@ namespace BusinessDomain.DomainObjects
             {
                 if (_friends!=null)
                     return _friends;
+                _friends = new List<Profile>();
                 AddLoadEvent(new LoadFriendsEvent(Id, _friends));
                 Load();
                 return _friends;

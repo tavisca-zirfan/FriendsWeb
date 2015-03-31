@@ -51,14 +51,18 @@ namespace ServiceLayer
 
         public static Post ToBusinessModel(this PostDTO postDto, Post post=null)
         {
-            switch (postDto.PostType)
+            PostType postType;
+            if (Enum.TryParse(postDto.PostType, out postType))
             {
+                switch (postType)
+                {
                     case PostType.PostText:
-                    post = ToPostBusinessModel((TextPostDTO) postDto, (TextPost)post);
+                    post = ToPostBusinessModel((TextPostDTO) postDto, (TextPost) post);
                     break;
                     case PostType.Comment:
-                    post = ToPostBusinessModel((CommentDTO)postDto, (Comment)post);
+                    post = ToPostBusinessModel((CommentDTO) postDto, (Comment) post);
                     break;
+                }
             }
             if (post != null)
             {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using BusinessDomain.DomainEvents.Common;
 using BusinessDomain.DomainEvents.PostEvent;
@@ -72,14 +73,22 @@ namespace BusinessDomain.DomainObjects
 
         public void Like(User user)
         {
-            AddSaveEvent(new RemoveLikeEvent(this.Id,user.Id));
-            AddSaveEvent(new AddLikeEvent(this.Id,user.Id,LikeType.Like));
+            if (this.Dislikes.Select(p => p.Id).Contains(user.Id))
+                AddSaveEvent(new RemoveLikeEvent(this.Id, user.Id));
+            else if (!this.Likes.Select(p => p.Id).Contains(user.Id))
+                AddSaveEvent(new AddLikeEvent(this.Id, user.Id, LikeType.Like));
+            else
+                throw new InvalidDataException("Already it has been liked");
         }
 
         public void Dislike(User user)
         {
-            AddSaveEvent(new RemoveLikeEvent(Id,user.Id));
-            AddSaveEvent(new AddLikeEvent(this.Id, user.Id, LikeType.Dislike));
+            if (this.Likes.Select(p => p.Id).Contains(user.Id))
+                AddSaveEvent(new RemoveLikeEvent(this.Id, user.Id));
+            else if (!this.Dislikes.Select(p => p.Id).Contains(user.Id))
+                AddSaveEvent(new AddLikeEvent(this.Id, user.Id, LikeType.Dislike));
+            else
+                throw new InvalidDataException("Already it has been disliked");
         }
 
         public void RemoveComment(User user,Comment comment)

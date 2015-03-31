@@ -84,12 +84,14 @@ namespace DAL
                 DOB = userProfile.DOB,
                 FirstName = userProfile.FirstName,
                 LastName = userProfile.LastName,
-                Gender = userProfile.Gender
+                Gender = userProfile.Gender,
+                Id = userProfile.UserId
             };
 
             if (user != null)
             {
                 profile.Email = user.Email;
+                profile.LastSeen = user.LastSeen;
             }
             return profile;
         }

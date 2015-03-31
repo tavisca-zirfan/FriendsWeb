@@ -179,14 +179,15 @@ namespace DAL
 
         public IEnumerable<Profile> GetFriends(string userId)
         {
-            return new List<Profile>();
+            var profiles = Db.UserProfiles.Where(u=>u.UserId!=userId).ToList();
+            return profiles.Select(p => p.ToBusinessModel());
         }
 
 
         public IEnumerable<Profile> GetProfiles(IEnumerable<string> userIds)
         {
-            var profiles = Db.UserProfiles.Where(u => userIds.Contains(u.UserId)).ToList();
-            return profiles.Select(p => p.ToBusinessModel());
+            var profiles = Db.UserProfiles.Include("UserCredential").Where(u => userIds.Contains(u.UserId)).ToList();
+            return profiles.Select(p => p.ToBusinessModel(p.UserCredential));
         }
 
 

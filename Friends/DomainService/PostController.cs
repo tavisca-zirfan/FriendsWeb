@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DAL;
+using DAL.Implementation;
+using DAL.Interfaces;
 using Infrastructure.Common;
 using Infrastructure.Data;
 using BusinessDomain.DomainObjects;
@@ -55,7 +57,9 @@ namespace DomainService
 
         public IEnumerable<Post> GetPosts(SearchFilter filter, IEnumerable<PostType> types, User authUser)
         {
-            return PostRepository.GetPosts(filter,types);
+            filter.FilterProperties.Add(new Filter{Name="types",Value=string.Join(",",types.Select(t=>t.ToString()))});
+            var filters = new List<string>{FilterType.PostBaseFilter.ToString(),FilterType.PostLastUpdateFilter.ToString(),FilterType.PostListUserFilter.ToString()};
+            return PostRepository.GetPosts(filter,filters,types);
         }
 
 

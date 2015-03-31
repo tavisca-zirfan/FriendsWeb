@@ -15,7 +15,7 @@ namespace IntegrationTest
             {
                 Author = new ProfileThumbnailDTO { Id = userId },
                 CreatedAt = DateTime.Now,
-                PostType = PostType.PostText,
+                PostType = PostType.PostText.ToString(),
                 Recipients = new List<ProfileThumbnailDTO> { new ProfileThumbnailDTO { Id = userId } },
                 Tags = new List<ProfileThumbnailDTO> { new ProfileThumbnailDTO { Id = userId } },
                 Message = "Post Text Message"
@@ -31,7 +31,7 @@ namespace IntegrationTest
                 CreatedAt = DateTime.Now,
                 Recipients = new List<ProfileThumbnailDTO> { new ProfileThumbnailDTO { Id = userId } },
                 Tags = new List<ProfileThumbnailDTO> { new ProfileThumbnailDTO { Id = userId } },
-                PostType = PostType.Comment,
+                PostType = PostType.Comment.ToString(),
                 ForPostId = forPostId
             };
         }

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using BusinessDomain.DomainObjects;
+using Infrastructure.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ServiceLayer;
 using ServiceLayer.Model;
@@ -53,10 +54,9 @@ namespace IntegrationTest
         {
             var posts =
                 _postService.Get(
-                    new PostFetchRequest
+                    new SearchFilter
                     {
-                        AuthorId = _userId,
-                        RecipientId = _userId,
+                        
                         PageNumber = 1,
                         RecordsPerPage = 10
                     }, _user);

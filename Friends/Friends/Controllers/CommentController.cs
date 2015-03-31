@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using BusinessDomain.DomainObjects;
+using Infrastructure.Model;
 using ServiceLayer;
 using ServiceLayer.Model;
 
@@ -20,7 +21,7 @@ namespace Friends.Controllers
         {
             PostService=new PostService();
         }
-        public IEnumerable<CommentDTO> Get(PostFetchRequest request)
+        public IEnumerable<CommentDTO> Get(SearchFilter request)
         {
             return PostService.Get(request, UserData).Cast<CommentDTO>();
         }
@@ -32,8 +33,12 @@ namespace Friends.Controllers
 
         public CommentDTO Put(CommentDTO post)
         {
-            
             return PostService.Put(post, UserData) as CommentDTO;
+        }
+
+        public CommentDTO Post(CommentDTO post)
+        {
+            return PostService.Post(post, UserData) as CommentDTO;
         }
 
         public void Delete(CommentDTO post)

@@ -5,12 +5,9 @@ using System.Text;
 
 namespace ServiceLayer.Model
 {
-    public class PostFetchRequest
+    public class PostFetchRequest:ListRequest
     {
         public string AuthorId { get; set; }
-        public string RecipientId { get; set; }
-        public int PageNumber { get; set; }
-        public int TotalRecords { get; set; }
-        public int RecordsPerPage { get; set; }
+        public string Text { get; set; }
     }
 }

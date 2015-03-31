@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DAL.Implementation;
 using DAL.Interfaces;
 using FriendsDb.Models;
 using Infrastructure.Container;
@@ -100,6 +101,18 @@ namespace DAL
             return dbComments.Select(commentRepo.ParsePost).Cast<Model.Comment>().ToList();
         }
 
+        private IFilterParser<Post> GetFinalFilter(List<string> filterParser)
+        {
+            IFilterParser<Post> finalParser = null;
+            foreach (var parserName in filterParser)
+            {
+                var parserType = ObjectFactory.Resolve<IFilterParser<Post>>(parserName);
+                parserType.SetBaseFilter(finalParser);
+                finalParser = parserType;
+            }
+            return finalParser;
+        } 
+
         private IQueryable<Post> GetPosts(IEnumerable<string> types)
         {
             IQueryable<Post> posts = Db.Posts
@@ -109,19 +122,15 @@ namespace DAL
                 .Aggregate(posts, (current, childRepository) => childRepository.IncludeTables(current));
         }
 
-        public IEnumerable<Model.Post> GetPosts(SearchFilter filter,IEnumerable<Model.PostType> types)
+        public IEnumerable<Model.Post> GetPosts(SearchFilter filter,List<string> filterParser,IEnumerable<Model.PostType> types)
         {
-            var recipient = filter.FilterProperties["recipientid"].ToString();
-            var author = filter.FilterProperties["authorid"].ToString();
             var postTypes = types as IList<Model.PostType> ?? types.ToList();
             var strTypes = postTypes.Select(t => t.ToString()).ToList();
             var postsTable = GetPosts(strTypes);
+            var finalParser = GetFinalFilter(filterParser);
             var posts =
-                postsTable.Where(
-                    p =>
-                        strTypes.Contains(p.Type)&&(
-                        p.Author ==  author||
-                        p.PostRecipients.Select(r => r.RecipientId).Contains(recipient)))
+                finalParser.CreateFilter(postsTable,filter).OrderByDescending(p=>p.LastUpdate)
+                .Skip((filter.PageNumber-1)*filter.RecordsPerPage).Take(filter.RecordsPerPage)
                     .ToList();
             var comments = GetComments(posts.Select(p => p.Pid));
             var finalList = posts.Select(p =>

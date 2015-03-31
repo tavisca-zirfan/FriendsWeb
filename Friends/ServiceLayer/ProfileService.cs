@@ -45,6 +45,7 @@ namespace ServiceLayer
             return profiles.Select(Mapper.Map<ProfileDTO>).ToList();
         }
 
+
         public List<ProfileDTO> Get(SearchFilter filters, UserDTO authUser)
         {
             return UserController.GetProfiles(filters,authUser.ToBusinessModel()).Select(Mapper.Map<ProfileDTO>).ToList();

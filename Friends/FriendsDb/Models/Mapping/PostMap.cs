@@ -33,6 +33,7 @@ namespace FriendsDb.Models.Mapping
             this.Property(t => t.Author).HasColumnName("Author");
             this.Property(t => t.Time).HasColumnName("Time");
             this.Property(t => t.Type).HasColumnName("Type");
+            this.Property(t => t.LastUpdate).HasColumnName("LastUpdate");
 
             // Relationships
             this.HasRequired(t => t.UserProfile)

@@ -14,7 +14,11 @@ namespace DAL
     {
         public void Setup(Infrastructure.Container.IDependencyContainer container)
         {
-            container.Register<IPostTypeRepository, PostTextRepository>(PostType.PostText.ToString())
+            container
+                .Register<IFilterParser<FriendsDb.Models.Post>, PostListBaseFilter>(FilterType.PostBaseFilter.ToString())
+                .Register<IFilterParser<FriendsDb.Models.Post>, PostListLastUpdateFilter>(FilterType.PostLastUpdateFilter.ToString())
+                .Register<IFilterParser<FriendsDb.Models.Post>, PostListUserFilter>(FilterType.PostListUserFilter.ToString())
+                .Register<IPostTypeRepository, PostTextRepository>(PostType.PostText.ToString())
                 .Register<IPostTypeRepository, CommentRepository>(PostType.Comment.ToString())
                 .RegisterAsSingleton<IUnitOfWork>(new UnitOfWork())
                 ;
