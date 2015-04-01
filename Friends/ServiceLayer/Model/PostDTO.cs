@@ -8,6 +8,11 @@ namespace ServiceLayer.Model
 {
     public class PostDTO
     {
+        public PostDTO()
+        {
+            Comments = new List<CommentDTO>();
+
+        }
         public string Id { get; set; }
         public ProfileThumbnailDTO Author { get; set; }
         public DateTime? CreatedAt { get; set; }

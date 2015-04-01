@@ -68,6 +68,7 @@ namespace ServiceLayer
             {
                 if (!string.IsNullOrEmpty(postDto.Id))
                     post.Id = postDto.Id;
+                if(post.Author!=null)
                 post.Author = new Profile{Id=postDto.Author.Id};
                 post.Tags = postDto.Tags.Select(t => new Profile {Id = t.Id}).ToList();
                 post.Recipients = postDto.Recipients.Select(r => new Profile {Id = r.Id}).ToList();

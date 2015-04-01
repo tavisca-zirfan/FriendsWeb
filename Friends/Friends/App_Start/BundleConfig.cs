@@ -43,6 +43,8 @@ namespace Friends.App_Start
                 .Include("~/Scripts/Model/profileModel.js")
                 .Include("~/Scripts/Views/basePostView.js")
                 .Include("~/Scripts/Views/commentView.js")
+                .Include("~/Scripts/Views/onlineListView.js")
+                .Include("~/Scripts/Views/postListView.js")
                 );
         }
     }

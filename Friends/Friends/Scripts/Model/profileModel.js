@@ -14,7 +14,8 @@ window.friends.Collection.Profile = Backbone.Collection.extend({
             url: '/api/profile/GetFriends',
             type: 'Get'
         }).done(function(response) {
-            response.items.forEach(function(item,index) {
+            response.items.forEach(function (item, index) {
+                that.reset();
                 var model = new friends.Model.Profile(item);
                 that.add(model);
             });

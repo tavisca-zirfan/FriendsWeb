@@ -8,121 +8,126 @@
     @Html.Partial("_Sidebar")
 }
 <div class="col-md-12 home-content">
-    <div class="row ">
-        <div class="col-md-8 form">
-            <div class="form-group">
-                <textarea placeholder="What's on your mind" class="form-control input-lg large"></textarea>
-            </div>
-
-        </div>
-    </div>
-    @* <div class="row">
-        <div class="col-md-8">
-            @for (int i = 0; i < 10; i++)
-            {
-                <div class="base-card">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <img class="img-responsive" data-src="holder.js/40x40" style="width: 40px; height: 40px" src="~/Content/images/games.jpg" />
+    <div class="post-list">
+        
+        <div>
+            @* <div class="row">
+            <div class="col-md-8">
+                @for (int i = 0; i < 10; i++)
+                {
+                    <div class="base-card">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img class="img-responsive" data-src="holder.js/40x40" style="width: 40px; height: 40px" src="~/Content/images/games.jpg" />
+                            </div>
+                            <div class="col-md-10 col-md-pull-1">
+                                <div><span>Zaid Bin Irfan</span><span class="text-muted"> Posted</span> </div>
+                                <div class="text-muted">11 hours ago</div>
+                            </div>
                         </div>
-                        <div class="col-md-10 col-md-pull-1">
-                            <div><span>Zaid Bin Irfan</span><span class="text-muted"> Posted</span> </div>
-                            <div class="text-muted">11 hours ago</div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        <div class="row">
+                            <div class="col-md-12">
+                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
                         
+                            </div>
                         </div>
-                    </div>
-                    <div class="row card-action">
-                        <div class="col-md-12">
-                            <span><a href="#">Like</a></span>
-                            <span><a href="#">Dislike</a></span>
-                            <span><a href="#">Comment</a></span>
+                        <div class="row card-action">
+                            <div class="col-md-12">
+                                <span><a href="#">Like</a></span>
+                                <span><a href="#">Dislike</a></span>
+                                <span><a href="#">Comment</a></span>
+                            </div>
                         </div>
-                    </div>
-                    <hr />
-                    <div class="row">
-                        <div class="col-md-12">
-                            <span class="glyphicon glyphicon-thumbs-up"></span><span>67 people like this</span>
-                            <hr />
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="glyphicon glyphicon-thumbs-up"></span><span>67 people like this</span>
+                                <hr />
+                            </div>
                         </div>
-                    </div>
-                    @for (int j = 0; j < 3; j++)
-                    {
+                        @for (int j = 0; j < 3; j++)
+                        {
+                            <div class="row comment">
+                                <div class="col-md-2">
+                                    <img class="img-responsive" data-src="holder.js/40x40" style="width: 40px; height: 40px" src="~/Content/images/games.jpg" />
+                                </div>
+                                <div class="col-md-10 col-md-pull-1">
+                                    <div>
+                                        <span><a href="#">Zaid Bin Irfan</a></span>
+                                        <span class="message">It has survived not only five centuries
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <span class="text-muted">11 hours ago</span>
+                                        <span class="card-action glyphicon glyphicon-thumbs-up">3</span>
+                                        <span class="card-action glyphicon glyphicon-thumbs-down">1</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                         <div class="row comment">
                             <div class="col-md-2">
                                 <img class="img-responsive" data-src="holder.js/40x40" style="width: 40px; height: 40px" src="~/Content/images/games.jpg" />
                             </div>
                             <div class="col-md-10 col-md-pull-1">
-                                <div>
-                                    <span><a href="#">Zaid Bin Irfan</a></span>
-                                    <span class="message">It has survived not only five centuries
-                                    </span>
+                                <div class="form-group margin5-top">
+                                    <input type="text" class="form-control" placeholder="Comment here ..."/>
                                 </div>
-                                <div>
-                                    <span class="text-muted">11 hours ago</span>
-                                    <span class="card-action glyphicon glyphicon-thumbs-up">3</span>
-                                    <span class="card-action glyphicon glyphicon-thumbs-down">1</span>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <div class="row comment">
-                        <div class="col-md-2">
-                            <img class="img-responsive" data-src="holder.js/40x40" style="width: 40px; height: 40px" src="~/Content/images/games.jpg" />
-                        </div>
-                        <div class="col-md-10 col-md-pull-1">
-                            <div class="form-group margin5-top">
-                                <input type="text" class="form-control" placeholder="Comment here ..."/>
-                            </div>
                                 
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
             
+            </div>
+            <div class="col-md-4">
+                @Html.Partial("_Events")
+            </div>
+        </div>*@
         </div>
-        <div class="col-md-4">
-            @Html.Partial("_Events")
-        </div>
-    </div>*@
-    <div class="row">
-        <div class="col-md-8">
-            <div class="posts"></div>
-        </div>
-    </div>
 
+        
+    </div>
 </div>
 @Html.Partial("_PostTemplates")
-
+<script type="text/template" id="postListTemplate">
+<div class="row ">
+    <div class="col-md-8 form">
+        <div class="form-group">
+            <textarea placeholder="What's on your mind" class="form-control input-lg large post-message"></textarea>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="posts"></div>
+    </div>
+</div>
+</script>
 @section scripts
 {
     @Scripts.Render("~/scripts/post")
     
+    
     <script type="text/javascript">
-        var lastUpdate;
-        setInterval(function () {
-            var filters = [];
-            if (lastUpdate) {
-                filters.push(new Filter('lastupdate', lastUpdate));
-            }
-            var searchFilter = friends.utils.Filter.createFilter(filters);
-            var posts = new window.friends.Collection.Post();
-            posts.fetch({
-                success: function (response) {
-                    _.forEach(response.models, function (post) {
-                        post.renderView($('.posts'));
-                    });
-                },
-                data:searchFilter
-            });
-            lastUpdate = new Date().toUTCString();
-        },5000);
+        var onlineListView = new friends.Views.OnlineListView();
+        var postListView = new friends.Views.PostListView();
+        //var lastUpdate;
+        //setInterval(function () {
+            
+        //    var posts = new window.friends.Collection.Post();
+        //    posts.fetch({
+        //        success: function (response) {
+        //            _.forEach(response.models, function (post) {
+        //                post.renderView($('.posts'));
+        //            });
+        //        },
+        //        data:searchFilter
+        //    });
+        //    lastUpdate = new Date().toUTCString();
+        //},5000);
         
         $("#btnPlanEvent").on('click', function() {
             $("#eventModal").modal('show');

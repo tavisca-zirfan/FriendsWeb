@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BusinessDomain;
 using DAL;
 using DAL.Implementation;
 using DAL.Interfaces;
@@ -28,6 +29,7 @@ namespace DomainService
             {
                 post.Id = IdGenerator.GenerateId();
                 post.CreatedAt = DateTime.Now;
+                post.Author = authUser.ToProfile();
                 PostRepository.AddPost(post);
                 UnitOfWork.Commit();
             }

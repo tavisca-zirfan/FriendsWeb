@@ -103,7 +103,7 @@ namespace Friends.Controllers
                 Password = model.Password,
                 Roles = new List<RolesDTO>{new RolesDTO{Id = 2}}
             };
-            
+            UserService.Post(request);
             return RedirectToAction("Index","Home");
         }
 

@@ -8,13 +8,31 @@
     parse:function(model) {
         if (!model.comments) model.comments = [];
         return model;
+    },
+    like:function() {
+        
+    },
+    dislike:function() {
+        
     }
 });
 
 window.friends.Model.TextPost = friends.Model.Post.extend({
+    defaults: {
+        postType: 'PostText'
+    },
     renderView: function ($container) {
         this.view = new window.friends.Views.TextPostView({ model: this, $container: $container });
-    }
+    },
+    parse: function (result) {
+        return result.items;
+    },
+    url:'/api/textpost'
+});
+
+window.friends.Collection.TextPost = Backbone.Collection.extend({
+    model: friends.Model.TextPost,
+
 });
 
 window.friends.Collection.Post = Backbone.Collection.extend({
