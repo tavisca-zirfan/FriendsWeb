@@ -5,7 +5,7 @@
         if (!window.friends.hbTemplate.ChildPostView) window.friends.hbTemplate.ChildPostView = Handlebars.compile($(this.options.childTemplate).html());
         this.$container = param.$container;
         this.render();
-
+        this._bindEvents();
     },
     options: {
         baseTemplate: '#basePostViewTemplate',
@@ -21,7 +21,7 @@
                 that._renderComment(comment);
             });
         }
-        this.$container.append(this.$card);
+        this.$container.prepend(this.$card);
     },
     _renderComment:function(comment) {
         var commentView = new friends.Views.CommentView({ model: comment, $container: $('.comments', this.$card) });
@@ -31,15 +31,14 @@
     },
     _bindEvents: function () {
         var that = this;
-        $('.comment-box', this.$card).on('keydown', function() {
-            var comment = new friends.Model.Comment();
-            comment.set('commentMessage', $(this).val());
-            comment.set('forPostId', that.model.id);
-            comment.save({
-                success: function(c) {
-                    that._renderComment(c);
-                }
-            });
+        $('.comment-box', this.$card).on('keydown', function (e) {
+            if (e.keyCode == 13) {
+                var comment = new friends.Model.Comment();
+                comment.set('commentMessage', $(this).val());
+                comment.set('forPostId', that.model.id);
+                comment.on('sync', that._renderComment,that);
+                comment.save();
+            }
         });
     },
     _bindChildEvents: function() {},

@@ -10,8 +10,8 @@ namespace ServiceLayer.Model
     {
         public PostDTO()
         {
-            Comments = new List<CommentDTO>();
-
+            Tags = new List<ProfileThumbnailDTO>();
+            Recipients = new List<ProfileThumbnailDTO>();
         }
         public string Id { get; set; }
         public ProfileThumbnailDTO Author { get; set; }

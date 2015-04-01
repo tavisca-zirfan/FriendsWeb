@@ -11,6 +11,7 @@
         this.listenTo(this.postList, 'sync', this.renderPostList);
         this.listenTo(this.postList, 'add', this._addPost);
         this.postList.fetch();
+        that.fetchTime = new Date().toUTCString();
         setInterval(function () {
             var filters = [];
             if (that.lastUpdate) {
@@ -28,22 +29,23 @@
     },
     renderPostList:function(posts) {
         var that = this;
-        _.forEach(posts.models, function (post) {
-            var insertPost = true;
-            var $card = $('#' + post.id, that.$postListContainer);
-            if ($card) {
-                insertPost = !$('.comment-box', $card).is(':focus');
-                if (insertPost) {
-                    $card.remove();
-                }
-            }
-            if (insertPost)
-                that._addPost(post);
-        });
+        //_.forEach(posts.models, function (post) {
+            
+        //});
         that.lastUpdate = that.fetchTime;
     },
-    _addPost:function(post) {
-        post.renderView(this.$postListContainer);
+    _addPost: function (post) {
+        var that = this;
+        var insertPost = true;
+        var $card = $('#' + post.id, that.$postListContainer);
+        if ($card) {
+            insertPost = !$('.comment-box', $card).is(':focus');
+            if (insertPost) {
+                $card.remove();
+            }
+        }
+        if (insertPost)
+            post.renderView(this.$postListContainer);
     },
     bindEvents: function () {
         var that = this;
@@ -52,9 +54,10 @@
                 var text = $(this).val();
                 var model = new friends.Model.TextPost();
                 model.set('message', text);
-                model.save({success:function(m) {
+                model.on('sync', function(m) {
                     that.postList.add(m);
-                }});
+                });
+                model.save();
             }
         });
     }

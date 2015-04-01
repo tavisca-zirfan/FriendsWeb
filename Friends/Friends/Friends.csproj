@@ -258,7 +258,6 @@
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Home\_Events.cshtml" />
     <Content Include="Views\Shared\_PostTemplates.cshtml" />
-    <Content Include="Views\Shared\_SidebarTemplate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
