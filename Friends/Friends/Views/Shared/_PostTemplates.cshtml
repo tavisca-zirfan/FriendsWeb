@@ -24,9 +24,12 @@
         <hr />
         <div class="row">
             <div class="col-md-12">
-                <div>
+                @*<div>
                     <span class="card-action glyphicon glyphicon-thumbs-up">{{attributes.numberOfLikes}}</span>
                     <span class="card-action glyphicon glyphicon-thumbs-down">{{attributes.numberOfDislikes}}</span>
+                </div>*@
+                <div class="post-like">
+
                 </div>
                 <div>
                     <span class="glyphicon glyphicon-thumbs-up"></span><span>67 people like this</span>
@@ -68,10 +71,16 @@
             </div>
             <div>
                 <span class="text-muted">11 hours ago</span>
-                <span class="card-action glyphicon glyphicon-thumbs-up">{{attributes.numberOfLikes}}</span>
-                <span class="card-action glyphicon glyphicon-thumbs-down">{{attributes.numberOfDislikes}}</span>
+                @*<span class="card-action glyphicon glyphicon-thumbs-up">{{attributes.numberOfLikes}}</span>
+                <span class="card-action glyphicon glyphicon-thumbs-down">{{attributes.numberOfDislikes}}</span>*@
+                <span class="comment-like"></span>
             </div>
         </div>
     </div>
+</script>
+
+<script type="text/template" id="likeViewTemplate">        
+    <span class="card-action glyphicon glyphicon-thumbs-up">{{attributes.numberOfLikes}}</span>
+    <span class="card-action glyphicon glyphicon-thumbs-down">{{attributes.numberOfDislikes}}</span>    
 </script>
 

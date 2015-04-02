@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -144,6 +146,7 @@
     <Compile Include="Controllers\PostResponseController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\TextPostController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,6 +231,7 @@
     <Content Include="Scripts\Library\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Library\moment.js" />
     <Content Include="Scripts\Model\commentModel.js" />
+    <Content Include="Scripts\Model\postLikeModel.js" />
     <Content Include="Scripts\Model\postModel.js" />
     <Content Include="Scripts\Model\profileModel.js" />
     <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.css" />
@@ -236,6 +240,7 @@
     <Content Include="Scripts\Utils\searchFilter.js" />
     <Content Include="Scripts\Views\basePostView.js" />
     <Content Include="Scripts\Views\commentView.js" />
+    <Content Include="Scripts\Views\likeView.js" />
     <Content Include="Scripts\Views\onlineListView.js" />
     <Content Include="Scripts\Views\postListView.js" />
     <Content Include="Web.config" />
@@ -258,6 +263,7 @@
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Home\_Events.cshtml" />
     <Content Include="Views\Shared\_PostTemplates.cshtml" />
+    <Content Include="Views\UserProfile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -312,6 +318,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

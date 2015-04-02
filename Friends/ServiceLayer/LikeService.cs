@@ -1,5 +1,7 @@
 ﻿using System;
+using AutoMapper;
 using BusinessDomain.DomainObjects;
+using BusinessDomain.Interface;
 using DomainService;
 using Infrastructure.Container;
 using ServiceLayer.Model;
@@ -8,7 +10,7 @@ namespace ServiceLayer
 {
     public interface ILikeService
     {
-        bool Post(string postId, PostType postType, LikeType likeType, UserDTO authUser);
+        PostDTO Post(string postId, PostType postType, LikeType likeType, UserDTO authUser);
     }
     public class LikeService : ILikeService
     {
@@ -18,7 +20,7 @@ namespace ServiceLayer
         {
             PostController = ObjectFactory.Resolve<IPostController>();
         }
-        public bool Post(string postId, PostType postType, LikeType likeType, UserDTO authUser)
+        public PostDTO Post(string postId, PostType postType, LikeType likeType, UserDTO authUser)
         {
             try
             {
@@ -33,11 +35,11 @@ namespace ServiceLayer
                     post.Dislike(user);
                 }
                 post.Save();
-                return true;
+                return Mapper.Map<PostDTO>(post);
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
         }
     }

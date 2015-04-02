@@ -74,9 +74,16 @@ namespace BusinessDomain.DomainObjects
         public void Like(User user)
         {
             if (this.Dislikes.Select(p => p.Id).Contains(user.Id))
+            {
                 AddSaveEvent(new RemoveLikeEvent(this.Id, user.Id));
+                var itemToBeRemoved = Dislikes.Single(p => p.Id == user.Id);
+                Dislikes.Remove(itemToBeRemoved);
+            }
             else if (!this.Likes.Select(p => p.Id).Contains(user.Id))
+            {
                 AddSaveEvent(new AddLikeEvent(this.Id, user.Id, LikeType.Like));
+                Likes.Add(user.ToProfile());
+            }
             else
                 throw new InvalidDataException("Already it has been liked");
         }
@@ -84,9 +91,16 @@ namespace BusinessDomain.DomainObjects
         public void Dislike(User user)
         {
             if (this.Likes.Select(p => p.Id).Contains(user.Id))
+            {
                 AddSaveEvent(new RemoveLikeEvent(this.Id, user.Id));
+                var itemToBeRemoved = Likes.Single(p => p.Id == user.Id);
+                Likes.Remove(itemToBeRemoved);
+            }
             else if (!this.Dislikes.Select(p => p.Id).Contains(user.Id))
+            {
                 AddSaveEvent(new AddLikeEvent(this.Id, user.Id, LikeType.Dislike));
+                Dislikes.Add(user.ToProfile());
+            }
             else
                 throw new InvalidDataException("Already it has been disliked");
         }

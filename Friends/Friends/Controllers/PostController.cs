@@ -35,8 +35,8 @@ namespace Friends.Controllers
         }
 
         
-
-        public bool Like(PostDTO post)
+        [HttpPost]
+        public PostDTO Like(PostDTO post)
         {
             PostType postType;
             if (Enum.TryParse(post.PostType, out postType))
@@ -44,8 +44,8 @@ namespace Friends.Controllers
             throw new ArgumentException("Invalid PostType");
 
         }
-
-        public bool Dislike(PostDTO post)
+        [HttpPost]
+        public PostDTO Dislike(PostDTO post)
         {
             PostType postType;
             if (Enum.TryParse(post.PostType, out postType))

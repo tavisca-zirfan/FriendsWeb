@@ -38,6 +38,7 @@ namespace Friends.App_Start
 
             // add scripts for post
             bundles.Add(new ScriptBundle("~/scripts/post")
+                .Include("~/Scripts/Model/postLikeModel.js")
                 .Include("~/Scripts/Model/commentModel.js")
                 .Include("~/Scripts/Model/postModel.js")
                 .Include("~/Scripts/Model/profileModel.js")

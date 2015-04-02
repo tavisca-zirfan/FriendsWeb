@@ -1,4 +1,6 @@
-﻿window.friends.Model.Post = Backbone.Model.extend({
+﻿
+
+window.friends.Model.Post = window.friends.Model.PostLike.extend({
     renderView:function($container) {
         this.view = new window.friends.Views.BasePostView({ model: this, $container: $container });
     },
@@ -8,13 +10,8 @@
     parse:function(model) {
         if (!model.comments) model.comments = [];
         return model;
-    },
-    like:function() {
-        
-    },
-    dislike:function() {
-        
     }
+    
 });
 
 window.friends.Model.TextPost = friends.Model.Post.extend({

@@ -1,4 +1,4 @@
-﻿window.friends.Model.Comment = Backbone.Model.extend({
+﻿window.friends.Model.Comment = window.friends.Model.PostLike.extend({
     defaults: {
         postType: 'Comment'
     },

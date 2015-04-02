@@ -3,9 +3,9 @@
         this.options = $.extend({}, this.options, this.childOptions);
         if (!window.friends.hbTemplate.BasePostView) window.friends.hbTemplate.BasePostView = Handlebars.compile($(this.options.baseTemplate).html());
         if (!window.friends.hbTemplate.ChildPostView) window.friends.hbTemplate.ChildPostView = Handlebars.compile($(this.options.childTemplate).html());
+        //this.listenTo(this.model, 'sync', this.update);
         this.$container = param.$container;
         this.render();
-        this._bindEvents();
     },
     options: {
         baseTemplate: '#basePostViewTemplate',
@@ -21,10 +21,31 @@
                 that._renderComment(comment);
             });
         }
+        this._renderLike(this.model);
+        this._bindEvents();
         this.$container.prepend(this.$card);
+    },
+    update: function () {
+        var that = this;
+        this.$card.html($(window.friends.hbTemplate.BasePostView(this.model)));
+        $('.post-type-container', this.$card).html($(window.friends.hbTemplate.ChildPostView(this.model)));
+        if (this.model.attributes.comments) {
+            var comments = this.model.get('comments');
+            _.forEach(comments.models, function (comment) {
+                that._renderComment(comment);
+            });
+        }
+        this._bindEvents();
     },
     _renderComment:function(comment) {
         var commentView = new friends.Views.CommentView({ model: comment, $container: $('.comments', this.$card) });
+    },
+    _renderLike: function(model) {
+        var that = this;
+        var likeView = new friends.Views.LikeView({
+            model: model,
+            $el: $('.post-like', that.$card)
+        });
     },
     _renderChild: function() {
 
@@ -38,6 +59,7 @@
                 comment.set('forPostId', that.model.id);
                 comment.on('sync', that._renderComment,that);
                 comment.save();
+                $(this).val('');
             }
         });
     },

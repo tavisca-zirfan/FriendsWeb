@@ -56,6 +56,7 @@
                 model.set('message', text);
                 model.on('sync', function(m) {
                     that.postList.add(m);
+                    $('.post-message', that.$el).val('');
                 });
                 model.save();
             }

@@ -11,7 +11,7 @@ window.friends.Collection.Profile = Backbone.Collection.extend({
     getFriends: function () {
         var that = this;
         $.ajax({
-            url: '/api/profile/GetFriends',
+            url: '/webapi/profile/GetFriends',
             type: 'Get'
         }).done(function(response) {
             response.items.forEach(function (item, index) {
