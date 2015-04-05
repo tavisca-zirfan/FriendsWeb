@@ -35,7 +35,7 @@ namespace Infrastructure.Model
             var unitOfWork = ObjectFactory.Resolve<IUnitOfWork>();
             _eventsToSave.ForEach(e=>e.Raise());
             unitOfWork.Commit();
-            unitOfWork.Refresh();
+            _eventsToSave.RemoveAll(e => e != null);
         }
 
         public virtual void Load()

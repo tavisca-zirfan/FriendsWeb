@@ -20,7 +20,7 @@ namespace DAL
                 .Register<IFilterParser<FriendsDb.Models.Post>, PostListUserFilter>(FilterType.PostListUserFilter.ToString())
                 .Register<IPostTypeRepository, PostTextRepository>(PostType.PostText.ToString())
                 .Register<IPostTypeRepository, CommentRepository>(PostType.Comment.ToString())
-                .RegisterAsSingleton<IUnitOfWork>(new UnitOfWork())
+                .RegisterAsWebSingleton<IUnitOfWork,UnitOfWork>()
                 ;
 
         }

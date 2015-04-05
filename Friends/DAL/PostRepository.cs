@@ -74,18 +74,25 @@ namespace DAL
 
         public void UpdatePost(Model.Post post)
         {
-            throw new NotImplementedException();
+            var dbPost = Db.Posts.SingleOrDefault(p => p.Pid == post.Id);
+            if (dbPost != null)
+            {
+                post.ToBaseDbModel(dbPost);
+            }
         }
 
-        public Model.Post GetPost(string postId, Model.PostType postType)
+        public Model.Post GetPost(string postId, string postType=null)
         {
-            var tables = new List<string> {postType.ToString()};
+            var tables = new List<string>
+            {
+                string.IsNullOrEmpty(postType) ? Model.PostType.PostText.ToString() : postType
+            };
             var dbPost =
                 GetPosts(tables)
                     .FirstOrDefault(p=>p.Pid==postId);
             if (dbPost == null)
                 return null;
-            var postTypeRepo = ObjectFactory.Resolve<IPostTypeRepository>(postType.ToString());
+            var postTypeRepo = ObjectFactory.Resolve<IPostTypeRepository>(dbPost.Type);
             var comments = GetComments(new List<string> {dbPost.Pid});
             var post= postTypeRepo.ParsePost(dbPost);
             post.Comments = comments.ToList();
@@ -140,6 +147,7 @@ namespace DAL
                 post.Comments = comments.Where(c => c.ForPostId == p.Pid).ToList();
                 return post;
             }).ToList();
+            finalList.Reverse();
             return finalList;
         }
 

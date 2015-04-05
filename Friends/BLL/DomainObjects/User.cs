@@ -56,7 +56,7 @@ namespace BusinessDomain.DomainObjects
 
         public void Update()
         {
-            this.LastSeen = DateTime.Now;
+            this.LastSeen = DateTime.UtcNow;
             AddSaveEvent(new EntityUpdateEvent<User>(this));
             Save();
         }

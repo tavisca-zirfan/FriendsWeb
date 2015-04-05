@@ -28,7 +28,7 @@ namespace Friends.Controllers
         [HttpGet]
         public TextPostDTO Get(string id)
         {
-            return PostService.Get(id, UserData, PostType.PostText) as TextPostDTO;
+            return PostService.Get(id, UserData, PostType.PostText.ToString()) as TextPostDTO;
         }
         [HttpPut]
         public TextPostDTO Put(TextPostDTO post)

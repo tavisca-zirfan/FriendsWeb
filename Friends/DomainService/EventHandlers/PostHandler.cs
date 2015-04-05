@@ -12,7 +12,7 @@ using Infrastructure.Events;
 
 namespace DomainService.EventHandlers
 {
-    public class PostHandler:IEventHandler<EntityCreateEvent<Post>>,IEventHandler<EntityDeleteEvent<Post>>
+    public class PostHandler:IEventHandler<EntityCreateEvent<Post>>,IEventHandler<EntityDeleteEvent<Post>>,IEventHandler<EntityUpdateEvent<Post>>
         ,IEventHandler<AddPostTag>,IEventHandler<AddPostRecipient>,IEventHandler<AddLikeEvent>,IEventHandler<RemoveLikeEvent>
         ,IEventHandler<RemovePostTag>,IEventHandler<RemovePostRecipient>
     {
@@ -75,6 +75,11 @@ namespace DomainService.EventHandlers
             {
                 _postRepository.RemoveTag(eventObject.Post.Id, userId);
             }
+        }
+
+        public void Handle(EntityUpdateEvent<Post> eventObject)
+        {
+            _postRepository.UpdatePost(eventObject.Entity);
         }
     }
 }

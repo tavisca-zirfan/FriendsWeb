@@ -13,7 +13,10 @@
     render: function () {
         this.$comment = $(window.friends.hbTemplate.CommentView(this.model));
         this.$container.append(this.$comment);
-        var view
+        var likeView = new friends.Views.LikeView({
+            model: this.model,
+            $el: $('.comment-like', this.$comment)
+        });
     },
 
     update:function() {

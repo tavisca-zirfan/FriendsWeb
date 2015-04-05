@@ -119,7 +119,7 @@ namespace DbProviderTest
             var comment = PostGenerator.CreateComment(commentId, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             UnitOfWork.Commit();
-            var curPost = PostRepository.GetPost(postId, PostType.PostText);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             var curComment = curPost.Comments.FirstOrDefault(c => c.Id == commentId);
             Assert.IsNotNull(curComment);
             PostResponseRepository.DeleteComment(curComment);
@@ -154,7 +154,7 @@ namespace DbProviderTest
             UnitOfWork.Commit();
             PostResponseRepository.DeleteComment(comment);
             UnitOfWork.Commit();
-            var curPost = PostRepository.GetPost(postId, PostType.PostText);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             var curComment = curPost.Comments.FirstOrDefault(c => c.Id == commentId);
             var curComment2 = curPost.Comments.FirstOrDefault(c => c.Id == commentId2);
             Assert.IsNull(curComment);
@@ -173,7 +173,7 @@ namespace DbProviderTest
             var list = PostResponseRepository.DeleteComment(postId, PostType.PostText);
             UnitOfWork.Commit();
             Assert.AreEqual(list.Count(), 2);
-            var curPost = PostRepository.GetPost(postId, PostType.PostText);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             var curComment = curPost.Comments;
             Assert.AreEqual(curComment.Count(), 0);
         }
@@ -193,7 +193,7 @@ namespace DbProviderTest
             PostResponseRepository.AddLike(userId, "lt5", commentId, PostType.Comment, LikeType.Like, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt6", commentId2, PostType.Comment, LikeType.Dislike, DateTime.Now);
             UnitOfWork.Commit();
-            var curPost = PostRepository.GetPost(postId, PostType.PostText);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
             Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 2);
@@ -216,14 +216,14 @@ namespace DbProviderTest
             PostResponseRepository.AddLike(userId, "lt6", commentId2, PostType.Comment, LikeType.Dislike, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt7", commentId, PostType.Comment, LikeType.Dislike, DateTime.Now);
             UnitOfWork.Commit();
-            var curPost = PostRepository.GetPost(postId, PostType.PostText);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
             Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 2);
             Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId2).Dislikes, 1);
             PostResponseRepository.RemoveLike(userId,commentId,PostType.Comment,LikeType.Like);
             UnitOfWork.Commit();
-            curPost = PostRepository.GetPost(postId, PostType.PostText);
+            curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
             Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 0);

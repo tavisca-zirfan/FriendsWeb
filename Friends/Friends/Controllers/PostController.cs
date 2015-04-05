@@ -40,8 +40,12 @@ namespace Friends.Controllers
         {
             PostType postType;
             if (Enum.TryParse(post.PostType, out postType))
-                return LikeService.Post(post.Id, postType, LikeType.Like, UserData);
-            throw new ArgumentException("Invalid PostType");
+            {
+                var response = LikeService.Post(post.Id, postType, LikeType.Like, UserData);
+                if (response != null)
+                    return response;
+            }
+            throw new ArgumentException("There seems to be some issue");
 
         }
         [HttpPost]
@@ -49,8 +53,12 @@ namespace Friends.Controllers
         {
             PostType postType;
             if (Enum.TryParse(post.PostType, out postType))
-                return LikeService.Post(post.Id, postType, LikeType.Dislike, UserData);
-            throw new ArgumentException("Invalid PostType");
+            {
+                var response = LikeService.Post(post.Id, postType, LikeType.Dislike, UserData);
+                if (response != null)
+                    return response;
+            }
+            throw new ArgumentException("There seems to be some issue");
 
         }
 

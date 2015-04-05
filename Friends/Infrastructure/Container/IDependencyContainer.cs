@@ -19,5 +19,6 @@ namespace Infrastructure.Container
         IDependencyContainer RegisterInstance<T>(T obj, string name = null);
         IDependencyContainer RegisterAsSingleton(Type typeInterface, object obj, string name = null);
         IDependencyContainer RegisterAsSingleton<T>(T obj, string name = null);
+        IDependencyContainer RegisterAsWebSingleton<TInterface, TConcrete>(string name = null);
     }
 }

@@ -20,6 +20,7 @@ namespace DAL.Implementation
                 list = list.Where(
                     p =>
                         p.Author == user.ToString() ||
+                        p.PostRecipients.Count==0 ||
                         p.PostRecipients.Select(r => r.RecipientId).Contains(user.ToString()));
             
             return list;
@@ -57,7 +58,10 @@ namespace DAL.Implementation
             {
                 DateTime dtLastUpdate;
                 if (DateTime.TryParse(lastUpdate.ToString(), out dtLastUpdate))
+                {
+                    dtLastUpdate = dtLastUpdate.ToUniversalTime();
                     list = list.Where(p => p.LastUpdate > dtLastUpdate);
+                }
             }
             return list;
         }

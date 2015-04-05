@@ -22,6 +22,7 @@ namespace DomainService
                 .Register<IEventHandler<LoadFriendsEvent>, UserEventHandler>("loadfriends")
                 .Register<IEventHandler<ChangePasswordEvent >, UserEventHandler>("changepassword")
                 .Register<IEventHandler<EntityCreateEvent<Post>>, PostHandler>("postcreate")
+                .Register<IEventHandler<EntityUpdateEvent<Post>>, PostHandler>("postupdate")
                 .Register<IEventHandler<EntityDeleteEvent<Post>>, PostHandler>("postdelete")
                 .Register<IEventHandler<AddPostTag>, PostHandler>("addposttag")
                 .Register<IEventHandler<AddPostRecipient>, PostHandler>("addpostrecipient")

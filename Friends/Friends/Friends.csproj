@@ -224,6 +224,7 @@
     <Content Include="Scripts\Library\backbone-nested.js" />
     <Content Include="Scripts\Library\backbone.modelbinding.js" />
     <Content Include="Scripts\Library\handlebars-1.3.js" />
+    <Content Include="Scripts\Library\holder.js" />
     <Content Include="Scripts\Library\init.js" />
     <Content Include="Scripts\Library\jquery.validate.js" />
     <Content Include="Scripts\Library\jquery.validate.min.js" />
@@ -234,15 +235,25 @@
     <Content Include="Scripts\Model\postLikeModel.js" />
     <Content Include="Scripts\Model\postModel.js" />
     <Content Include="Scripts\Model\profileModel.js" />
+    <Content Include="Scripts\Plugins\bootstrap-fileinput\bootstrap-fileinput.css" />
+    <Content Include="Scripts\Plugins\bootstrap-fileinput\bootstrap-fileinput.js" />
     <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.css" />
     <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.js" />
     <Content Include="Scripts\Library\underscore-min.js" />
+    <Content Include="Scripts\Plugins\picEdit\css\font.css" />
+    <Content Include="Scripts\Plugins\picEdit\css\font.v01.css" />
+    <Content Include="Scripts\Plugins\picEdit\css\picedit.css" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\fonts\picediticons.svg" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\style.css" />
+    <Content Include="Scripts\Plugins\picEdit\js\picedit.js" />
     <Content Include="Scripts\Utils\searchFilter.js" />
     <Content Include="Scripts\Views\basePostView.js" />
     <Content Include="Scripts\Views\commentView.js" />
     <Content Include="Scripts\Views\likeView.js" />
     <Content Include="Scripts\Views\onlineListView.js" />
     <Content Include="Scripts\Views\postListView.js" />
+    <Content Include="Scripts\Views\profilePicView.js" />
+    <Content Include="Scripts\Views\profileView.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -264,6 +275,10 @@
     <Content Include="Views\Home\_Events.cshtml" />
     <Content Include="Views\Shared\_PostTemplates.cshtml" />
     <Content Include="Views\UserProfile\Index.cshtml" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\selection.json" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\fonts\picediticons.eot" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\fonts\picediticons.ttf" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\fonts\picediticons.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

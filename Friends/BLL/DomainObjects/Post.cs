@@ -14,6 +14,7 @@ namespace BusinessDomain.DomainObjects
     {
         public Profile Author { get; set; }
         public DateTime? CreatedAt { get; set; }
+        public DateTime LastUpdate { get; set; }
         public IList<Comment> Comments { get; set; }
         public IList<Profile> Likes { get; set; }
         private IList<Profile> _recipients;
@@ -86,6 +87,7 @@ namespace BusinessDomain.DomainObjects
             }
             else
                 throw new InvalidDataException("Already it has been liked");
+            Update();
         }
 
         public void Dislike(User user)
@@ -103,6 +105,7 @@ namespace BusinessDomain.DomainObjects
             }
             else
                 throw new InvalidDataException("Already it has been disliked");
+            Update();
         }
 
         public void RemoveComment(User user,Comment comment)
@@ -111,22 +114,28 @@ namespace BusinessDomain.DomainObjects
                             (this.Recipients.Select(p=>p.Id).Contains(user.Id));
             if(canDelete)
                 AddSaveEvent(new EntityDeleteEvent<Post>(comment));
+            Update();
         }
 
-        public Comment AddComment(User user,string commentMessage)
+        public Comment AddComment(User user,Comment comment)
         {
-            var comment = new Comment
+            try
             {
-                CreatedAt = DateTime.Now,
-                Author = new Profile {Id = user.Id},
-                CommentMessage = commentMessage,
-                Id = IdGenerator.GenerateId(),
-                PostType = PostType.Comment,
-                ForPostId = this.Id
-            };
-            AddSaveEvent(new EntityCreateEvent<Post>(comment));
-            Comments.Add(comment);
-            return comment;
+                comment.Id = IdGenerator.GenerateId();
+                comment.CreatedAt = DateTime.UtcNow;
+                comment.LastUpdate = DateTime.UtcNow;
+                comment.Author = user.ToProfile();
+                this.LastUpdate = DateTime.UtcNow;
+                AddSaveEvent(new EntityCreateEvent<Post>(comment));
+                Update();
+                Comments.Add(comment);
+                return comment;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         public void AddRecipients(IEnumerable<string> userIds,User user)
@@ -147,6 +156,13 @@ namespace BusinessDomain.DomainObjects
                 Tags.Add(new Profile{Id=userId});
             }
             AddSaveEvent(new AddPostTag(this,enumerable));
+        }
+
+        public void Update()
+        {
+            this.LastUpdate = DateTime.UtcNow;
+            AddSaveEvent(new EntityUpdateEvent<Post>(this));
+            Save();
         }
 
         public void RemoveRecipients(IEnumerable<string> userIds,User user)

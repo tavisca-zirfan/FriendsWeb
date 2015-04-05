@@ -78,7 +78,7 @@ namespace DbProviderTest
                 PostResponseRepository = new PostResponseRepository(UnitOfWork);
                 PostRepository = new PostRepository(UnitOfWork);
                 UserRepository = new UserRepository(UnitOfWork);
-                var postToBeDeleted = PostRepository.GetPost(postId, PostType.PostText);
+                var postToBeDeleted = PostRepository.GetPost(postId, PostType.PostText.ToString());
                 if(postToBeDeleted!=null)
                 PostRepository.DeletePost(postToBeDeleted);
                 UnitOfWork.Commit();
@@ -98,7 +98,7 @@ namespace DbProviderTest
                 PostResponseRepository = new PostResponseRepository(UnitOfWork);
                 PostRepository = new PostRepository(UnitOfWork);
                 UserRepository = new UserRepository(UnitOfWork);
-                var postToBeDeleted = PostRepository.GetPost(postId, PostType.PostText);
+                var postToBeDeleted = PostRepository.GetPost(postId, PostType.PostText.ToString());
                 if(postToBeDeleted!=null)
                 PostRepository.DeletePost(postToBeDeleted);
                 UnitOfWork.Commit();
@@ -115,7 +115,7 @@ namespace DbProviderTest
             var textpost = PostGenerator.CreateTextPost(postId, userId);
             PostRepository.AddPost(textpost);
             UnitOfWork.Commit();
-            var p = PostRepository.GetPost(postId, PostType.PostText);
+            var p = PostRepository.GetPost(postId, PostType.PostText.ToString());
            Assert.IsNotNull(p);
         }
 
@@ -125,7 +125,7 @@ namespace DbProviderTest
             var textpost = PostGenerator.CreateTextPost(postId, userId);
             PostRepository.AddPost(textpost);
             UnitOfWork.Commit();
-            var p = PostRepository.GetPost(postId, PostType.PostText);
+            var p = PostRepository.GetPost(postId, PostType.PostText.ToString());
             Assert.IsNotNull(p);
         }
 
@@ -138,7 +138,7 @@ namespace DbProviderTest
             var comment = PostGenerator.CreateComment(commentId, postId, userId);
             PostRepository.AddPost(comment);
             UnitOfWork.Commit();
-            var p = PostRepository.GetPost(postId, PostType.PostText);
+            var p = PostRepository.GetPost(postId, PostType.PostText.ToString());
             Assert.IsNotNull(p);
             Assert.AreEqual(1,p.Comments.Count);
             Assert.AreEqual(1,p.Comments[0].Tags.Count);
@@ -153,7 +153,7 @@ namespace DbProviderTest
             UnitOfWork.Commit();
             PostRepository.AddLike(textpost.Id,userId,LikeType.Like);
             UnitOfWork.Commit();
-            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
             Assert.AreEqual(1,myPost.Likes.Count);
         }
 
@@ -165,7 +165,7 @@ namespace DbProviderTest
             UnitOfWork.Commit();
             PostRepository.AddLike(textpost.Id, userId, LikeType.Dislike);
             UnitOfWork.Commit();
-            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
             Assert.AreEqual(1, myPost.Dislikes.Count);
         }
 
@@ -178,7 +178,7 @@ namespace DbProviderTest
             PostRepository.AddLike(textpost.Id, userId, LikeType.Like);
             PostRepository.AddLike(textpost.Id, userId, LikeType.Dislike);
             UnitOfWork.Commit();
-            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
             Assert.AreEqual(1, myPost.Likes.Count);
         }
 
@@ -191,7 +191,7 @@ namespace DbProviderTest
             UnitOfWork.Commit();
             PostRepository.AddTag(textpost.Id, userId);
             UnitOfWork.Commit();
-            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
             Assert.AreEqual(2, myPost.Tags.Count);
         }
 
@@ -203,11 +203,11 @@ namespace DbProviderTest
             UnitOfWork.Commit();
             PostRepository.AddTag(textpost.Id, userId);
             UnitOfWork.Commit();
-            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
             Assert.AreEqual(2, myPost.Tags.Count);
             PostRepository.RemoveTag(textpost.Id, userId);
             UnitOfWork.Commit();
-            myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
             Assert.AreEqual(1, myPost.Tags.Count);
         }
 
@@ -220,7 +220,7 @@ namespace DbProviderTest
                 UnitOfWork.Commit();
                 PostRepository.AddRecipient(textpost.Id, userId);
                 UnitOfWork.Commit();
-                var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+                var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
                 Assert.AreEqual(2, myPost.Recipients.Count);
             
         }
@@ -233,11 +233,11 @@ namespace DbProviderTest
             UnitOfWork.Commit();
             PostRepository.AddRecipient(textpost.Id, userId);
             UnitOfWork.Commit();
-            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            var myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
             Assert.AreEqual(2, myPost.Recipients.Count);
             PostRepository.RemoveRecipient(textpost.Id, userId);
             UnitOfWork.Commit();
-            myPost = PostRepository.GetPost(textpost.Id, PostType.PostText);
+            myPost = PostRepository.GetPost(textpost.Id, PostType.PostText.ToString());
             Assert.AreEqual(1, myPost.Recipients.Count);
         }
 

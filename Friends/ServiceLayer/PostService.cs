@@ -14,7 +14,7 @@ namespace ServiceLayer
     public interface IPostService
     {
         IEnumerable<PostDTO> Get(SearchFilter request, UserDTO authUser);
-        PostDTO Get(string postId,UserDTO authUser,PostType postType);
+        PostDTO Get(string postId,UserDTO authUser,string postType);
         PostDTO Put(PostDTO request, UserDTO authUser);
         PostDTO Post(PostDTO request, UserDTO authUser);
         void Delete(string postId,UserDTO authUser);
@@ -38,13 +38,21 @@ namespace ServiceLayer
             return posts.Select(Mapper.Map<PostDTO>);
         }
 
-        public PostDTO Get(string postId, UserDTO authUser, PostType postType)
+        public PostDTO Get(string postId, UserDTO authUser, string postType)
         {
             return Mapper.Map<PostDTO>(PostController.GetPost(postId,authUser.ToBusinessModel(), postType));
         }
 
         public PostDTO Post(PostDTO request, UserDTO authUser)
         {
+            var postWithType = request.ToBusinessModel();
+            if (postWithType.PostType == PostType.Comment)
+            {
+                var parentPost = PostController.GetPost(((Comment) postWithType).ForPostId, authUser.ToBusinessModel(), ((CommentDTO)request).ForPostType);
+                var comment = parentPost.AddComment(authUser.ToBusinessModel(), (Comment)postWithType);
+                parentPost.Save();
+                return Mapper.Map<PostDTO>(comment);
+            }
             var post=PostController.CreatePost(request.ToBusinessModel(),authUser.ToBusinessModel());
             return Mapper.Map<PostDTO>(post);
         }
@@ -61,12 +69,12 @@ namespace ServiceLayer
             return Mapper.Map<PostDTO>(post);
         }
 
-        public bool Post(string postId, PostType postType, LikeType likeType, UserDTO authUser)
+        public PostDTO Post(string postId, PostType postType, LikeType likeType, UserDTO authUser)
         {
             try
             {
                 var user = authUser.ToBusinessModel();
-                var post = PostController.GetPost(postId, user, postType);
+                var post = PostController.GetPost(postId, user, postType.ToString());
                 if (likeType == LikeType.Like)
                 {
                     post.Like(user);
@@ -76,11 +84,11 @@ namespace ServiceLayer
                     post.Dislike(user);
                 }
                 post.Save();
-                return true;
+                return Mapper.Map<PostDTO>(post);
             }
             catch (Exception ex)
             {
-                return false;
+                return null;
             }
         }
     }

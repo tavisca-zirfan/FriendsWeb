@@ -43,7 +43,7 @@ namespace IntegrationTest
 
             var comment = PostGenerator.CreateComment(_postId, _userId);
             var insertedComment = _postService.Post(comment, _user);
-            var post = _postService.Get(_postId, _user, PostType.PostText);
+            var post = _postService.Get(_postId, _user, PostType.PostText.ToString());
             Assert.IsNotNull(post);
             Assert.IsTrue(post.Comments.Count > 0);
 
@@ -68,7 +68,7 @@ namespace IntegrationTest
         {
            _likeService.Post(_postId,PostType.PostText, LikeType.Like, _user);
             _likeService.Post(_commentId,PostType.Comment, LikeType.Like, _user);
-            var post = _postService.Get(_postId, _user,PostType.PostText);
+            var post = _postService.Get(_postId, _user,PostType.PostText.ToString());
             Assert.AreEqual(1,post.NumberOfLikes);
             var com = post.Comments.FirstOrDefault(c => c.Id == _commentId);
             Assert.AreEqual(1,com.NumberOfLikes);
@@ -79,7 +79,7 @@ namespace IntegrationTest
         {
             _likeService.Post(_postId, PostType.PostText, LikeType.Dislike, _user);
             _likeService.Post(_commentId, PostType.Comment, LikeType.Dislike, _user);
-            var post = _postService.Get(_postId, _user, PostType.PostText);
+            var post = _postService.Get(_postId, _user, PostType.PostText.ToString());
             Assert.AreEqual(0, post.NumberOfLikes);
             Assert.AreEqual(1, post.NumberOfDislikes);
             var com = post.Comments.FirstOrDefault(c => c.Id == _commentId);

@@ -9,5 +9,6 @@ namespace ServiceLayer.Model
     {
         public string CommentMessage { get; set; }
         public string ForPostId { get; set; }
+        public string ForPostType { get; set; }
     }
 }

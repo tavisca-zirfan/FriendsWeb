@@ -28,7 +28,8 @@ namespace DomainService
             try
             {
                 post.Id = IdGenerator.GenerateId();
-                post.CreatedAt = DateTime.Now;
+                post.CreatedAt = DateTime.UtcNow;
+                post.LastUpdate = DateTime.UtcNow;
                 post.Author = authUser.ToProfile();
                 PostRepository.AddPost(post);
                 UnitOfWork.Commit();
@@ -46,7 +47,7 @@ namespace DomainService
         {
             try
             {
-                var post = PostRepository.GetPost(postId, PostType.PostText);
+                var post = PostRepository.GetPost(postId, PostType.PostText.ToString());
                 PostRepository.DeletePost(post);
                 UnitOfWork.Commit();
             }
@@ -65,7 +66,7 @@ namespace DomainService
         }
 
 
-        public Post GetPost(string postId, User authUser, PostType postType)
+        public Post GetPost(string postId, User authUser, string postType)
         {
             return PostRepository.GetPost(postId, postType);
         }

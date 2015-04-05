@@ -29,7 +29,7 @@ namespace Friends.Controllers
         [HttpGet]
         public CommentDTO Get(string id)
         {
-            return PostService.Get(id, UserData, PostType.PostText) as CommentDTO;
+            return PostService.Get(id, UserData, PostType.Comment.ToString()) as CommentDTO;
         }
         [HttpPut]
         public CommentDTO Put(CommentDTO post)

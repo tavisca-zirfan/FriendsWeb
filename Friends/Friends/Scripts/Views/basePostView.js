@@ -3,6 +3,7 @@
         this.options = $.extend({}, this.options, this.childOptions);
         if (!window.friends.hbTemplate.BasePostView) window.friends.hbTemplate.BasePostView = Handlebars.compile($(this.options.baseTemplate).html());
         if (!window.friends.hbTemplate.ChildPostView) window.friends.hbTemplate.ChildPostView = Handlebars.compile($(this.options.childTemplate).html());
+        this.postType = this.model.get('postType');
         //this.listenTo(this.model, 'sync', this.update);
         this.$container = param.$container;
         this.render();
@@ -57,6 +58,7 @@
                 var comment = new friends.Model.Comment();
                 comment.set('commentMessage', $(this).val());
                 comment.set('forPostId', that.model.id);
+                comment.set('forPostType', that.postType);
                 comment.on('sync', that._renderComment,that);
                 comment.save();
                 $(this).val('');

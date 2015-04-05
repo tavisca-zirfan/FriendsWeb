@@ -24,7 +24,7 @@
             success: function (response) {
                 console.log(response);
                 var model = new friends.Model.PostLike(response);
-                that.trigger('liked', model);
+                that.trigger('disliked', model);
             }
         });
     }

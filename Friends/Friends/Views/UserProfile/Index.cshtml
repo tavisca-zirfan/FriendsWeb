@@ -1,8 +1,11 @@
-﻿@{
+﻿@using System.Web.Optimization
+@{
     ViewBag.Title = "Index";
 }
 
+<div id="profile"></div>
 
+<script type="text/template" id="profileViewTemplate">
 <div class="container target">
     <div class="row">
         <div class="col-sm-10">
@@ -11,7 +14,7 @@
             <button type="button" class="btn btn-success">Book me!</button>  <button type="button" class="btn btn-info">Send me a message</button>
             <br>
         </div>
-        <div class="col-sm-2"><a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></a>
+        <div class="col-sm-2 profile-pic">
 
         </div>
     </div>
@@ -173,3 +176,38 @@
         </div>
     </footer>
 </div>
+</script>
+<script type="text/template" id="profilePicViewTemplate">
+    @*<div>
+        <a href="/users" class="pull-right"><img title="profile image" class="img-circle img-responsive" src="http://www.rlsandbox.com/img/profile.jpg"></a>
+    </div>*@
+    <form id="frmPic">
+    <div class="fileinput  fileinput-new circle-image" data-provides="fileinput">
+        <div data-trigger="fileinput">
+            <div class="fileinput-new  "  style="width: 140px; height: 140px;">
+                <img class="" src="http://www.rlsandbox.com/img/profile.jpg"  alt="...">
+            </div>
+            <div class="fileinput-preview img-shown" style="max-width: 140px; max-height: 140px;"></div>
+        </div>
+        
+        <div class="" style="position:relative">            
+            <span class="btn btn-link btn-file" ><input type="file" name="..."></span>
+            <a href="#" class="btn btn-link fileinput-exists"  data-dismiss="fileinput">Remove</a>
+        </div>
+        
+    </div>
+    </form>
+    
+   
+</script>
+
+@section scripts
+{
+    @Scripts.Render("~/js")
+    @Scripts.Render("~/scripts/primary")
+    @Scripts.Render("~/scripts/profile")
+
+    <script type="text/javascript">
+        var view = new friends.Views.ProfileView();
+    </script>
+}

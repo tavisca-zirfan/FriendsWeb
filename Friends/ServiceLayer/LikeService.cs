@@ -25,7 +25,7 @@ namespace ServiceLayer
             try
             {
                 var user = authUser.ToBusinessModel();
-                var post = PostController.GetPost(postId, user, postType);
+                var post = PostController.GetPost(postId, user, postType.ToString());
                 if (likeType == LikeType.Like)
                 {
                     post.Like(user);

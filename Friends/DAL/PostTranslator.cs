@@ -33,6 +33,7 @@ namespace DAL
             }
             if (post.CreatedAt.HasValue)
                 dbPost.Time = post.CreatedAt.Value;
+            dbPost.LastUpdate = post.LastUpdate;
         }
 
         public static BusinessDomain.DomainObjects.Post ToBusinessModel(this Post dbPost, Model.Post post, int likes = 0,

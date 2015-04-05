@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Web;
 using Infrastructure.Configuration;
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity;
@@ -44,6 +45,12 @@ namespace Infrastructure.Container
             return this;
         }
 
+        public IDependencyContainer RegisterAsWebSingleton<TInterface, TConcrete>(string name = null)
+        {
+            _container.RegisterType(typeof(TInterface), typeof(TConcrete), name,new PerHttpRequestLifetime());
+            return this;
+        }
+
         public IEnumerable<object> ResolveAll(Type typeInterface)
         {
             return _container.ResolveAll(typeInterface);
@@ -78,13 +85,13 @@ namespace Infrastructure.Container
 
         public IDependencyContainer RegisterAsSingleton(Type typeInterface, object obj, string name = null)
         {
-            _container.RegisterInstance(typeInterface, name, obj, new ContainerControlledLifetimeManager());
+            _container.RegisterInstance(typeInterface, name, obj, new PerHttpRequestLifetime());
             return this;
         }
 
         public IDependencyContainer RegisterAsSingleton<T>(T obj, string name = null)
         {
-            _container.RegisterInstance(typeof (T), name, obj, new ContainerControlledLifetimeManager());
+            _container.RegisterInstance(typeof (T), name, obj, new PerHttpRequestLifetime());
             return this;
         }
 
@@ -94,6 +101,31 @@ namespace Infrastructure.Container
             if (setting == null)
                 return;
             setting.ModuleCollection.Cast<Module>().ForEach(m=>m.Configure(this));
+        }
+
+
+    }
+
+    public class PerHttpRequestLifetime : LifetimeManager
+    {
+        // This is very important part and the reason why I believe mentioned
+        // PerCallContext implementation is wrong.
+        private readonly Guid _key = Guid.NewGuid();
+
+        public override object GetValue()
+        {
+            return HttpContext.Current.Items[_key];
+        }
+
+        public override void SetValue(object newValue)
+        {
+            HttpContext.Current.Items[_key] = newValue;
+        }
+
+        public override void RemoveValue()
+        {
+            var obj = GetValue();
+            HttpContext.Current.Items.Remove(obj);
         }
     }
 }
