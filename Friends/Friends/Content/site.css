@@ -1,0 +1,72 @@
+@media (min-width: 980px) {
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+}
+
+[class^="icon-"],[class*=" icon-"] {
+    background-image: url("/Content/images/glyphicons-halflings.png");
+}
+.apps {
+    /*background-image: url("/Content/images/app_store.png");*/
+    min-height: 400px;
+    background-color: aliceblue;
+}
+.ftr {
+    padding:50px;
+    background-color: darkseagreen;
+    color: white;
+    font-size: 1.2em;
+}
+.ftr img{
+    height: 100px;
+    width: 150px;
+}
+.sign-up {
+    padding: 20px 0px;
+}
+.sign-up .form-group{
+    padding-left: 0px;
+}
+.sign-up .btn {
+    padding-left: 30px;
+    padding-right: 30px;
+    font-size: 1.4em;
+}
+.home-content {
+    border-left: #e6e6e6 1px solid;
+    min-height: 600px;
+}
+/*base card start here*/
+.base-card,.event-card {
+    border:#e6e6e6 1px solid;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+}
+.event-card {
+    margin-bottom: 20px;
+}
+.base-card .row {
+    padding: 0px 15px;
+}
+.base-card .card-action {
+    padding-top: 5px;
+    padding-bottom: 5px
+}
+.base-card .card-action span {
+    padding-right: 5px;
+}
+.base-card hr {
+    margin: 2px;
+}
+.base-card .comment {
+    padding-top: 10px
+}
+
+/*Events start here*/
+.events {
+    margin-bottom: 10px;
+}
