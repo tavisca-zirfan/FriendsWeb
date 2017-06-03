@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
-using BLL;
+using DomainService;
 using DAL;
 using Infrastructure.Data;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -61,14 +61,14 @@ namespace BusinessControllerTest
         {
             var controller = new UserController();
             var ur = new Mock<IUserRepository>();
-            ur.Setup(m => m.AddUser(It.IsAny<User>(),It.IsAny<Profile>())).Returns(new User{UserId = "abc"});
+            ur.Setup(m => m.AddUser(It.IsAny<User>())).Returns(new User{Id = "abc"});
             //ur.Setup(m => m.AddProfile(It.IsAny<string>(), It.IsAny<Profile>())).Returns(new Profile());
             ur.Setup(m => m.AddRoles(It.IsAny<string>(), It.IsAny<List<int>>()));
             var uow = new Mock<IUnitOfWork>();
             uow.Setup(m => m.Commit());
             controller.UserRepository = ur.Object;
             controller.UnitOfWork = uow.Object;
-            var user = controller.RegisterUser(new User(), new Profile());
+            var user = controller.RegisterUser(new User());
             Assert.IsNotNull(user);
         }
         

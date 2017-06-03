@@ -11,6 +11,8 @@
     <AssemblyName>DAL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,12 +34,14 @@
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FriendsDb\bin\Release\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\FriendsDb\bin\Release\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -46,7 +50,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ContainerSetup.cs" />
     <Compile Include="EFBaseRepository.cs" />
+    <Compile Include="FilterExtension.cs" />
+    <Compile Include="FilterType.cs" />
+    <Compile Include="Implementation\BasePostTypeRepository.cs" />
+    <Compile Include="Implementation\CommentRepository.cs" />
+    <Compile Include="Implementation\PostListFilter.cs" />
+    <Compile Include="Implementation\PostTextRepository.cs" />
+    <Compile Include="Interfaces\IFilterParser.cs" />
+    <Compile Include="Interfaces\IPostTypeRepository.cs" />
     <Compile Include="IPostRepository.cs" />
     <Compile Include="IPostResponseRepository.cs" />
     <Compile Include="IUserRepository.cs" />
@@ -60,6 +73,10 @@
     <Compile Include="UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BLL\BusinessDomain.csproj">
+      <Project>{161eb738-aa0c-4239-b9a3-705a9fb6894b}</Project>
+      <Name>BusinessDomain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FriendsDb\FriendsDb.csproj">
       <Project>{60b5916f-2f2b-4445-a3ee-6992a6f28da0}</Project>
       <Name>FriendsDb</Name>
@@ -69,7 +86,12 @@
       <Name>Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

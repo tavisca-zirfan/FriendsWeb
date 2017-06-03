@@ -7,11 +7,8 @@ namespace FriendsDb.Models
     {
         public int Id { get; set; }
         public string CommentId { get; set; }
-        public string TypeId { get; set; }
+        public string ForPostId { get; set; }
         public string CommentMessage { get; set; }
-        public string Type { get; set; }
-        public string UserId { get; set; }
-        public Nullable<System.DateTime> CommentTime { get; set; }
-        public virtual UserCredential UserCredential { get; set; }
+        public virtual Post Post { get; set; }
     }
 }

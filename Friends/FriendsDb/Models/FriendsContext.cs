@@ -1,5 +1,5 @@
-
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using FriendsDb.Models.Mapping;
 
 namespace FriendsDb.Models
@@ -8,7 +8,7 @@ namespace FriendsDb.Models
     {
         static FriendsContext()
         {
-            Database.SetInitializer<FriendsContext>(new CreateDatabaseIfNotExists<FriendsContext>());
+            Database.SetInitializer<FriendsContext>(null);
         }
 
         public FriendsContext()
@@ -23,7 +23,11 @@ namespace FriendsDb.Models
         public DbSet<Image> Images { get; set; }
         public DbSet<Like> Likes { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<PostRecipient> PostRecipients { get; set; }
+        public DbSet<PostTag> PostTags { get; set; }
+        public DbSet<PostText> PostTexts { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<UserCredential> UserCredentials { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
@@ -37,7 +41,11 @@ namespace FriendsDb.Models
             modelBuilder.Configurations.Add(new ImageMap());
             modelBuilder.Configurations.Add(new LikeMap());
             modelBuilder.Configurations.Add(new PostMap());
+            modelBuilder.Configurations.Add(new PostRecipientMap());
+            modelBuilder.Configurations.Add(new PostTagMap());
+            modelBuilder.Configurations.Add(new PostTextMap());
             modelBuilder.Configurations.Add(new RoleMap());
+            modelBuilder.Configurations.Add(new sysdiagramMap());
             modelBuilder.Configurations.Add(new UserCredentialMap());
             modelBuilder.Configurations.Add(new UserProfileMap());
             modelBuilder.Configurations.Add(new UserRoleMap());

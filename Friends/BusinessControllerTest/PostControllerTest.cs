@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BLL;
+using DbProviderTest;
+using DomainService;
 using DAL;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -30,7 +31,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostRepository>();
             mockRepository.Setup(r => r.AddPost(It.IsAny<Post>()));
             PostController.PostRepository = mockRepository.Object;
-            var post = PostController.CreatePost(authorId, recipientId, postMessage);
+            var post = PostController.CreatePost(PostGenerator.CreateTextPost("",""),It.IsAny<User>());
             Assert.IsNotNull(post);
         }
 
@@ -40,7 +41,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostRepository>();
             mockRepository.Setup(r => r.AddPost(It.IsAny<Post>())).Throws<Exception>();
             PostController.PostRepository = mockRepository.Object;
-            var post = PostController.CreatePost(authorId, recipientId, postMessage);
+            var post = PostController.CreatePost(PostGenerator.CreateTextPost(It.IsAny<string>(), It.IsAny<string>()), It.IsAny<User>());
             Assert.IsNull(post);
         }
         [TestMethod]
@@ -49,7 +50,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostResponseRepository>();
             mockRepository.Setup(r => r.AddComment(It.IsAny<string>(),It.IsAny<Comment>()));
             PostResponseController.PostResponseRepository = mockRepository.Object;
-            var comment = PostResponseController.AddComment(authorId, Guid.NewGuid().ToString(),PostType.Post, commentMessage);
+            var comment = PostResponseController.AddComment(authorId, Guid.NewGuid().ToString(),PostType.PostText, commentMessage);
             Assert.IsNotNull(comment);
         }
         [TestMethod]
@@ -58,7 +59,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostResponseRepository>();
             mockRepository.Setup(r => r.AddComment(It.IsAny<string>(), It.IsAny<Comment>())).Throws<Exception>();
             PostResponseController.PostResponseRepository = mockRepository.Object;
-            var comment = PostResponseController.AddComment(authorId, Guid.NewGuid().ToString(), PostType.Post, commentMessage);
+            var comment = PostResponseController.AddComment(authorId, Guid.NewGuid().ToString(), PostType.PostText, commentMessage);
             Assert.IsNull(comment);
         }
         [TestMethod]
@@ -67,7 +68,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostResponseRepository>();
             mockRepository.Setup(r => r.AddComment(It.IsAny<string>(), It.IsAny<Comment>())).Throws<Exception>();
             PostResponseController.PostResponseRepository = mockRepository.Object;
-            var comment = PostResponseController.AddComment(authorId, Guid.NewGuid().ToString(), PostType.Post, commentMessage);
+            var comment = PostResponseController.AddComment(authorId, Guid.NewGuid().ToString(), PostType.PostText, commentMessage);
             Assert.IsNull(comment);
         }
 
@@ -77,7 +78,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostRepository>();
             mockRepository.Setup(r => r.DeletePost(It.IsAny<Post>()));
             PostController.PostRepository = mockRepository.Object;
-            var post = PostController.RemovePost(authorId, recipientId);
+            var post = PostController.RemovePost(It.IsAny<string>(),  It.IsAny<User>());
             Assert.IsTrue(true);
         }
         [TestMethod]
@@ -86,7 +87,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostRepository>();
             mockRepository.Setup(r => r.DeletePost(It.IsAny<Post>())).Throws<Exception>();
             PostController.PostRepository = mockRepository.Object;
-            var post = PostController.RemovePost(authorId, recipientId);
+            var post = PostController.RemovePost(authorId, It.IsAny<User>());
             Assert.IsFalse(post);
         }
         [TestMethod]
@@ -95,7 +96,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostResponseRepository>();
             mockRepository.Setup(r => r.DeleteComment(It.IsAny<Comment>()));
             PostResponseController.PostResponseRepository = mockRepository.Object;
-            var post = PostResponseController.RemoveComment(authorId, recipientId,PostType.Post);
+            var post = PostResponseController.RemoveComment(authorId, recipientId,PostType.PostText);
             Assert.IsTrue(true);
         }
         [TestMethod]
@@ -104,7 +105,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostResponseRepository>();
             mockRepository.Setup(r => r.DeleteComment(It.IsAny<Comment>())).Throws<Exception>();
             PostResponseController.PostResponseRepository = mockRepository.Object;
-            var post = PostResponseController.RemoveComment(authorId, recipientId,PostType.Post);
+            var post = PostResponseController.RemoveComment(authorId, recipientId,PostType.PostText);
             Assert.IsFalse(post);
         }
         [TestMethod]
@@ -113,7 +114,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostResponseRepository>();
             mockRepository.Setup(r => r.AddLike(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<PostType>(), It.IsAny<LikeType>(), It.IsAny<DateTime>()));
             PostResponseController.PostResponseRepository = mockRepository.Object;
-            var like = PostResponseController.Like(authorId, PostType.Post, "did");
+            var like = PostResponseController.Like(authorId, PostType.PostText, "did");
             Assert.IsTrue(like);
         }
         [TestMethod]
@@ -122,7 +123,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostResponseRepository>();
             mockRepository.Setup(r => r.AddLike(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<PostType>(), It.IsAny<LikeType>(), It.IsAny<DateTime>())).Throws<Exception>();
             PostResponseController.PostResponseRepository = mockRepository.Object;
-            var like = PostResponseController.Like(authorId, PostType.Post, "did");
+            var like = PostResponseController.Like(authorId, PostType.PostText, "did");
             Assert.IsFalse(like);
         }
         [TestMethod]
@@ -131,7 +132,7 @@ namespace BusinessControllerTest
             var mockRepository = new Mock<IPostResponseRepository>();
             mockRepository.Setup(r => r.AddLike(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<PostType>(), It.IsAny<LikeType>(), It.IsAny<DateTime>())).Throws<Exception>();
             PostResponseController.PostResponseRepository = mockRepository.Object;
-            var like = PostResponseController.Like(authorId, PostType.Post, "did");
+            var like = PostResponseController.Like(authorId, PostType.PostText, "did");
             Assert.IsFalse(like);
         }
 

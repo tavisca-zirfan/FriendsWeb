@@ -1,51 +1,68 @@
 ﻿
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Http;
-using BLL;
+using DomainService;
 using Friends.Classes;
+using BusinessDomain.DomainObjects;
 using Infrastructure.Model;
+using ServiceLayer;
+using ServiceLayer.Model;
 
 namespace Friends.Controllers
 {
-    public class PostController : ApiController
+    public class PostController : BaseApiController
     {
-        public IPostController BPostController { get; set; }
-        public CustomPrincipal AuthUser { get; set; }
+        public IPostService PostService { get; set; }
+        public ILikeService LikeService { get; set; }
         public PostController()
         {
-            BPostController = new BLL.PostController();
-            AuthUser = HttpContext.Current.User as CustomPrincipal;
-
+            PostService = new PostService();
+            LikeService = (ILikeService) PostService;
         }
-        [HttpPut]
-        public Post CreatePost(string message,string recipient)
-        {
-            return BPostController.CreatePost(AuthUser.UserId, recipient, message);
-        }
+        
         [HttpDelete]
-        public bool DeletePost(string postId)
+        public void Delete(string postId)
         {
-            return BPostController.RemovePost(AuthUser.UserId, postId);
+            PostService.Delete(postId,UserData);
         }
-        //[HttpGet]
-        //public IEnumerable<Post> GetPosts()
-        //{
-        //    return BPostController.GetPosts("");
-        //}
-
         [HttpGet]
-        public string GetFilterObject([FromUri] List<Filter> filter)
+        public PagedList<PostDTO> Get([FromUri]SearchFilter request)
         {
-            var str = "";
-            filter.ForEach(f => str = str + f.Name + ":" + f.Value + ";");
-            return str;
+            return new PagedList<PostDTO> {Items = PostService.Get(request, UserData).ToList()};
         }
+
+        
+        [HttpPost]
+        public PostDTO Like(PostDTO post)
+        {
+            PostType postType;
+            if (Enum.TryParse(post.PostType, out postType))
+            {
+                var response = LikeService.Post(post.Id, postType, LikeType.Like, UserData);
+                if (response != null)
+                    return response;
+            }
+            throw new ArgumentException("There seems to be some issue");
+
+        }
+        [HttpPost]
+        public PostDTO Dislike(PostDTO post)
+        {
+            PostType postType;
+            if (Enum.TryParse(post.PostType, out postType))
+            {
+                var response = LikeService.Post(post.Id, postType, LikeType.Dislike, UserData);
+                if (response != null)
+                    return response;
+            }
+            throw new ArgumentException("There seems to be some issue");
+
+        }
+
     }
 
-    public class Filter
-    {
-        public string Name { get; set; }
-        public string Value { get; set; }
-    }
+    
 }

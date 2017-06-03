@@ -9,7 +9,7 @@ namespace Friends.Classes
 {
     public class CustomPrincipal:IPrincipal
     {
-        IUserService service = new MockUserService();
+        IUserService service = new UserService();
         public CustomPrincipal(string username)
         {
             this.Identity = new GenericIdentity(username);

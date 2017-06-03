@@ -8,21 +8,10 @@ namespace FriendsDb.Models.Mapping
         public LikeMap()
         {
             // Primary Key
-            this.HasKey(t => t.LikeId);
+            this.HasKey(t => t.Id);
 
             // Properties
-            this.Property(t => t.Id)
-                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-
-            this.Property(t => t.LikeId)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            this.Property(t => t.TypeId)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            this.Property(t => t.Type)
+            this.Property(t => t.PostId)
                 .IsRequired()
                 .HasMaxLength(50);
 
@@ -33,15 +22,16 @@ namespace FriendsDb.Models.Mapping
             // Table & Column Mappings
             this.ToTable("Like");
             this.Property(t => t.Id).HasColumnName("Id");
-            this.Property(t => t.LikeId).HasColumnName("LikeId");
-            this.Property(t => t.TypeId).HasColumnName("TypeId");
-            this.Property(t => t.Type).HasColumnName("Type");
+            this.Property(t => t.PostId).HasColumnName("PostId");
             this.Property(t => t.UserId).HasColumnName("UserId");
             this.Property(t => t.LikeType).HasColumnName("LikeType");
             this.Property(t => t.Time).HasColumnName("Time");
 
             // Relationships
-            this.HasRequired(t => t.UserCredential)
+            this.HasRequired(t => t.Post)
+                .WithMany(t => t.Likes)
+                .HasForeignKey(d => d.PostId);
+            this.HasRequired(t => t.UserProfile)
                 .WithMany(t => t.Likes)
                 .HasForeignKey(d => d.UserId);
 

@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using FriendsDb.Models;
 using Infrastructure.Data;
 using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Role = FriendsDb.Models.Role;
 
 namespace DAL
@@ -15,10 +16,16 @@ namespace DAL
     public class UserRepository:EfBaseRepository<UserCredential>,IUserRepository
     {
         private FriendsContext Db;
-        
-        public UserRepository(IUnitOfWork uow):base(uow)
+        public IUnitOfWork UnitOfWork { get; set; }
+        public UserRepository(IUnitOfWork unitOfWork):base(unitOfWork)
         {
-            Db = Context as FriendsContext;
+            UnitOfWork = unitOfWork;
+            if (unitOfWork == null)
+                Db = new FriendsContext();
+            else
+            {
+                Db = UnitOfWork.GetTransactionObject() as FriendsContext;
+            }
             
         } 
 
@@ -26,25 +33,26 @@ namespace DAL
         {
             Db = new FriendsContext();
         }
+
         public User GetUserByEmail(string emailId)
         {
             using (var db = new FriendsContext())
             {
                 var user = (from ur in db.UserRoles
                     join r in db.Roles on ur.RoleId equals r.RoleId
-                group r by ur.UserId
-                into roles
+                    group r by ur.UserId
+                    into roles
                     join uc in db.UserCredentials on roles.Key equals uc.UserId
                     join up in db.UserProfiles on uc.UserId equals up.UserId
-                where uc.Email == emailId
-                select new {Credential = uc, Profile = up, Roles = roles}).FirstOrDefault();
-                       
+                    where uc.Email == emailId
+                    select new {Credential = uc, Profile = up, Roles = roles}).FirstOrDefault();
+
 
                 return user != null ? user.Credential.ToBusinessModel(user.Profile, user.Roles) : null;
-        }
+            }
         }
 
-        public User AddUser(User user,Profile profile)
+        public User AddUser(User user)
         {
 
            // using (var Db = new FriendsContext())
@@ -55,7 +63,7 @@ namespace DAL
                 user.ToDbModel(credential);
                 Db.UserCredentials.Add(credential);
                     var userProfile = new UserProfile { UserId = credential.UserId };
-                    profile.ToDbModel(userProfile);
+                    user.ToDbModel(userProfile);
                     Db.UserProfiles.Add(userProfile);
                     if(user.Roles!=null)
                         AddRoles(credential.UserId,user.Roles.Select(r=>r.RoleId));
@@ -119,15 +127,15 @@ namespace DAL
 
         public void UpdateCredential(User user)
         {
-            var credential = Db.UserCredentials.FirstOrDefault(uc => uc.UserId == user.UserId);
+            var credential = Db.UserCredentials.FirstOrDefault(uc => uc.UserId == user.Id);
             if(credential == null)
                 throw new Exception("User Not Found");
             user.ToDbModel(credential);
         }
 
-        public void UpdateProfile(string userId, Profile profile)
+        public void UpdateProfile(Profile profile)
         {
-            var userProfile = Db.UserProfiles.FirstOrDefault(up => up.UserId == userId);
+            var userProfile = Db.UserProfiles.FirstOrDefault(up => up.UserId == profile.Id);
             if (userProfile == null)
                 throw new Exception("User Not Found");
             profile.ToDbModel(userProfile);
@@ -145,21 +153,47 @@ namespace DAL
             if (credential == null)
                 //throw new Exception("User Not Found");
                 return;
-            Db.UserCredentials.Remove(credential);
-            var profile = Db.UserProfiles.FirstOrDefault(u => u.UserId == userId);
-            //if (profile == null)
-                //throw new Exception("User Not Found");
-            Db.UserProfiles.Remove(profile);
+            Db.Likes.RemoveRange(credential.UserProfile.Likes);
+            Db.PostRecipients.RemoveRange(credential.UserProfile.PostRecipients);
+            Db.PostTags.RemoveRange(credential.UserProfile.PostTags);
+            Db.PostTexts.RemoveRange(
+                credential.UserProfile.Posts.Where(p => p.Type == PostType.PostText.ToString()).Select(p => p.PostText));
+            Db.Comments.RemoveRange(
+                credential.UserProfile.Posts.Where(p => p.Type == PostType.Comment.ToString()).Select(p => p.Comment));
+            Db.Posts.RemoveRange(credential.UserProfile.Posts);
+            Db.UserProfiles.Remove(credential.UserProfile);
             Db.UserRoles.RemoveRange(Db.UserRoles.Where(ur => ur.UserId == userId));
+            Db.UserCredentials.Remove(credential);
+            
         }
 
-        public List<Infrastructure.Model.Role> GetRoles(string userId)
+        public List<BusinessDomain.DomainObjects.Role> GetRoles(string userId)
         {
             var roles = (from ur in Db.UserRoles
                 join r in Db.Roles on ur.RoleId equals r.RoleId
                 where ur.UserId == userId
                 select r).ToList();
             return roles.ToBusinessModel();
+        }
+
+
+        public IEnumerable<Profile> GetFriends(string userId)
+        {
+            var profiles = Db.UserProfiles.Where(u=>u.UserId!=userId).ToList();
+            return profiles.Select(p => p.ToBusinessModel());
+        }
+
+
+        public IEnumerable<Profile> GetProfiles(IEnumerable<string> userIds)
+        {
+            var profiles = Db.UserProfiles.Include("UserCredential").Where(u => userIds.Contains(u.UserId)).ToList();
+            return profiles.Select(p => p.ToBusinessModel(p.UserCredential));
+        }
+
+
+        public IEnumerable<Profile> GetProfiles(SearchFilter filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }

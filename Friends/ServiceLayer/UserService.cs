@@ -1,56 +1,73 @@
 ﻿
 using System.Collections.Generic;
 using System.Linq;
-using BLL;
-using Infrastructure.Model;
+using AutoMapper;
+using DomainService;
+using BusinessDomain.DomainObjects;
+using Infrastructure.Container;
 using ServiceLayer.Model;
 
 namespace ServiceLayer
 {
     public interface IUserService
     {
-        User Authenticate(LoginRequest request);
-        User RegisterUser(UserRegistrationRequest request);
-        Profile GetProfile(string userid);
+        UserDTO Post(UserDTO request);
+        UserDTO Get(string email, string password);
+        UserDTO Get(string id);
+        void Delete();
+        void ChangePassword(UserDTO authUser,string oldpassword, string newpassword);
+        void ChangePassword(string email ,string oldpassword, string newpassword);
     }
-    public class MockUserService : IUserService
+    public class UserService : IUserService
     {
-       IUserController UserController { get; set; }
+        public IUserController UserController { get; set; }
 
-        public MockUserService()
+        public UserService()
         {
-            UserController = new UserController();
+            UserController = ObjectFactory.Resolve<IUserController>();
         }
-        public User Authenticate(LoginRequest request)
-        {
-            return UserController.GetUser(request.Username, request.Password);
-        }
-
-        public User RegisterUser(UserRegistrationRequest request)
-        {
-            return (this.UserController.RegisterUser(new User
-            {
-                Email = request.Email,
-                Password = request.Password,
-                Roles = request.Roles.Select(r=>new Role{RoleId = r}).ToList()
-            },
-                new Profile
-                {
-                    DOB = request.DOB,
-                    FirstName = request.FirstName,
-                    LastName = request.LastName,
-                    Gender = request.Gender
-                }));
-
-        }
-
-
-        public Profile GetProfile(string userid)
-        {
-            return UserController.GetProfile(userid);
-        }
-
         
+        public UserDTO Post(UserDTO request)
+        {
+            var user = request.ToBusinessModel();
+            user.Roles = new List<Role> {new Role {RoleId = 2}};
+            user=this.UserController.RegisterUser(user);
+            request.Id = user.Id;
+            return request;
+        }
+        
+
+        public void Delete()
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+        public UserDTO Get(string username, string password)
+        {
+            var user = UserController.GetUser(username, password);
+            var userDto = Mapper.Map<UserDTO>(user);
+            return userDto;
+        }
+
+        public void ChangePassword(UserDTO authUser, string oldpassword, string newpassword)
+        {
+            var user = authUser.ToBusinessModel();
+            user.ChangePassword(newpassword);
+        }
+
+        public void ChangePassword(string email, string oldpassword, string newpassword)
+        {
+            var user = UserController.GetUser(email, oldpassword);
+            user.ChangePassword(newpassword);
+        }
+
+
+        public UserDTO Get(string id)
+        {
+            var user = UserController.GetUserById(id);
+            return Mapper.Map<UserDTO>(user);
+        }
     }
 
 }

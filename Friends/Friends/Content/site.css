@@ -70,3 +70,22 @@
 .events {
     margin-bottom: 10px;
 }
+
+div.img-div{
+    height:200px;
+    width:200px;
+    overflow:hidden;
+    border-radius:50%;
+}
+
+.img-div img{
+    -webkit-transform:translate(-10%);
+    margin-left:100px;
+}
+
+.circle-image img{
+   border-radius: 50%;
+    width: 140px;
+    height: 140px;
+    /*background-image:url("http://placekitten.com/g/200/400");*/
+}

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FriendsDb.Models;
 using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
 namespace DAL
 {
@@ -14,17 +15,19 @@ namespace DAL
         {
             var user = new User
             {
-                UserId = credential.UserId,
+                Id = credential.UserId,
                 Email = credential.Email,
                 Password = credential.Password,
                 IsActive = credential.IsActive,
-                LastSeen = credential.LastSeen
+                LastSeen = credential.LastSeen,
+                CreatedOn = credential.CreatedOn,
             };
             if (profile != null)
             {
                 user.FirstName = profile.FirstName;
                 user.LastName = profile.LastName;
                 user.Gender = profile.Gender;
+                user.DOB = profile.DOB;
             }
             if (roles != null)
             {
@@ -33,17 +36,17 @@ namespace DAL
             return user;
         }
 
-        public static Infrastructure.Model.Role ToBusinessModel(this FriendsDb.Models.Role role)
+        public static BusinessDomain.DomainObjects.Role ToBusinessModel(this FriendsDb.Models.Role role)
         {
-            return new Infrastructure.Model.Role
+            return new BusinessDomain.DomainObjects.Role
             {
                 RoleId = role.RoleId,RoleName = role.RoleName
             };
         }
 
-        public static List<Infrastructure.Model.Role> ToBusinessModel(this List<FriendsDb.Models.Role> role)
+        public static List<BusinessDomain.DomainObjects.Role> ToBusinessModel(this List<FriendsDb.Models.Role> role)
         {
-            var roles = new List<Infrastructure.Model.Role>();
+            var roles = new List<BusinessDomain.DomainObjects.Role>();
             role.ForEach(r=>roles.Add(r.ToBusinessModel()));
             return roles;
         }
@@ -53,12 +56,18 @@ namespace DAL
             credential.Email = user.Email;
             credential.IsActive = user.IsActive;
             credential.LastSeen = user.LastSeen;
-            credential.CreatedOn = user.CreatedOn;
+            if(credential.CreatedOn==default(DateTime))
+                credential.CreatedOn = user.CreatedOn;
             if (!string.IsNullOrEmpty(user.ChangedPassword))
             {
+                if (!string.IsNullOrEmpty(credential.Password))
+                {
+                    if (credential.Password.Trim() != user.Password.Trim())
+                        throw new Exception("Credentials mismatch");
+                }
                 credential.Password = user.ChangedPassword;
             }
-            credential.UserId = user.UserId;
+            credential.UserId = user.Id;
         }
         public static void ToDbModel(this User user, UserProfile profile)
         {
@@ -75,12 +84,14 @@ namespace DAL
                 DOB = userProfile.DOB,
                 FirstName = userProfile.FirstName,
                 LastName = userProfile.LastName,
-                Gender = userProfile.Gender
+                Gender = userProfile.Gender,
+                Id = userProfile.UserId
             };
 
             if (user != null)
             {
                 profile.Email = user.Email;
+                profile.LastSeen = user.LastSeen;
             }
             return profile;
         }
@@ -91,19 +102,6 @@ namespace DAL
             userProfile.FirstName = profile.FirstName;
             userProfile.LastName = profile.LastName;
             userProfile.Gender = profile.Gender;
-        }
-
-        public static Profile ToProfile(this User user)
-        {
-            return new Profile{DOB = user.DOB,Email = user.Email,FirstName=user.FirstName,LastName = user.LastName,Gender=user.Gender,LastSeen = user.LastSeen};
-        }
-
-        public static void AddProfileInformation(this User user,Profile profile)
-        {
-            user.FirstName = profile.FirstName;
-            user.LastName = profile.LastName;
-            user.Gender = profile.Gender;
-            user.DOB = profile.DOB;
         }
     }
 }

@@ -2,34 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
 namespace DbProviderTest
 {
     public static class PostGenerator
     {
-        public static Post CreatePost(string postId,string userId)
+        public static Post CreateTextPost(string postId,string userId)
         {
-            return new Post
+            return new TextPost
             {
-                Author = new User {UserId = userId},
+                Author = new Profile {Id = userId},
                 CreatedAt = DateTime.Now,
-                PostId = postId,
-                PostType = PostType.Post,
-                Recipient = new User {UserId = userId},
-                PostMessage = "Post"
+                Id = postId,
+                PostType = PostType.PostText,
+                Recipients = new List<Profile>{new Profile {Id = userId}},
+                Tags = new List<Profile> { new Profile { Id = userId } },
+                Message = "Post Text Message"
             };
         }
 
-        public static Comment CreateComment(string commentId,PostType postType,string userId)
+        public static Comment CreateComment(string commentId,string forPostId,string userId)
         {
             return new Comment
             {
-                CommentId = commentId,
-                CommentedBy = new User {UserId = userId},
+                Id = commentId,
+                Author = new Profile {Id = userId},
                 CommentMessage = "Comment",
-                CommentedAt = DateTime.Now,
-                PostType = postType
+                CreatedAt = DateTime.Now,
+                Recipients = new List<Profile> { new Profile { Id = userId } },
+                Tags = new List<Profile> { new Profile { Id = userId } },
+                PostType = PostType.Comment,
+                ForPostId = forPostId
             };
         }
     }

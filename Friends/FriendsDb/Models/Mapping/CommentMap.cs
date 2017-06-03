@@ -18,7 +18,7 @@ namespace FriendsDb.Models.Mapping
                 .IsRequired()
                 .HasMaxLength(50);
 
-            this.Property(t => t.TypeId)
+            this.Property(t => t.ForPostId)
                 .IsRequired()
                 .HasMaxLength(50);
 
@@ -26,28 +26,16 @@ namespace FriendsDb.Models.Mapping
                 .IsRequired()
                 .HasMaxLength(50);
 
-            this.Property(t => t.Type)
-                .IsRequired()
-                .HasMaxLength(50);
-
-            this.Property(t => t.UserId)
-                .IsRequired()
-                .HasMaxLength(50);
-
             // Table & Column Mappings
             this.ToTable("Comment");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.CommentId).HasColumnName("CommentId");
-            this.Property(t => t.TypeId).HasColumnName("TypeId");
+            this.Property(t => t.ForPostId).HasColumnName("ForPostId");
             this.Property(t => t.CommentMessage).HasColumnName("CommentMessage");
-            this.Property(t => t.Type).HasColumnName("Type");
-            this.Property(t => t.UserId).HasColumnName("UserId");
-            this.Property(t => t.CommentTime).HasColumnName("CommentTime");
 
             // Relationships
-            this.HasRequired(t => t.UserCredential)
-                .WithMany(t => t.Comments)
-                .HasForeignKey(d => d.UserId);
+            this.HasRequired(t => t.Post)
+                .WithOptional(t => t.Comment);
 
         }
     }

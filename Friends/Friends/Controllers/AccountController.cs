@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using Friends.Models;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Newtonsoft.Json;
 using ServiceLayer;
 using ServiceLayer.Model;
@@ -18,17 +18,17 @@ namespace Friends.Controllers
 
         public AccountController()
         {
-            UserService = new MockUserService();
+            UserService = new UserService();
         }
 
-        private ActionResult AuthorizeUser(User user)
+        private ActionResult AuthorizeUser(UserDTO user)
         {
             if (user != null)
             {
                 var roles = user.Roles.Select(r => r.RoleName).ToArray();
 
                 var serializeModel = new UserModel();
-                serializeModel.UserId = user.UserId;
+                serializeModel.UserId = user.Id;
                 serializeModel.FirstName = user.FirstName;
                 serializeModel.LastName = user.LastName;
                 serializeModel.Roles = user.Roles.Select(r => r.RoleName).ToArray();
@@ -67,7 +67,7 @@ namespace Friends.Controllers
         public ActionResult Login(LoginModel login, string returnUrl = "")
         {
             //UserService = new MockUserService();
-            var user = UserService.Authenticate(new LoginRequest {Username = login.Username, Password = login.Password});
+            var user = UserService.Get(login.Username, login.Password);
             var result = AuthorizeUser(user);
             if (result != null)
                 return result;
@@ -93,7 +93,7 @@ namespace Friends.Controllers
         public ActionResult SignUp(SignUpModel model)
         {
             var a = Request.Form;
-            var request = new UserRegistrationRequest
+            var request = new UserDTO
             {
                 DOB = new DateTime(model.YearDOB, model.MonthDOB, model.DateDOB),
                 Email = model.Email,
@@ -101,11 +101,10 @@ namespace Friends.Controllers
                 LastName = model.LastName,
                 Gender = model.Gender,
                 Password = model.Password,
-                Roles = new List<int>{2}
+                Roles = new List<RolesDTO>{new RolesDTO{Id = 2}}
             };
-            var user = UserService.RegisterUser(request);
-            var result = AuthorizeUser(user);
-            return result ?? RedirectToAction("Index","Home");
+            UserService.Post(request);
+            return RedirectToAction("Index","Home");
         }
 
     }

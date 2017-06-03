@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FriendsDb.Models;
-using Model = Infrastructure.Model;
+using Model = BusinessDomain.DomainObjects;
 using Infrastructure.Data;
 
 namespace DAL
@@ -32,48 +32,41 @@ namespace DAL
             Db.Comments.Add(dbComment);
         }
 
-        public void UpdateComment(Infrastructure.Model.Comment comment)
+        public void UpdateComment(Model.Comment comment)
         {
             throw new NotImplementedException();
         }
 
         public string DeleteComment(Model.Comment comment)
         {
-            var dbComment =
-                Db.Comments.FirstOrDefault(
-                    c => c.CommentId == comment.CommentId && c.UserId == comment.CommentedBy.UserId);
-            if (dbComment == null)
-                return null;
-            RemoveLike(new List<string>{dbComment.CommentId},Model.PostType.Comment );
-            Db.Comments.Remove(dbComment);
-            return dbComment.CommentId;
+            return comment.Id;
         }
 
         public IEnumerable<string> DeleteComment(string postId, Model.PostType postType)
         {
-            var dbComment = Db.Comments.Where(c => c.TypeId == postId && c.Type == postType.ToString());
+            var dbComment = Db.Comments.Where(c => c.ForPostId == postId);
             var deletedIds = dbComment.Select(c => c.CommentId).ToList();
-            Db.Comments.RemoveRange(dbComment);
+            //Db.Comments.RemoveRange(dbComment);
             RemoveLike(deletedIds,Model.PostType.Comment);
             return deletedIds;
         }
 
         public void AddLike(string userId, string likeId, string postId, Model.PostType postType, Model.LikeType likeType, DateTime time)
         {
-            Db.Likes.Add(new Like {LikeId = likeId,LikeType = (int)likeType,Time = time,Type=postType.ToString(),TypeId=postId,UserId = userId});
+           // Db.Likes.Add(new Like {LikeId = likeId,LikeType = (int)likeType,Time = time,Type=postType.ToString(),TypeId=postId,UserId = userId});
         }
 
         public void RemoveLike(string userId, string postId, Model.PostType postType, Model.LikeType likeType)
         {
-            Db.Likes.RemoveRange(Db.Likes.Where(
-                l =>
-                    l.TypeId == postId && l.UserId == userId && l.Type == postType.ToString() &&
-                    l.LikeType == (int) likeType));
+            //Db.Likes.RemoveRange(Db.Likes.Where(
+            //    l =>
+            //        l.TypeId == postId && l.UserId == userId && l.Type == postType.ToString() &&
+            //        l.LikeType == (int) likeType));
         }
 
         public void RemoveLike(List<string> postIds, Model.PostType postType)
         {
-            Db.Likes.RemoveRange(Db.Likes.Where(l =>postIds.Contains(l.TypeId)  && l.Type == postType.ToString()));
+            //Db.Likes.RemoveRange(Db.Likes.Where(l =>postIds.Contains(l.TypeId)  && l.Type == postType.ToString()));
         }
 
 
@@ -82,8 +75,14 @@ namespace DAL
             return
                 Db.Likes.Count(
                     l =>
-                        l.LikeType == (int) likeType && l.TypeId == postId && l.Type == postType.ToString() &&
+                        l.LikeType == (int) likeType && l.PostId == postId  &&
                         (l.UserId == userId || userId == ""));
+        }
+
+
+        public IEnumerable<string> DeleteComment(IEnumerable<string> commentIds)
+        {
+            throw new NotImplementedException();
         }
     }
 }

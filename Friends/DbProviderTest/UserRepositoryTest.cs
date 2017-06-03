@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
+using BusinessDomain;
 using DAL;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DbProviderTest
@@ -20,9 +20,9 @@ namespace DbProviderTest
         {
             var user = UserGenerator.CreateUserForCredential(Email, Password);
             var profile = UserGenerator.CreateProfile();
-            UserRepository.AddUser(user,profile);
+            UserRepository.AddUser(user);
             //UserRepository.AddProfile(user.UserId, profile);
-            UserRepository.AddRoles(user.UserId, new List<int> {1, 2});
+            UserRepository.AddRoles(user.Id, new List<int> {1, 2});
             UOW.Commit();
             user.AddProfileInformation(profile);
             return user;
@@ -47,7 +47,7 @@ namespace DbProviderTest
             var user = UserRepository.GetUserByEmail(Email);
             Assert.IsNotNull(user);
             Assert.AreEqual(2, user.Roles.Count());
-            DeleteUser(nuser.UserId);
+            DeleteUser(nuser.Id);
         }
 
         [TestMethod]
@@ -67,14 +67,14 @@ namespace DbProviderTest
         {
             var user = UserGenerator.CreateUserForCredential(Email, Password);
             var profile = UserGenerator.CreateProfile();
-            user = UserRepository.AddUser(user,profile);
+            user = UserRepository.AddUser(user);
             //UserRepository.AddProfile(user.UserId, profile);
             UOW.Commit();
-            var isUserSaved = UserRepository.CheckCredentialIfUserIdExist(user.UserId);
+            var isUserSaved = UserRepository.GetUser(user.Id)!=null;
             Assert.IsTrue(isUserSaved);
-            profile = UserRepository.GetProfile(user.UserId);
+            profile = UserRepository.GetProfile(user.Id);
             Assert.IsNotNull(profile);
-            UserRepository.DeleteCredential(user.UserId);
+            UserRepository.DeleteCredential(user.Id);
             UOW.Commit();
         }
 
@@ -99,12 +99,12 @@ namespace DbProviderTest
         public void AddUserRoles()
         {
             var user = UserGenerator.CreateUserForCredential(Email, Password);
-            user = UserRepository.AddUser(user,UserGenerator.CreateProfile());
-            UserRepository.AddRoles(user.UserId, new List<int> {1, 2});
+            user = UserRepository.AddUser(user);
+            UserRepository.AddRoles(user.Id, new List<int> {1, 2});
             UOW.Commit();
-            var roles = UserRepository.GetRoles(user.UserId);
+            var roles = UserRepository.GetRoles(user.Id);
             Assert.AreEqual(roles.Count, 2);
-            UserRepository.DeleteCredential(user.UserId);
+            UserRepository.DeleteCredential(user.Id);
             UOW.Commit();
         }
 
@@ -132,10 +132,10 @@ namespace DbProviderTest
             user.Email = "newemail";
             UserRepository.UpdateCredential(user);
             UOW.Commit();
-            var modifiedUser = UserRepository.GetUser(user.UserId);
+            var modifiedUser = UserRepository.GetUser(user.Id);
             Assert.AreEqual(modifiedUser.Email, "newemail");
             Assert.AreEqual(modifiedUser.Password, "newpassword");
-            UserRepository.DeleteCredential(modifiedUser.UserId);
+            UserRepository.DeleteCredential(modifiedUser.Id);
             UOW.Commit();
 
         }
@@ -143,7 +143,7 @@ namespace DbProviderTest
         [TestMethod]
         public void UpdateUserCredentialShouldFailIfUserDoesNotExist()
         {
-            var user = new User {UserId = "invaliduser", ChangedPassword = "newpassword", Email = "newemail"};
+            var user = new User {Id = "invaliduser", ChangedPassword = "newpassword", Email = "newemail"};
             try
             {
                 UserRepository.UpdateCredential(user);
@@ -164,22 +164,22 @@ namespace DbProviderTest
             var profile = user.ToProfile();
             profile.FirstName = "ChangedFirstName";
             profile.LastName = "ChangedLastName";
-            UserRepository.UpdateProfile(user.UserId, profile);
+            UserRepository.UpdateProfile(profile);
             UOW.Commit();
-            var modifiedProfile = UserRepository.GetProfile(user.UserId);
+            var modifiedProfile = UserRepository.GetProfile(user.Id);
             Assert.AreEqual(modifiedProfile.FirstName, "ChangedFirstName");
             Assert.AreEqual(modifiedProfile.LastName, "ChangedLastName");
-            UserRepository.DeleteCredential(user.UserId);
+            UserRepository.DeleteCredential(user.Id);
             UOW.Commit();
         }
 
         [TestMethod]
         public void UpdateUserProfileShouldFailIfUserDoesNotExist()
         {
-            var profile = new Profile {FirstName = "invaliduser", LastName = "invaliduser", Email = "newemail"};
+            var profile = new Profile {FirstName = "invaliduser", LastName = "invaliduser", Email = "newemail",Id="invaliduser"};
             try
             {
-                UserRepository.UpdateProfile("invaliduser", profile);
+                UserRepository.UpdateProfile( profile);
                 UOW.Commit();
             }
             catch (Exception ex)
@@ -192,12 +192,12 @@ namespace DbProviderTest
         public void RemoveUserRoles()
         {
             var user = CreateUser();
-            UserRepository.RemoveRoles(user.UserId, new List<int> {1});
+            UserRepository.RemoveRoles(user.Id, new List<int> {1});
             UOW.Commit();
-            var roles = UserRepository.GetRoles(user.UserId);
+            var roles = UserRepository.GetRoles(user.Id);
             Assert.AreEqual(roles.Count, 1);
             Assert.AreEqual(roles[0].RoleName, "User");
-            UserRepository.DeleteCredential(user.UserId);
+            UserRepository.DeleteCredential(user.Id);
             UOW.Commit();
         }
 

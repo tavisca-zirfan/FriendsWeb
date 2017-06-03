@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using DAL;
-using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 using Infrastructure.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -22,8 +22,8 @@ namespace DbProviderTest
                 UserRepository.DeleteCredential(userId);
                 UnitOfWork.Commit();
                 var user = UserGenerator.CreateUserForCredential("test@test.com", "qwerty");
-                user.UserId = userId;
-                UserRepository.AddUser(user,UserGenerator.CreateProfile());
+                user.Id = userId;
+                UserRepository.AddUser(user);
                 UnitOfWork.Commit();
             }
             catch (Exception ex)
@@ -59,8 +59,8 @@ namespace DbProviderTest
                 PostResponseRepository = new PostResponseRepository(UnitOfWork);
                 PostRepository = new PostRepository(UnitOfWork);
                 UserRepository = new UserRepository(UnitOfWork);
-                post = PostGenerator.CreatePost(postId, userId);
-                PostRepository.AddPost(post);
+                //post = PostGenerator.CreatePost(postId, userId);
+                //PostRepository.AddPost(post);
                 UnitOfWork.Commit();
             }
             catch (Exception ex)
@@ -83,8 +83,8 @@ namespace DbProviderTest
                 //PostResponseRepository.RemoveLike(userId, postId, PostType.Post, LikeType.Like);
                 //PostResponseRepository.RemoveLike(userId, postId2, PostType.Post, LikeType.Like);
                 //PostResponseRepository.DeleteComment(post.PostId, PostType.Post);
-                PostRepository.DeletePost(PostGenerator.CreatePost(postId2,userId));
-                PostRepository.DeletePost(PostGenerator.CreatePost(postId,userId));
+                //PostRepository.DeletePost(PostGenerator.CreatePost(postId2,userId));
+                //PostRepository.DeletePost(PostGenerator.CreatePost(postId,userId));
                 UnitOfWork.Commit();
             }
             catch (Exception ex)
@@ -116,11 +116,11 @@ namespace DbProviderTest
         public void AddComment()
         {
 
-            var comment = PostGenerator.CreateComment(commentId, PostType.Post, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             UnitOfWork.Commit();
-            var curPost = PostRepository.GetPost(postId, PostType.Post, userId);
-            var curComment = curPost.Comments.FirstOrDefault(c => c.CommentId == commentId);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
+            var curComment = curPost.Comments.FirstOrDefault(c => c.Id == commentId);
             Assert.IsNotNull(curComment);
             PostResponseRepository.DeleteComment(curComment);
             UnitOfWork.Commit();
@@ -130,10 +130,10 @@ namespace DbProviderTest
         public void ShouldNotAddCommentIfUserNotExist()
         {
 
-            var comment = PostGenerator.CreateComment(commentId, PostType.Post, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
             try
             {
-                comment.CommentedBy.UserId = "invalid";
+                comment.Author.Id = "invalid";
                 PostResponseRepository.AddComment(postId, comment);
                 UnitOfWork.Commit();
             }
@@ -147,16 +147,16 @@ namespace DbProviderTest
         [TestMethod]
         public void DeleteCommentByPassingCommentInfo()
         {
-            var comment = PostGenerator.CreateComment(commentId, PostType.Post, userId);
-            var comment2 = PostGenerator.CreateComment(commentId2, PostType.Post, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            var comment2 = PostGenerator.CreateComment(commentId2, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             PostResponseRepository.AddComment(postId, comment2);
             UnitOfWork.Commit();
             PostResponseRepository.DeleteComment(comment);
             UnitOfWork.Commit();
-            var curPost = PostRepository.GetPost(postId, PostType.Post);
-            var curComment = curPost.Comments.FirstOrDefault(c => c.CommentId == commentId);
-            var curComment2 = curPost.Comments.FirstOrDefault(c => c.CommentId == commentId2);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
+            var curComment = curPost.Comments.FirstOrDefault(c => c.Id == commentId);
+            var curComment2 = curPost.Comments.FirstOrDefault(c => c.Id == commentId2);
             Assert.IsNull(curComment);
             Assert.IsNotNull(curComment2);
         }
@@ -165,15 +165,15 @@ namespace DbProviderTest
         public void DeleteCommentByPassingPostInfo()
         {
 
-            var comment = PostGenerator.CreateComment(commentId, PostType.Post, userId);
-            var comment2 = PostGenerator.CreateComment(commentId2, PostType.Post, userId);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            var comment2 = PostGenerator.CreateComment(commentId2, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             PostResponseRepository.AddComment(postId, comment2);
             UnitOfWork.Commit();
-            var list = PostResponseRepository.DeleteComment(postId, PostType.Post);
+            var list = PostResponseRepository.DeleteComment(postId, PostType.PostText);
             UnitOfWork.Commit();
             Assert.AreEqual(list.Count(), 2);
-            var curPost = PostRepository.GetPost(postId, PostType.Post);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             var curComment = curPost.Comments;
             Assert.AreEqual(curComment.Count(), 0);
         }
@@ -182,33 +182,33 @@ namespace DbProviderTest
         public void AddLikes()
         {
 
-            PostResponseRepository.AddLike(userId, "lt1", postId, PostType.Post, LikeType.Like, DateTime.Now);
-            PostResponseRepository.AddLike(userId, "lt2", postId, PostType.Post, LikeType.Like, DateTime.Now);
-            PostResponseRepository.AddLike(userId, "lt3", postId, PostType.Post, LikeType.Dislike, DateTime.Now);
-            var comment = PostGenerator.CreateComment(commentId, PostType.Post, userId);
-            var comment2 = PostGenerator.CreateComment(commentId2, PostType.Post, userId);
+            PostResponseRepository.AddLike(userId, "lt1", postId, PostType.PostText, LikeType.Like, DateTime.Now);
+            PostResponseRepository.AddLike(userId, "lt2", postId, PostType.PostText, LikeType.Like, DateTime.Now);
+            PostResponseRepository.AddLike(userId, "lt3", postId, PostType.PostText, LikeType.Dislike, DateTime.Now);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            var comment2 = PostGenerator.CreateComment(commentId2, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             PostResponseRepository.AddComment(postId, comment2);
             PostResponseRepository.AddLike(userId, "lt4", commentId, PostType.Comment, LikeType.Like, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt5", commentId, PostType.Comment, LikeType.Like, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt6", commentId2, PostType.Comment, LikeType.Dislike, DateTime.Now);
             UnitOfWork.Commit();
-            var curPost = PostRepository.GetPost(postId, PostType.Post, userId);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId).Likes, 2);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId2).Dislikes, 1);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 2);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId2).Dislikes, 1);
         }
 
         [TestMethod]
         public void RemoveLikes()
         {
 
-            PostResponseRepository.AddLike(userId, "lt1", postId, PostType.Post, LikeType.Like, DateTime.Now);
-            PostResponseRepository.AddLike(userId, "lt2", postId, PostType.Post, LikeType.Like, DateTime.Now);
-            PostResponseRepository.AddLike(userId, "lt3", postId, PostType.Post, LikeType.Dislike, DateTime.Now);
-            var comment = PostGenerator.CreateComment(commentId, PostType.Post, userId);
-            var comment2 = PostGenerator.CreateComment(commentId2, PostType.Post, userId);
+            PostResponseRepository.AddLike(userId, "lt1", postId, PostType.PostText, LikeType.Like, DateTime.Now);
+            PostResponseRepository.AddLike(userId, "lt2", postId, PostType.PostText, LikeType.Like, DateTime.Now);
+            PostResponseRepository.AddLike(userId, "lt3", postId, PostType.PostText, LikeType.Dislike, DateTime.Now);
+            var comment = PostGenerator.CreateComment(commentId, postId, userId);
+            var comment2 = PostGenerator.CreateComment(commentId2, postId, userId);
             PostResponseRepository.AddComment(postId, comment);
             PostResponseRepository.AddComment(postId, comment2);
             PostResponseRepository.AddLike(userId, "lt4", commentId, PostType.Comment, LikeType.Like, DateTime.Now);
@@ -216,18 +216,18 @@ namespace DbProviderTest
             PostResponseRepository.AddLike(userId, "lt6", commentId2, PostType.Comment, LikeType.Dislike, DateTime.Now);
             PostResponseRepository.AddLike(userId, "lt7", commentId, PostType.Comment, LikeType.Dislike, DateTime.Now);
             UnitOfWork.Commit();
-            var curPost = PostRepository.GetPost(postId, PostType.Post, userId);
+            var curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId).Likes, 2);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId2).Dislikes, 1);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 2);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId2).Dislikes, 1);
             PostResponseRepository.RemoveLike(userId,commentId,PostType.Comment,LikeType.Like);
             UnitOfWork.Commit();
-            curPost = PostRepository.GetPost(postId, PostType.Post, userId);
+            curPost = PostRepository.GetPost(postId, PostType.PostText.ToString());
             Assert.AreEqual(curPost.Likes, 2);
             Assert.AreEqual(1, curPost.Dislikes);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId).Likes, 0);
-            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.CommentId == commentId).Dislikes, 1);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Likes, 0);
+            Assert.AreEqual(curPost.Comments.FirstOrDefault(c => c.Id == commentId).Dislikes, 1);
         }
 
 

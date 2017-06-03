@@ -3,7 +3,7 @@ using System.Web.Mvc;
 namespace Friends.Controllers
 {
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         //
         // GET: /Home/

@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,15 +46,15 @@
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\FriendsDb\bin\Release\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer">
-      <HintPath>..\FriendsDb\bin\Release\EntityFramework.SqlServer.dll</HintPath>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -130,15 +132,26 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CacheExtension.cs" />
     <Compile Include="Classes\CustomAuthorizeAttribute.cs" />
     <Compile Include="Classes\CustomPrincipal.cs" />
+    <Compile Include="Classes\Translator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\PostResponseController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\TextPostController.cs" />
+    <Compile Include="Controllers\UserProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\PagedList.cs" />
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -207,8 +220,40 @@
     <Content Include="Scripts\BtJs\uglify.js" />
     <Content Include="Scripts\jquery-2.0.2.js" />
     <Content Include="Scripts\jquery-2.0.2.min.js" />
+    <Content Include="Scripts\Library\backbone-min.js" />
+    <Content Include="Scripts\Library\backbone-nested.js" />
+    <Content Include="Scripts\Library\backbone.modelbinding.js" />
+    <Content Include="Scripts\Library\handlebars-1.3.js" />
+    <Content Include="Scripts\Library\holder.js" />
+    <Content Include="Scripts\Library\init.js" />
+    <Content Include="Scripts\Library\jquery.validate.js" />
+    <Content Include="Scripts\Library\jquery.validate.min.js" />
+    <Content Include="Scripts\Library\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\Library\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Library\moment.js" />
+    <Content Include="Scripts\Model\commentModel.js" />
+    <Content Include="Scripts\Model\postLikeModel.js" />
+    <Content Include="Scripts\Model\postModel.js" />
+    <Content Include="Scripts\Model\profileModel.js" />
+    <Content Include="Scripts\Plugins\bootstrap-fileinput\bootstrap-fileinput.css" />
+    <Content Include="Scripts\Plugins\bootstrap-fileinput\bootstrap-fileinput.js" />
     <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.css" />
     <Content Include="Scripts\Plugins\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\Library\underscore-min.js" />
+    <Content Include="Scripts\Plugins\picEdit\css\font.css" />
+    <Content Include="Scripts\Plugins\picEdit\css\font.v01.css" />
+    <Content Include="Scripts\Plugins\picEdit\css\picedit.css" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\fonts\picediticons.svg" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\style.css" />
+    <Content Include="Scripts\Plugins\picEdit\js\picedit.js" />
+    <Content Include="Scripts\Utils\searchFilter.js" />
+    <Content Include="Scripts\Views\basePostView.js" />
+    <Content Include="Scripts\Views\commentView.js" />
+    <Content Include="Scripts\Views\likeView.js" />
+    <Content Include="Scripts\Views\onlineListView.js" />
+    <Content Include="Scripts\Views\postListView.js" />
+    <Content Include="Scripts\Views\profilePicView.js" />
+    <Content Include="Scripts\Views\profileView.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -228,17 +273,28 @@
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Shared\_Sidebar.cshtml" />
     <Content Include="Views\Home\_Events.cshtml" />
+    <Content Include="Views\Shared\_PostTemplates.cshtml" />
+    <Content Include="Views\UserProfile\Index.cshtml" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\selection.json" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\fonts\picediticons.eot" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\fonts\picediticons.ttf" />
+    <Content Include="Scripts\Plugins\picEdit\css\picediticons\fonts\picediticons.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\Storage\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj">
+    <ProjectReference Include="..\BLL\BusinessDomain.csproj">
       <Project>{161eb738-aa0c-4239-b9a3-705a9fb6894b}</Project>
-      <Name>BLL</Name>
+      <Name>BusinessDomain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DomainService\DomainService.csproj">
+      <Project>{dd4c336b-177e-49a1-845a-dbaf3a42ae2b}</Project>
+      <Name>DomainService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{3d67b0de-1f6d-4e85-9927-206dc13f0d34}</Project>
@@ -277,6 +333,7 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

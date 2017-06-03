@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Infrastructure.Model;
+using BusinessDomain.DomainObjects;
 
 namespace DAL
 {
@@ -12,6 +13,7 @@ namespace DAL
         void UpdateComment(Comment comment);
         string DeleteComment(Comment comment);
         IEnumerable<string> DeleteComment(string postId, PostType postType);
+        IEnumerable<string> DeleteComment(IEnumerable<string> commentIds);
         int GetLike(string postId, PostType postType,LikeType likeType, string userId);
         void AddLike(string userId, string likeId, string postId, PostType postType, LikeType likeType, DateTime time);
         void RemoveLike(string userId, string postId, PostType postType, LikeType likeType);
